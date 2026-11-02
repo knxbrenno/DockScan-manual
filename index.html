@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
+  <script src="tema.js"></script>
+  <meta name="description" content="Manual de uso do DockScan. Aprenda a analisar máquinas e containers por IP, investigar redes e acompanhar as correções.">
+  <title>Manual de uso · DockScan</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/barlow-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="manual.css">
+  <script src="manual.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="mobile-header">
+    <a class="brand" href="#inicio" aria-label="DockScan, início do manual"><img src="assets/logo.svg" alt="" width="66" height="30"><span>dock<span>scan</span></span></a>
+    <button class="button" id="menu-toggle" type="button" aria-expanded="false" aria-controls="sidebar" hidden>Capítulos</button>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#inicio" aria-label="DockScan, início do manual"><img src="assets/logo.svg" alt="" width="80" height="36"><span>dock<span>scan</span></span></a>
+    <p class="sidebar-label">Documentação</p>
+    <div class="search" id="search-control" hidden>
+      <label for="busca">Buscar nesta aba</label>
+      <div class="search-field"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg><input id="busca" type="search" name="busca" placeholder="Ex.: imagem, exportar…" autocomplete="off"></div>
+      <p id="busca-status" class="sr-only" role="status"></p>
+    </div>
+    <nav aria-label="Capítulos do manual" id="chapters">
+      <a href="#inicio" aria-current="location">Antes de começar</a>
+      <a href="#como-usar">Como usar</a>
+      <a href="#primeiro-scan">Seu primeiro scan</a>
+      <a href="#resultados">Entenda os resultados</a>
+      <a href="#achados">Consulte os achados</a>
+      <a href="#comparacao">Acompanhe correções</a>
+      <a href="#frota">Analise sua frota</a>
+      <a href="#rede">Explore a rede</a>
+      <a href="#nuvem">Conecte a nuvem</a>
+      <a href="#agendamentos">Agende análises</a>
+      <a href="#relatorios">Exporte relatórios</a>
+      <a href="#desenvolvimento">Em desenvolvimento</a>
+      <a href="#ajuda">Dúvidas frequentes</a>
+    </nav>
+    <div class="sidebar-footer">Guia da interface web<p>Manual de uso</p><a href="#primeiro-scan">Abrir passo a passo</a></div>
+  </aside>
+
+  <div class="page">
+    <div class="topbar"><p>Documentação <span aria-hidden="true">/</span> Manual de uso</p><div class="topbar-actions"><button class="button small theme-toggle" id="theme-toggle" type="button" aria-label="Tema escuro" aria-pressed="false" title="Ativar tema escuro" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"></path></svg><span>Tema escuro</span></button><button class="button small" id="print-manual" type="button" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7z"></path></svg>Salvar em PDF</button></div></div>
+    <main id="conteudo" tabindex="-1">
+      <nav class="manual-tabs" id="manual-tabs" aria-label="Seções do manual">
+        <a id="aba-visao-geral" href="#inicio" data-panel="painel-visao-geral">Visão geral</a>
+        <a id="aba-como-usar" href="#como-usar" data-panel="painel-como-usar">Como usar</a>
+      </nav>
+      <p id="sem-resultados" class="empty-state" hidden>Nenhuma etapa encontrada. Tente “scan”, “rede”, “frota” ou “relatório”. <button class="text-button" id="limpar-busca" type="button">Limpar busca</button></p>
+
+      <div id="painel-visao-geral" data-manual-panel>
+      <section id="inicio" class="chapter intro" aria-labelledby="titulo-inicio" data-keywords="começar painel acesso interface instalação abrir overview dashboard">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="intro-label">Manual do DockScan</p>
+            <h1 id="titulo-inicio">Aprenda a usar<br>o DockScan.</h1>
+            <p class="lead">Da primeira análise à leitura dos resultados. Encontre as funções que precisa e acompanhe cada etapa com calma.</p>
+            <div class="hero-actions"><a class="button primary" href="#primeiro-scan">Começar meu primeiro scan</a><a class="text-link" href="#como-usar">Conhecer as funções</a></div>
+            <p class="hero-note">Máquinas, containers e redes. Ferramenta em desenvolvimento.</p>
+          </div>
+          <div class="hero-preview">
+        <figure class="screenshot-placeholder" id="print-painel" data-screenshot="painel.webp">
+          <div class="placeholder-header"><span>Imagem 01</span><span>Painel</span></div>
+          <img src="assets/prints/painel.webp" alt="Painel do DockScan com o resumo por severidade, os scans recentes e os achados mais urgentes" width="1440" height="900" decoding="async">
+          <figcaption>Referência da etapa: use “Novo scan” para iniciar ou abra uma análise em “Scans recentes”.</figcaption>
+        </figure>
+          </div>
+        </div>
+        <div class="start-paths" aria-label="Escolha seu ponto de partida">
+          <a href="#primeiro-scan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6m-6 4h6"></path></svg><span>Analisar máquinas por IP<small>Sistema e containers via SSH</small></span></a>
+          <a href="#rede"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="16" y="16" width="6" height="6" rx="1"></rect><path d="M12 8v5M5 16v-3h14v3"></path></svg><span>Explorar uma rede<small>Hosts, portas e serviços</small></span></a>
+          <a href="#resultados"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v16h16M8 15v-4m5 4V7m5 8v-6"></path></svg><span>Entender um resultado<small>Achados, evidências e correções</small></span></a>
+        </div>
+        <div class="overview-panel-note"><h2>Seu ponto de partida é o Painel</h2><p>Com o acesso já configurado, abra a interface. O Painel reúne os achados mais recentes de cada alvo, as análises recentes e os itens que precisam de atenção.</p></div>
+        <div class="two-columns notes"><div><h3>Está abrindo a interface local?</h3><p>Com o DockScan instalado, execute o comando abaixo e abra o endereço informado no terminal. O endereço local padrão é <code>http://127.0.0.1:8443</code>.</p><div class="code-box"><pre><code>python -m dockscan ui</code></pre><button type="button" class="copy-button" data-copy hidden>Copiar</button></div></div><div><h3>Como usar este manual</h3><p>Siga os capítulos em ordem ou use o índice para ir direto à sua tarefa. As instruções podem ser seguidas sem as imagens.</p><p class="muted">As telas vêm do laboratório do DockScan, com dados de demonstração. O guia começa após o acesso à interface; a tela de login fica fora do manual.</p><p class="muted">O DockScan está em desenvolvimento: veja <a href="#desenvolvimento">o que chegou e o que vem por aí</a>.</p></div></div>
+      </section>
+
+      </div>
+      <div id="painel-como-usar" data-manual-panel>
+      <section id="como-usar" class="chapter usage-guide" aria-labelledby="titulo-como-usar" data-keywords="tutorial como usar funções recursos menu botões passo a passo auditoria configurações allowlist baselines rede achados nuvem perfis">
+        <header class="chapter-header"><div><h2 id="titulo-como-usar">Como usar</h2><p>Veja o caminho de uma análise e para que serve cada função da interface. Os capítulos seguintes detalham as etapas, com a tela de cada uma.</p></div></header>
+        <h3 class="subheading">O fluxo completo, passo a passo</h3>
+        <ol class="steps">
+          <li><div><h3>Escolha o alvo</h3><p>Abra <a href="#primeiro-scan">Novo scan</a> para informar os IPs das máquinas. Para IPs, portas e serviços, siga o <a href="#rede">tutorial de rede</a>.</p></div></li>
+          <li><div><h3>Preencha a entrada e a política</h3><p>Informe os endereços IP e configure o acesso SSH na Frota. Defina a severidade que deve reprovar o scan e se deseja comparar com uma análise anterior.</p></div></li>
+          <li><div><h3>Inicie e acompanhe</h3><p>Clique em “Iniciar varredura por IP” ou, na rede, em “Iniciar varredura”. Aguarde o término e confira mensagens de erro e avisos de cobertura.</p></div></li>
+          <li><div><h3>Investigue os achados</h3><p>Em <a href="#resultados">Resultados</a>, filtre os itens e leia localização, detalhes e recomendação. Os estados “Passou” e “Falhou” se referem à política configurada.</p></div></li>
+          <li><div><h3>Corrija e repita a análise</h3><p>Altere o alvo e execute outro scan compatível. Use <a href="#comparacao">Comparar scans</a> para conferir itens novos, persistentes e que deixaram de ser reportados.</p></div></li>
+          <li><div><h3>Guarde o resultado e crie uma rotina</h3><p><a href="#relatorios">Exporte o relatório</a> no formato necessário. Para repetir a análise, configure um <a href="#agendamentos">agendamento</a>.</p></div></li>
+        </ol>
+
+        <h3 class="subheading">O que cada função do menu faz</h3>
+        <div class="function-list">
+          <details class="function-item"><summary>Painel<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Mostra os achados mais recentes por alvo, scans recentes e itens urgentes.</p><p class="function-instruction">Confira o resumo e abra uma análise em “Scans recentes”. <a href="#inicio">Ver orientação</a>.</p></div></details>
+          <details class="function-item"><summary>Novo scan<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Analisa o sistema e os containers das máquinas selecionadas por IP.</p><p class="function-instruction">Informe os IPs, revise a política e inicie. <a href="#primeiro-scan">Ver etapas</a>.</p></div></details>
+          <details class="function-item"><summary>Resultados<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Guarda o histórico e permite investigar os achados de cada análise.</p><p class="function-instruction">Localize o scan, abra o resultado, aplique filtros e leia os detalhes. <a href="#resultados">Ver etapas</a>.</p></div></details>
+          <details class="function-item"><summary>Achados<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Junta numa tabela os achados do último scan de cada alvo, com uma consulta parecida com SQL.</p><p class="function-instruction">Clique na caixa da consulta, escolha campo, operador e valores e consulte. <a href="#achados">Ver etapas</a>.</p></div></details>
+          <details class="function-item"><summary>Inventário<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Reúne máquinas, containers e serviços dos scans em um mapa e numa lista.</p><p class="function-instruction">Clique em uma máquina para expandir os itens, selecione um recurso para ver os detalhes e use os filtros para localizar um IP ou serviço.</p><p>O mapa consulta os dados salvos. Estados históricos e datas ajudam a identificar coletas antigas ou incompletas. As faixas são agrupamentos visuais dos IPs.</p></div></details>
+          <details class="function-item"><summary>Frota<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Salva o inventário de hosts cujos containers serão analisados.</p><p class="function-instruction">Cadastre os hosts, salve e use “Configurar varredura”. <a href="#frota">Ver etapas</a>.</p></div></details>
+          <details class="function-item"><summary>Nuvem<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Cadastra contas de nuvem e clusters Kubernetes com credenciais só de leitura. A leitura chega nas próximas etapas.</p><p class="function-instruction">Escolha o provedor, preencha os campos e teste a conexão. <a href="#nuvem">Ver etapas</a>.</p></div></details>
+          <details class="function-item"><summary>Buscar CVE<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Verifica uma CVE ou GHSA ao vivo nos IPs informados, com uma coleta atual por SSH.</p><p class="function-instruction"><a href="#guia-cve">Ver etapas da investigação</a>.</p></div></details>
+          <details class="function-item"><summary>Allowlist<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Suprime achados avaliados nas próximas análises e na avaliação da política.</p><p class="function-instruction">Informe uma entrada por linha, revise seu alcance e salve. <a href="#funcao-allowlist">Ver etapas</a>.</p></div></details>
+          <details class="function-item"><summary>Rede<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Reúne varredura de rede, hosts, serviços, exposição do Docker, registries, certificados TLS e achados de rede.</p><p class="function-instruction">Comece por “Varrer a rede” e investigue os resultados nas telas do módulo. <a href="#rede">Ver etapas</a>.</p></div></details>
+          <details class="function-item"><summary>Agendamentos<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Repete análises com um intervalo e uma entrada salvos.</p><p class="function-instruction">Defina nome, tipo, intervalo, horário, alvo e política. <a href="#agendamentos">Ver etapas</a>.</p></div></details>
+          <details class="function-item"><summary>Baselines<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Compara análises compatíveis e mostra como os achados mudaram.</p><p class="function-instruction">Selecione o scan atual e a referência e revise os grupos. <a href="#comparacao">Ver etapas</a>.</p></div></details>
+          <details class="function-item"><summary>Auditoria<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Permite consultar os registros de acesso e operação da interface.</p><p class="function-instruction">Abra o menu e busque por usuário, ação, alvo ou resultado. <a href="#funcao-auditoria">Ver etapas</a>.</p></div></details>
+          <details class="function-item"><summary>Configurações<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Mostra informações da instância, limites de envio e opções de rede.</p><p class="function-instruction">Confira a conexão e ajuste o escopo e as opções de rede. <a href="#funcao-configuracoes">Ver etapas</a>.</p></div></details>
+        </div>
+
+        <h3 class="subheading">As telas de Rede</h3>
+        <div class="function-list">
+          <details class="function-item"><summary>Painel de rede<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Resume os scans selecionados. Escolha as análises e filtre por IP ou severidade para consultar os indicadores.</p></div></details>
+          <details class="function-item"><summary>Varrer a rede<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Cria uma análise. Informe os alvos autorizados, revise perfil, portas e módulos e clique em “Iniciar varredura”.</p></div></details>
+          <details class="function-item"><summary>Hosts<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Organiza as observações por host. Selecione um scan e abra o host para investigar portas, serviços e evidências.</p></div></details>
+          <details class="function-item"><summary>Serviços<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Lista os serviços identificados. Selecione o scan, filtre a listagem e confira os dados observados.</p></div></details>
+          <details class="function-item"><summary>Exposição do Docker<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Reúne as observações de APIs Docker. Confira as evidências de exposição e os achados relacionados.</p></div></details>
+          <details class="function-item"><summary>Registries<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Reúne os dados observados nos registries. Escolha o scan e consulte os registros e suas evidências.</p></div></details>
+          <details class="function-item"><summary>Certificados TLS<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Permite investigar as observações TLS. Confira os dados do certificado e os problemas reportados na análise.</p></div></details>
+          <details class="function-item"><summary>Achados de rede<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Reúne os achados de rede. Filtre por alvo, porta, serviço ou severidade; abra um item e registre a triagem com um comentário.</p></div></details>
+          <details class="function-item"><summary>Em andamento<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Mostra o andamento das análises ativas. Abra os resultados ao vivo ou use os controles de pausa, retomada e parada.</p></div></details>
+          <details class="function-item"><summary>Histórico<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Permite localizar análises anteriores. Filtre o histórico e use as ações para abrir, repetir, comparar, exportar ou excluir uma análise.</p></div></details>
+          <details class="function-item"><summary>Comparar varreduras<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Compara cobertura e observações de duas análises. Escolha os scans e revise também os itens sem cobertura comparável.</p></div></details>
+          <details class="function-item"><summary>Perfis<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Salva combinações de portas, descoberta e auditorias. Crie um perfil ou duplique um existente, ajuste os campos e salve.</p></div></details>
+        </div>
+
+        <details class="disclosure" id="funcao-allowlist"><summary>Allowlist: como cadastrar uma exceção</summary><div><ol class="compact-steps"><li>Abra “Allowlist” no menu.</li><li>Informe uma regra, localização de pacote ou identificador por linha. Use linhas iniciadas por <code>#</code> para comentários.</li><li>Revise a entrada e clique em “Salvar allowlist”.</li><li>Execute um novo scan para aplicar a alteração. O histórico anterior permanece como estava.</li></ol><p>Uma entrada de pacote pode suprimir várias vulnerabilidades. Confira o alcance da exceção antes de salvar.</p></div></details>
+        <details class="disclosure" id="funcao-auditoria"><summary>Auditoria: como localizar uma atividade</summary><div><ol class="compact-steps"><li>Abra “Auditoria” no menu.</li><li>Preencha “Buscar atividade” com usuário, ação, alvo ou resultado.</li><li>Confira data, usuário, ação, alvo, IP e resultado da atividade encontrada.</li><li>Limpe a busca para voltar à listagem disponível.</li></ol></div></details>
+        <details class="disclosure" id="funcao-configuracoes"><summary>Configurações: o que conferir e como ajustar a rede</summary><div><ol class="compact-steps"><li>Abra “Configurações” para consultar versão, conexão e limites de envio.</li><li>Em “Configurações de rede”, revise escopos autorizados, exclusões e limites da análise.</li><li>Confira também formato dos relatórios, evidências e preferências da interface.</li><li>Clique em “Salvar configurações de rede”. Alterações de escopo e limites globais exigem que não haja scans ativos.</li></ol><p>Revise a confirmação antes de reduzir a retenção: essa mudança pode excluir scans de rede antigos e seus relatórios.</p></div></details>
+        <details class="disclosure"><summary>Achados de rede: como registrar a triagem</summary><div><ol class="compact-steps"><li>Abra “Rede → Achados de rede”.</li><li>Localize o achado usando os filtros e abra seus detalhes.</li><li>Leia a evidência e escreva o motivo em “Comentário de triagem”.</li><li>Escolha a ação: revisado, falso positivo ou risco aceito. Use “Reabrir” para reabrir um achado.</li></ol><p>A triagem registra a avaliação do item. Confira a evidência e a cobertura da análise antes de decidir seu estado.</p></div></details>
+        <div class="callout"><span class="callout-tag">Imagens do manual</span><div><p>As telas de cada etapa vêm do laboratório do DockScan, com dados de demonstração. Telas e nomes podem mudar enquanto a ferramenta está em desenvolvimento.</p></div></div>
+      </section>
+
+      <section id="primeiro-scan" class="chapter" aria-labelledby="titulo-primeiro" data-keywords="ip ipv4 ipv6 ssh máquina containers novo scan política kev epss cofre">
+        <header class="chapter-header"><div><h2 id="titulo-primeiro">Seu primeiro scan por IP</h2><p>Informe os endereços das máquinas. O DockScan coleta os dados por SSH e identifica automaticamente os pacotes instalados.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Configure o acesso SSH</h3><p>Em Frota, cadastre uma credencial no cofre com o escopo dos IPs permitidos ou configure uma chave SSH no inventário.</p></div></li>
+          <li><div><h3>Abra “Novo scan” e informe os IPs</h3><p>Digite um IP por linha ou separe por vírgula. Os botões do inventário adicionam IPs já cadastrados. A seleção pode incluir IPv4 e IPv6.</p></div></li>
+          <li><div><h3>Defina a política da análise</h3><p>Escolha a severidade mínima de falha e as opções de CVEs, KEV e EPSS. Deixe a comparação marcada para acompanhar mudanças nos mesmos IPs.</p></div></li>
+          <li><div><h3>Clique em “Iniciar varredura por IP”</h3><p>O resultado atualiza automaticamente. A coleta usa apenas os IPs informados, mesmo que existam outras máquinas no inventário.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-novo-scan" data-screenshot="novo-scan.webp">
+          <div class="placeholder-header"><span>Imagem 02</span><span>Novo scan / IPs das máquinas</span></div>
+          <img src="assets/prints/novo-scan.webp" alt="Novo scan com os IPs das máquinas e a política da análise" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Referência das etapas 1 a 4: preencher o alvo, revisar a política e iniciar a análise.</figcaption>
+        </figure>
+        <div class="callout"><span class="callout-tag">Como os dados são obtidos</span><div><p>Os nomes e as versões dos pacotes são descobertos na própria máquina. Nenhum pacote precisa ser informado ou enviado para iniciar a varredura. Os comandos remotos fazem leituras, sem instalar um agente.</p></div></div>
+        <div class="table-scroll"><table><caption class="sr-only">Varreduras disponíveis por IP</caption><thead><tr><th scope="col">Objetivo</th><th scope="col">Onde abrir</th><th scope="col">Alvo</th></tr></thead><tbody>
+          <tr><td>Auditar o sistema e os containers</td><td>Novo scan</td><td>IPs das máquinas, com acesso SSH.</td></tr>
+          <tr><td>Investigar uma vulnerabilidade específica</td><td>Buscar CVE</td><td>IPs das máquinas e identificador CVE ou GHSA.</td></tr>
+          <tr><td>Identificar portas e serviços</td><td>Rede → Varrer a rede</td><td>IPs ou faixas autorizadas no escopo de rede.</td></tr>
+        </tbody></table></div>
+        <details class="disclosure"><summary>O que a varredura coleta?</summary><div><p>São lidos os pacotes e a configuração do sistema, os containers e os dados disponíveis sobre processos e portas. O resultado informa falhas de acesso ou partes da coleta que ficaram incompletas.</p><p>“Pular consulta de CVEs” desativa a consulta de vulnerabilidades. “Pular KEV e EPSS” desativa esse enriquecimento. A ausência de achados numa coleta incompleta não descarta vulnerabilidades.</p></div></details>
+      </section>
+
+      <section id="resultados" class="chapter" aria-labelledby="titulo-resultados" data-keywords="achado severidade crítica alta média baixa info risco falhou passou filtros cve kev epss detalhe recomendação resultado vulnerabilidades pacotes">
+        <header class="chapter-header"><div><h2 id="titulo-resultados">Entenda os resultados</h2><p>O resultado mostra o que foi encontrado, onde está o problema e qual é o próximo passo recomendado.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Confira o estado e os avisos</h3><p>Abra o scan pelo Painel ou por Resultados. Veja se ele terminou, se houve erro e quais limites ou consultas afetaram a cobertura.</p></div></li>
+          <li><div><h3>Filtre o que precisa investigar</h3><p>Use Severidade e Buscar achado para localizar uma regra, pacote, CVE ou localização. Em Exibir, alterne entre “Pacotes e regras” e “Vulnerabilidades individuais”.</p></div></li>
+          <li><div><h3>Abra os detalhes e leia a recomendação</h3><p>Cada item informa severidade, identificador da regra e localização. Use Ver detalhes para consultar a evidência e planejar a correção. Quando disponíveis, KEV e EPSS ajudam a priorizar.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-resultados" data-screenshot="resultado.webp">
+          <div class="placeholder-header"><span>Imagem 03</span><span>Resultado / filtros e achados</span></div>
+          <img src="assets/prints/resultado.webp" alt="Resultado de uma análise que falhou pela política, com o resumo por severidade e os achados" width="1440" height="1150" loading="lazy" decoding="async">
+          <figcaption>Referência das etapas 1 a 3: conferir o estado, filtrar os itens e ler a recomendação.</figcaption>
+        </figure>
+        <div class="callout warning"><span class="callout-tag">Sobre a política</span><div><h3>“Passou” pode aparecer mesmo com achados</h3><p>O estado indica se a política escolhida foi atingida. Um scan com achados abaixo do limite configurado pode passar. Confira a política, os avisos e a cobertura antes de concluir que o alvo está seguro.</p></div></div>
+        <div class="severity-key" aria-label="Severidades"><span class="critical">Crítica</span><span class="high">Alta</span><span class="medium">Média</span><span class="low">Baixa</span><span class="info">Info</span></div>
+        <p class="muted">Um achado de pacote pode reunir várias vulnerabilidades. A visualização individual ajuda a verificar cada identificador sem confundir a quantidade de pacotes com a de vulnerabilidades.</p>
+        <details class="disclosure"><summary>Qual a diferença entre “Falhou” e “Erro na análise”?</summary><div><p>“Falhou” e “Passou” são o resultado da política: a análise terminou, e algum achado atingiu, ou não, o limite configurado. “Erro na análise” é uma falha técnica: a coleta não terminou. Ele aparece com um sublinhado pontilhado vermelho para não ser confundido com “Falhou”. “Incompleto” indica que faltou parte da cobertura.</p></div></details>
+      </section>
+
+      <section id="achados" class="chapter" aria-labelledby="titulo-achados" data-keywords="achados consulta sql filtro campos operadores severidade kev epss pacote cve ip fonte agrupar exportar csv json link compartilhar sugestões">
+        <header class="chapter-header"><div><h2 id="titulo-achados">Consulte os achados</h2><p>A tela Achados junta numa tabela só os achados do último scan de cada alvo, de todas as fontes. Uma consulta parecida com SQL encontra o que você precisa.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Abra “Achados” no menu</h3><p>A tabela começa com todos os achados, do mais urgente para o menos urgente: primeiro os explorados ativamente (KEV), depois por severidade e por chance de exploração (EPSS).</p></div></li>
+          <li><div><h3>Clique na caixa da consulta e escolha um campo</h3><p>A lista mostra os campos. Passe o mouse num campo para abrir as opções dele ao lado: escolha o operador, marque um ou mais valores e clique em “Adicionar à consulta”. Os valores sugeridos vêm dos seus próprios achados, com a contagem de cada um.</p></div></li>
+          <li><div><h3>Junte condições e consulte</h3><p>Com uma consulta pronta, clique de novo na caixa para continuar com “e”, “ou” ou “ordenar por”, ou use “Adicionar outro filtro”. Depois clique em “Consultar” ou aperte Enter. Quem já conhece a linguagem pode digitar direto.</p></div></li>
+          <li><div><h3>Agrupe, compartilhe e exporte</h3><p>Em “Agrupar por”, veja os achados por ativo, vulnerabilidade, pacote ou fonte; clique num grupo para filtrar só ele. A consulta fica no endereço da página, então o link pode ser compartilhado. “Exportar CSV” e “Exportar JSON” levam o resultado da consulta.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-achados" data-screenshot="achados.webp">
+          <div class="placeholder-header"><span>Imagem 09</span><span>Achados / consulta e opções do campo</span></div>
+          <img src="assets/prints/achados.webp" alt="Tela Achados com a lista de sugestões aberta e, ao lado, as opções do campo pacote com valores marcados" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Referência das etapas 2 e 3: a lista de sugestões à esquerda e, ao lado, o operador e os valores do campo escolhido.</figcaption>
+        </figure>
+        <div class="code-box labeled"><span class="code-label">Exemplos de consulta</span><pre><code>severidade &gt;= alta e corrigivel
+pacote ~ openssl e (fonte = maquina ou fonte = container)
+cve em (CVE-2022-37434, CVE-2024-3094)
+ip em 172.30.0.0/24 e visto_em &gt; -7d
+"nginx" ordenar por epss desc</code></pre><button class="copy-button" type="button" data-copy hidden>Copiar</button></div>
+        <div class="table-scroll"><table><caption class="sr-only">Operadores da consulta</caption><thead><tr><th scope="col">Operador</th><th scope="col">Significado</th></tr></thead><tbody>
+          <tr><td class="mono">= e !=</td><td>É igual ou diferente. Aceitam <code>*</code> como curinga, como em <code>versao = 1.2.*</code>.</td></tr>
+          <tr><td class="mono">&gt; &gt;= &lt; &lt;=</td><td>Maior ou menor, para severidade, EPSS, porta e data.</td></tr>
+          <tr><td class="mono">~ e !~</td><td>Contém ou não contém o texto.</td></tr>
+          <tr><td class="mono">em (a, b)</td><td>Está na lista. Para IP, aceita faixa: <code>ip em 10.0.0.0/24</code>.</td></tr>
+          <tr><td class="mono">existe</td><td>O campo tem valor.</td></tr>
+          <tr><td class="mono">e, ou, não, ( )</td><td>Juntam e agrupam as condições. Também valem and, or, not e in.</td></tr>
+        </tbody></table></div>
+        <div class="callout"><span class="callout-tag">De onde vêm os achados</span><div><p>A tabela usa o último scan concluído de cada alvo. Na frota, cada máquina conta separada: se uma máquina ficou inacessível no scan mais novo, vale a última coleta boa dela. As buscas de CVE não entram, porque os mesmos pacotes já aparecem pela frota.</p></div></div>
+        <details class="disclosure"><summary>Quais campos posso consultar?</summary><div><p>severidade, cve, regra, titulo, pacote, versao, ecossistema, correcao, corrigivel, fonte, ativo, ip, porta, container, local, epss, kev, novo, visto_em e scan. A ajuda “Como consultar”, na própria tela, descreve cada um.</p><p>Um campo de sim ou não sozinho vale “sim”: <code>kev</code> é o mesmo que <code>kev = sim</code>. Datas aceitam <code>2026-11-01</code>, <code>-7d</code>, <code>-24h</code>, <code>hoje</code> e <code>ontem</code>. EPSS aceita <code>0.1</code> ou <code>10%</code>.</p></div></details>
+        <details class="disclosure"><summary>A consulta mostrou um erro</summary><div><p>A mensagem diz o que faltou e em que posição, e o cursor vai até o ponto do problema. Os erros mais comuns são um campo com nome errado, um operador que não vale para o campo (como <code>&gt;</code> em <code>kev</code>) e aspas ou parênteses sem fechar.</p></div></details>
+      </section>
+
+      <section id="comparacao" class="chapter" aria-labelledby="titulo-comparacao" data-keywords="baseline comparar scans novos persistentes corrigidos allowlist suprimir exceções histórico diferenças">
+        <header class="chapter-header"><div><h2 id="titulo-comparacao">Acompanhe as correções</h2><p>Repita a análise depois de alterar o alvo e compare os resultados para saber o que mudou.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Execute um novo scan do mesmo alvo</h3><p>Use o mesmo tipo de análise e o mesmo nome de alvo. Mantenha a mesma seleção de IPs e as mesmas opções de cobertura.</p></div></li>
+          <li><div><h3>Abra “Comparar scans”</h3><p>Na página de um resultado concluído, clique em Comparar scans. Você também pode abrir Baselines no menu. Selecione o scan atual e a referência compatível.</p></div></li>
+          <li><div><h3>Revise os três grupos</h3><p>Novos apareceram no scan atual. Persistentes continuam presentes. Corrigidos estavam na referência e não aparecem no resultado atual. Abra os itens para entender a mudança.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-comparacao" data-screenshot="comparacao.webp">
+          <div class="placeholder-header"><span>Imagem 04</span><span>Comparar scans</span></div>
+          <img src="assets/prints/comparacao.webp" alt="Comparação entre dois scans da mesma imagem, com os grupos novos, persistentes e corrigidos" width="1440" height="1000" loading="lazy" decoding="async">
+          <figcaption>Referência das etapas 2 e 3: escolher duas análises compatíveis e revisar as mudanças.</figcaption>
+        </figure>
+        <div class="callout"><span class="callout-tag">Antes de comparar</span><div><p>Uma consulta desativada, um erro de coleta ou uma alteração na allowlist pode mudar os resultados. “Corrigido” significa que o achado deixou de ser reportado nessa comparação. Confira a evidência e os avisos dos dois scans.</p></div></div>
+        <details class="disclosure"><summary>Como tratar uma exceção pela Allowlist?</summary><div><p>Abra Allowlist, informe uma regra, localização de pacote ou identificador por linha e clique em Salvar allowlist. Linhas que começam com <code>#</code> são comentários.</p><p>As entradas são aplicadas nos próximos scans e retiram os achados correspondentes da avaliação de falha. O histórico anterior permanece como estava. Revise o alcance de cada entrada: um pacote pode reunir várias vulnerabilidades.</p></div></details>
+      </section>
+
+      <section id="frota" class="chapter" aria-labelledby="titulo-frota" data-keywords="ssh inventário host containers execução frota servidor docker chave remoto local agente">
+        <header class="chapter-header"><div><h2 id="titulo-frota">Analise sua frota</h2><p>Cadastre os hosts para analisar os containers em execução e sua configuração, usando o inventário salvo.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Abra “Frota” e preencha o inventário</h3><p>Informe um IP por linha, com as opções de acesso SSH. O servidor DockScan precisa alcançar os hosts por SSH, ter acesso por chave ou pelo cofre de credenciais e permissão para as leituras. O cofre fica na própria página Frota.</p></div></li>
+          <li><div><h3>Salve e inicie a análise</h3><p>Clique em Salvar inventário e depois em Configurar varredura. Em “Novo scan”, selecione os IPs, ajuste a política e clique em “Iniciar varredura por IP”.</p></div></li>
+          <li><div><h3>Revise cada host</h3><p>No resultado, abra os hosts e verifique os achados da máquina e dos containers. Confira também falhas de acesso e avisos de coleta. Volte a “Frota” para consultar a última varredura.</p></div></li>
+        </ol>
+        <details class="disclosure" id="guia-cofre"><summary>Como configurar o cofre SSH</summary><div><ol class="compact-steps"><li>Em Frota, vá até “Cofre de acesso SSH”.</li><li>Informe nome, usuário, senha e escopo permitido. Marque sudo somente se essa conta estiver configurada para usá-lo.</li><li>Clique em “Salvar credencial”. A senha sai do campo e não é devolvida pela interface.</li><li>No inventário, use <code>cred=nome-da-credencial</code> para selecioná-la. O escopo continua sendo respeitado.</li></ol><p>A identidade SSH é registrada na primeira conexão. Se mudar, confira a mudança antes de esquecer a entrada na lista de identidades conhecidas.</p></div></details>
+        <details class="disclosure" id="guia-cve"><summary>Como investigar uma CVE</summary><div><ol class="compact-steps"><li>Abra “Buscar CVE” no menu da ferramenta.</li><li>Informe os IPs e um identificador CVE ou GHSA.</li><li>Clique em “Verificar CVE nos IPs”. Os dados são coletados por SSH nas máquinas selecionadas.</li><li>Leia as ocorrências, a data da coleta, os avisos e as evidências de uso. Uma coleta incompleta não descarta um alvo.</li></ol><p>Os pacotes são identificados automaticamente durante a coleta por IP.</p></div></details>
+        <figure class="screenshot-placeholder" id="print-frota" data-screenshot="frota.webp">
+          <div class="placeholder-header"><span>Imagem 05</span><span>Frota / inventário</span></div>
+          <img src="assets/prints/frota.webp" alt="Frota com um inventário de exemplo e a última varredura dos hosts" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Referência das etapas 1 e 2: cadastrar os hosts, salvar e configurar a análise de frota.</figcaption>
+        </figure>
+        <div class="code-box labeled"><span class="code-label">Exemplo de inventário</span><pre><code># Docker da máquina em que o DockScan está rodando
+127.0.0.1 local=true
+
+# Exemplo de host remoto: substitua pelo seu ambiente
+deploy@host.exemplo.com:2222 key=~/.ssh/id_deploy</code></pre><button class="copy-button" type="button" data-copy hidden>Copiar</button></div>
+        <p class="muted">Os caminhos de chave e o Docker local são resolvidos na máquina do servidor DockScan. Use hosts aos quais você tem acesso autorizado.</p>
+      </section>
+
+      <section id="rede" class="chapter" aria-labelledby="titulo-rede" data-keywords="network security scanner rede ip cidr escopo portas serviços tls registry docker exposição varrer iniciar pausar retomar parar hosts achados histórico perfil painel">
+        <header class="chapter-header"><div><h2 id="titulo-rede">Explore a rede</h2><p>O módulo Rede identifica portas e serviços e reúne evidências de exposição nos alvos autorizados.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Confira os escopos permitidos</h3><p>Em Configurações → Configurações de rede, revise “Escopos de rede autorizados (IP/CIDR)”. Só inclua redes que você está autorizado a analisar. O padrão permite loopback.</p></div></li>
+          <li><div><h3>Abra “Rede → Varrer a rede”</h3><p>Dê um nome ao scan. Em IP, range, CIDR ou múltiplos alvos, informe os IPs e redes. Para experimentar na máquina do servidor, use <code>127.0.0.1</code>. Você também pode importar uma lista <code>.txt</code> em “Importar alvos”.</p><p>Preencha as exclusões, se necessário. Confira a estimativa de alvos e o escopo autorizado mostrado no formulário.</p></div></li>
+          <li><div><h3>Escolha o perfil e revise as portas</h3><p>Em “Configuração da varredura”, selecione o “Perfil” e confira as “Portas”. Revise o tempo limite, a velocidade e os módulos “Detectar serviços”, “Detectar Docker”, “Auditar registries” e “Analisar TLS”.</p></div></li>
+          <li><div><h3>Confirme a autorização e clique em “Iniciar varredura”</h3><p>Acompanhe o progresso na página do scan. Use “Pausar”, “Retomar” ou “Parar” para encerrar. Ao parar, os resultados parciais continuam disponíveis.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-rede" data-screenshot="rede.webp">
+          <div class="placeholder-header"><span>Imagem 06</span><span>Varrer a rede / configuração</span></div>
+          <img src="assets/prints/rede.webp" alt="Varrer a rede com o alvo do laboratório, os escopos autorizados e a configuração" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Referência das etapas 1 a 4: conferir o escopo e configurar o scan antes de iniciar.</figcaption>
+        </figure>
+        <div class="two-columns notes"><div><h3>Onde consultar depois</h3><p>“Em andamento” mostra os trabalhos ativos. “Histórico” guarda as análises anteriores. Use “Hosts” e “Serviços” para investigar os hosts e serviços encontrados.</p></div><div><h3>Como ler a cobertura</h3><p>Na página do scan, alterne “Visualização” entre hosts, portas, cobertura TCP, serviços e achados. Consulte “Configuração e limitações” para entender o alcance da coleta.</p></div></div>
+        <div class="callout warning"><span class="callout-tag">Sobre a cobertura</span><div><h3>Timeout é um resultado inconclusivo</h3><p>Uma porta sem resposta não está comprovadamente fechada. Um host sem resposta também não está comprovadamente desligado. Verifique os estados de cobertura antes de comparar ou encerrar a investigação.</p></div></div>
+        <details class="disclosure"><summary>Como comparar dois scans de rede?</summary><div><p>Abra “Comparar varreduras” no menu Rede ou use “Comparar” no resultado. Selecione as duas análises e revise os itens novos, removidos, alterados e sem mudanças.</p><p>Itens sem cobertura comparável aparecem como “NotComparable”. Confirme alvos, portas e módulos antes de interpretar um serviço como removido ou um risco como resolvido.</p></div></details>
+      </section>
+
+      <section id="nuvem" class="chapter" aria-labelledby="titulo-nuvem" data-keywords="nuvem cloud aws azure google gcp kubernetes conta credencial permissão leitura securityaudit reader viewer kubeconfig testar conexão">
+        <header class="chapter-header"><div><h2 id="titulo-nuvem">Conecte a nuvem</h2><p>O módulo de nuvem vai ler contas da AWS, do Azure e do Google Cloud e clusters Kubernetes para achar o que expõe seus containers. Nesta versão, o cadastro das contas está pronto; a leitura chega nas próximas etapas.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Crie uma credencial só de leitura</h3><p>Ao escolher o provedor, a tela mostra a permissão mínima e o passo a passo para criar a credencial. Nunca use a chave de um usuário administrador.</p></div></li>
+          <li><div><h3>Abra “Nuvem” e escolha o provedor</h3><p>Dê um nome à conta e preencha os campos. Regiões, assinaturas, projetos ou namespaces definem o que pode ser lido.</p></div></li>
+          <li><div><h3>Salve e clique em “Testar conexão”</h3><p>Nesta versão, o teste confirma que a conta foi validada e salva. Quando o conector do provedor chegar, ele vai conferir o acesso na própria nuvem.</p></div></li>
+          <li><div><h3>Edite ou exclua quando precisar</h3><p>Em “Editar”, um segredo deixado em branco continua o atual. “Excluir” apaga a conta e os segredos dela do servidor.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-nuvem" data-screenshot="nuvem.webp">
+          <div class="placeholder-header"><span>Imagem 10</span><span>Nuvem / cadastro de contas</span></div>
+          <img src="assets/prints/nuvem.webp" alt="Tela Nuvem com o cadastro de uma conta da AWS e, ao lado, a permissão mínima e o passo a passo" width="1440" height="1050" loading="lazy" decoding="async">
+          <figcaption>Referência das etapas 1 a 3: escolher o provedor, preencher os campos e conferir a permissão mínima ao lado.</figcaption>
+        </figure>
+        <div class="table-scroll"><table><caption class="sr-only">Permissão mínima por provedor</caption><thead><tr><th scope="col">Provedor</th><th scope="col">Credencial só de leitura</th><th scope="col">Escopo</th></tr></thead><tbody>
+          <tr><td>AWS</td><td>Usuário que só pode assumir um papel com a política SecurityAudit, exigindo external ID.</td><td>Regiões</td></tr>
+          <tr><td>Azure</td><td>Aplicativo (service principal) com o papel Reader.</td><td>Assinaturas</td></tr>
+          <tr><td>Google Cloud</td><td>Conta de serviço com os papéis Viewer e Security Reviewer.</td><td>Projetos</td></tr>
+          <tr><td>Kubernetes</td><td>ServiceAccount com um ClusterRole de leitura em pods, nodes e namespaces.</td><td>Namespaces</td></tr>
+        </tbody></table></div>
+        <div class="callout warning"><span class="callout-tag">Segurança</span><div><h3>Os segredos ficam cifrados, mas no servidor</h3><p>As credenciais são cifradas com a chave do cofre e nunca voltam para a tela. Quem tem acesso de administrador ao servidor do DockScan consegue lê-las: cadastre só credenciais de leitura e, de preferência, com prazo de validade.</p></div></div>
+        <details class="disclosure"><summary>Por que meu kubeconfig foi recusado?</summary><div><p>Por segurança, o kubeconfig precisa trazer o token ou o certificado embutidos e a CA do cluster em <code>certificate-authority-data</code>. São recusados: autenticação por <code>exec</code> ou <code>auth-provider</code>, que rodaria um programa no servidor do DockScan; caminhos de arquivo, que leriam arquivos do servidor; <code>insecure-skip-tls-verify</code>; e endereços sem <code>https://</code>.</p></div></details>
+        <details class="disclosure"><summary>O que o DockScan vai procurar na nuvem?</summary><div><p>Portas de administração abertas para a internet (API do Docker, kubelet, etcd, API do Kubernetes, registry e SSH), regras que liberam todas as portas, registries públicos ou com usuário administrador, API do cluster aberta, cluster sem RBAC, máquinas que aceitam o serviço de metadados sem token e workloads privilegiados. Esses achados vão aparecer na tela Achados, e as contas, no Inventário.</p></div></details>
+      </section>
+
+      <section id="agendamentos" class="chapter" aria-labelledby="titulo-agendamentos" data-keywords="automático recorrente periodicidade intervalo diário agendamento scheduler agendador pausar retomar executar agora minutos">
+        <header class="chapter-header"><div><h2 id="titulo-agendamentos">Agende análises</h2><p>Repita uma análise em intervalos definidos e consulte o resultado de cada rodada no histórico.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Abra “Agendamentos” e dê um nome à rotina</h3><p>Defina o intervalo em minutos e a primeira execução. Para executar uma vez por dia, use 1440 minutos. A interface aceita de 5 a 10080 minutos.</p></div></li>
+          <li><div><h3>Preencha o alvo e a política</h3><p>Informe os IPs das máquinas e os critérios de falha. A seleção fica salva na rotina, e o acesso SSH usa as configurações da Frota.</p></div></li>
+          <li><div><h3>Clique em “Criar agendamento”</h3><p>A rotina aparece em “Scans agendados”. Use Executar agora para iniciar uma rodada manual, Pausar para interromper as próximas rodadas e Retomar para reativar. Excluir o agendamento preserva os scans anteriores.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-agendamentos" data-screenshot="agendamentos.webp">
+          <div class="placeholder-header"><span>Imagem 07</span><span>Agendamentos / nova rotina</span></div>
+          <img src="assets/prints/agendamentos.webp" alt="Agendamentos com uma rotina pausada e o formulário de nova rotina" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Referência das etapas 1 a 3: definir a rotina, informar o alvo e salvar o agendamento.</figcaption>
+        </figure>
+        <div class="callout"><span class="callout-tag">Como a rotina funciona</span><div><p>O agendamento repete a coleta nos IPs selecionados e identifica os dados atuais das máquinas. Adicionar outros IPs ao inventário não amplia o alvo de uma rotina já criada.</p></div></div>
+        <details class="disclosure"><summary>As análises continuam com a interface fechada?</summary><div><p>Fechar a aba do navegador não desliga o servidor. As rotinas continuam enquanto o servidor DockScan estiver rodando. Para executar com o servidor web desligado, mantenha o serviço independente abaixo ativo, usando o mesmo diretório de dados da sua instância.</p><div class="code-box"><pre><code>python -m dockscan agendador --data-dir ~/.dockscan</code></pre><button type="button" class="copy-button" data-copy hidden>Copiar</button></div><p>Sem o servidor e sem esse serviço, as rodadas não executam. Ao voltar, ocorre a rodada pendente, sem repetir todas as rodadas perdidas.</p></div></details>
+      </section>
+
+      <section id="relatorios" class="chapter" aria-labelledby="titulo-relatorios" data-keywords="exportação exportar baixar relatório compartilhar download html json sarif csv cyclonedx spdx sbom imprimir pdf">
+        <header class="chapter-header"><div><h2 id="titulo-relatorios">Exporte relatórios</h2><p>Escolha o formato conforme a finalidade: leitura, automação ou inventário de componentes.</p></div></header>
+        <div class="two-columns notes"><div><h3>Máquinas e containers</h3><ol class="compact-steps"><li>Abra uma análise concluída em Resultados.</li><li>No resumo, clique em HTML, JSON ou SARIF.</li><li>Se houver pacotes disponíveis, use CycloneDX ou SPDX para exportar o SBOM.</li></ol></div><div><h3>Scans de rede</h3><ol class="compact-steps"><li>Abra o resultado e procure “Exportar relatório”.</li><li>Escolha o formato, os hosts, as severidades e se deseja incluir evidências.</li><li>Para CSV, selecione a tabela desejada. Clique em “Exportar relatório” para baixar.</li></ol></div></div>
+        <figure class="screenshot-placeholder" id="print-relatorios" data-screenshot="relatorios.webp">
+          <div class="placeholder-header"><span>Imagem 08</span><span>Exportação de relatórios</span></div>
+          <img src="assets/prints/relatorios.webp" alt="Resultado de uma imagem com os botões de exportação HTML, JSON, SARIF, CycloneDX e SPDX" width="1440" height="700" loading="lazy" decoding="async">
+          <figcaption>Referência da exportação: localizar os formatos disponíveis e revisar os filtros antes de baixar.</figcaption>
+        </figure>
+        <div class="table-scroll"><table><caption class="sr-only">Formatos de relatório e suas finalidades</caption><thead><tr><th scope="col">Formato</th><th scope="col">Quando usar</th></tr></thead><tbody><tr><td class="mono">HTML</td><td>Relatório visual para abrir no navegador e compartilhar.</td></tr><tr><td class="mono">JSON</td><td>Dados estruturados para integrações e processamento.</td></tr><tr><td class="mono">SARIF</td><td>Achados em formato de análise estática para ferramentas compatíveis.</td></tr><tr><td class="mono">CSV</td><td>Tabelas de rede e o resultado de uma consulta da tela Achados, para abrir em planilhas.</td></tr><tr><td class="mono">CycloneDX / SPDX</td><td>Inventário de componentes em scans que possuem dados de pacotes.</td></tr></tbody></table></div>
+        <p class="muted">Os filtros da lista de achados ajudam a navegar na interface. Na exportação de rede, revise os filtros do próprio formulário “Exportar relatório” para definir o conteúdo do arquivo.</p>
+      </section>
+
+      <section id="desenvolvimento" class="chapter" aria-labelledby="titulo-desenvolvimento" data-keywords="em desenvolvimento roadmap próximos passos novidades futuro versão planejado jira notificações nuvem aws tags triagem estados rpm">
+        <header class="chapter-header"><div><h2 id="titulo-desenvolvimento">Em desenvolvimento</h2><p>O DockScan é uma ferramenta em desenvolvimento. Telas e nomes podem mudar entre versões. Este capítulo mostra o que chegou há pouco e o que vem a seguir.</p></div></header>
+        <div class="two-columns notes"><div><h3>Chegou nesta versão</h3><ol class="compact-steps">
+          <li><a href="#achados">Achados</a>: todos os achados numa tela, com consulta parecida com SQL, sugestões de campo, operador e valor, agrupamento e exportação.</li>
+          <li><a href="#nuvem">Nuvem</a>: cadastro de contas da AWS, do Azure, do Google Cloud e de clusters Kubernetes, com os segredos cifrados.</li>
+          <li>Resultados com nomes claros: “Falhou” e “Passou” para a política; “Erro na análise” aparece diferente, porque é uma falha técnica.</li>
+          <li>Interface em português, inclusive o menu e as telas de Rede.</li>
+          <li>Visual mais limpo: resumos em faixa, listas sem caixas repetidas e identificadores na fonte do texto.</li>
+        </ol></div><div><h3>Próximas etapas</h3><ol class="compact-steps">
+          <li>Estado de cada achado pelo histórico: novo, ativo, corrigido ou reapareceu.</li>
+          <li>Triagem com prazo para qualquer achado: revisado, falso positivo ou risco aceito até uma data.</li>
+          <li>Tags no formato categoria:valor, manuais ou automáticas, visões salvas e ações em lote nos achados.</li>
+          <li>Leitura da nuvem, começando pela AWS (máquinas, regras de firewall, registries e clusters), depois Azure, Google Cloud e Kubernetes.</li>
+          <li>Integrações e notificações: abrir tickets no Jira e avisar a equipe quando surgir um achado importante.</li>
+          <li>Mais cobertura nas máquinas: pacotes RPM (Red Hat, Rocky, Alma e Amazon Linux) e o motivo do resultado para binários Go e bibliotecas Java.</li>
+        </ol></div></div>
+        <div class="callout"><span class="callout-tag">Sobre as versões</span><div><p>Um recurso pode chegar em partes: na Nuvem, por exemplo, o cadastro das contas vem antes da leitura. O manual é atualizado a cada etapa, junto com a ferramenta.</p></div></div>
+      </section>
+
+      <section id="ajuda" class="chapter" aria-labelledby="titulo-ajuda" data-keywords="erro falha problemas nenhum achado vazio limite upload conexão indisponível ajuda suporte dúvidas pergunta faq">
+        <header class="chapter-header"><div><h2 id="titulo-ajuda">Dúvidas frequentes</h2><p>Confira o estado da análise antes de interpretar o resultado.</p></div></header>
+        <details class="disclosure"><summary>O scan não retornou nenhum achado. Está tudo seguro?</summary><div><p>Confira se a análise terminou, se não há filtros escondendo itens e se aparecem avisos de falha ou coleta incompleta. Verifique também se a consulta de CVEs foi desativada e se há entradas na allowlist. Nenhum achado significa que aquela execução não reportou itens dentro da cobertura realizada.</p></div></details>
+        <details class="disclosure"><summary>Um IP não foi aceito</summary><div><p>Informe o endereço IPv4 ou IPv6 da máquina, sem nome DNS, usuário, porta ou faixa. Se houver uma porta SSH diferente, configure-a no inventário da Frota.</p></div></details>
+        <details class="disclosure"><summary>Não foi possível conectar à máquina</summary><div><p>Confira se o servidor DockScan alcança o IP, se o SSH está disponível e se a credencial do cofre cobre esse endereço. Leia o erro e os avisos do scan para identificar as partes da coleta que falharam.</p></div></details>
+        <details class="disclosure"><summary>Um host da frota falhou</summary><div><p>Confira endereço, usuário, porta e caminho da chave no inventário. O acesso SSH e a consulta ao Docker precisam funcionar a partir da máquina do servidor. Leia os avisos por host; uma falha de acesso pode impedir a coleta daquele alvo.</p></div></details>
+        <details class="disclosure"><summary>A varredura de rede rejeitou meu alvo</summary><div><p>Confira se informou um IP, intervalo ou CIDR e se ele está dentro de “Escopos de rede autorizados”. Hostnames e URLs não são entradas desse campo. Verifique também exclusões e limites de hosts. Ajuste as configurações globais quando não houver scans ativos.</p></div></details>
+        <details class="disclosure"><summary>Não apareceram itens novos na comparação</summary><div><p>Confirme se existe uma referência anterior compatível e se a comparação foi ativada. Use os mesmos IPs e as mesmas opções de cobertura. Revise os avisos de cobertura, a allowlist e o filtro “Somente novos”. Na primeira execução, não há baseline para identificar novidades.</p></div></details>
+        <div class="closing"><img src="assets/logo.svg" alt="" width="96" height="42" loading="lazy"><div><h3>Pronto para o próximo scan?</h3><p>Escolha o alvo, revise a política e acompanhe a evolução.</p></div><a class="button" href="#primeiro-scan">Voltar ao passo a passo</a></div>
+      </section>
+      </div>
+      <footer class="page-footer"><div class="footer-credits"><span>DockScan · Manual de uso</span><p>Ferramenta em desenvolvimento.</p></div><span>Instruções em revisão</span><a class="back-to-top" href="#inicio">Voltar ao início</a></footer>
+    </main>
+  </div>
+
+  <div id="copy-status" class="sr-only" role="status"></div>
+</body>
+</html>
