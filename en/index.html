@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
+  <script src="../tema.js"></script>
+  <meta name="description" content="DockScan user manual. Learn how to scan machines and containers by IP, investigate networks and track fixes.">
+  <title>User manual · DockScan</title>
+  <link rel="alternate" hreflang="pt-BR" href="../index.html">
+  <link rel="alternate" hreflang="en" href="../en/index.html">
+  <link rel="alternate" hreflang="es" href="../es/index.html">
+  <link rel="alternate" hreflang="fr" href="../fr/index.html">
+  <link rel="alternate" hreflang="de" href="../de/index.html">
+  <link rel="alternate" hreflang="ja" href="../ja/index.html">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/barlow-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../manual.css">
+  <script src="../manual.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Skip to content</a>
+  <header class="mobile-header">
+    <a class="brand" href="#inicio" aria-label="DockScan, manual home"><img src="../assets/logo.svg" alt="" width="66" height="30"><span>dock<span>scan</span></span></a>
+    <button class="button" id="menu-toggle" type="button" aria-expanded="false" aria-controls="sidebar" hidden>Chapters</button>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#inicio" aria-label="DockScan, manual home"><img src="../assets/logo.svg" alt="" width="80" height="36"><span>dock<span>scan</span></span></a>
+    <p class="sidebar-label">Documentation</p>
+    <div class="search" id="search-control" hidden>
+      <label for="busca">Search this tab</label>
+      <div class="search-field"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg><input id="busca" type="search" name="busca" placeholder="E.g.: image, export…" autocomplete="off"></div>
+      <p id="busca-status" class="sr-only" role="status"></p>
+    </div>
+    <nav aria-label="Manual chapters" id="chapters">
+      <a href="#inicio" aria-current="location">Before you start</a>
+      <a href="#como-usar">How to use</a>
+      <a href="#primeiro-scan">Your first scan</a>
+      <a href="#resultados">Understand the results</a>
+      <a href="#achados">Query the findings</a>
+      <a href="#comparacao">Track fixes</a>
+      <a href="#frota">Scan your fleet</a>
+      <a href="#rede">Explore the network</a>
+      <a href="#nuvem">Connect the cloud</a>
+      <a href="#agendamentos">Schedule scans</a>
+      <a href="#relatorios">Export reports</a>
+      <a href="#contas">Accounts and access</a>
+      <a href="#desenvolvimento">In development</a>
+      <a href="#ajuda">Frequently asked questions</a>
+    </nav>
+    <div class="sidebar-footer">Web interface guide<p>User manual</p><a href="#primeiro-scan">Open the step-by-step guide</a></div>
+  </aside>
+
+  <div class="page">
+    <div class="topbar"><p>Documentation <span aria-hidden="true">/</span> User manual</p><div class="topbar-actions"><details class="lang-menu"><summary class="button small"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.5 2.8 3.8 5.8 3.8 9s-1.3 6.2-3.8 9c-2.5-2.8-3.8-5.8-3.8-9S9.5 5.8 12 3Z"></path></svg><span class="sr-only">Language: </span>English</summary><ul><li><a href="../index.html" hreflang="pt-BR" lang="pt-BR" data-idioma>Português</a></li><li><a href="../en/index.html" hreflang="en" lang="en" data-idioma aria-current="page">English</a></li><li><a href="../es/index.html" hreflang="es" lang="es" data-idioma>Español</a></li><li><a href="../fr/index.html" hreflang="fr" lang="fr" data-idioma>Français</a></li><li><a href="../de/index.html" hreflang="de" lang="de" data-idioma>Deutsch</a></li><li><a href="../ja/index.html" hreflang="ja" lang="ja" data-idioma>日本語</a></li></ul></details><button class="button small theme-toggle" id="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false" title="Turn on dark theme" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"></path></svg><span>Dark theme</span></button><button class="button small" id="print-manual" type="button" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7z"></path></svg>Save as PDF</button></div></div>
+    <main id="conteudo" tabindex="-1">
+      <nav class="manual-tabs" id="manual-tabs" aria-label="Manual sections">
+        <a id="aba-visao-geral" href="#inicio" data-panel="painel-visao-geral">Overview</a>
+        <a id="aba-como-usar" href="#como-usar" data-panel="painel-como-usar">How to use</a>
+      </nav>
+      <p id="sem-resultados" class="empty-state" hidden>No step found. Try “scan”, “network”, “fleet” or “report”. <button class="text-button" id="limpar-busca" type="button">Clear search</button></p>
+
+      <div id="painel-visao-geral" data-manual-panel>
+      <section id="inicio" class="chapter intro" aria-labelledby="titulo-inicio" data-keywords="começar painel acesso interface instalação abrir overview dashboard start getting started access installation install open">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="intro-label">DockScan manual</p>
+            <h1 id="titulo-inicio">Learn how to use<br>DockScan.</h1>
+            <p class="lead">From your first scan to reading the results. Find the features you need and go through each step at your own pace.</p>
+            <div class="hero-actions"><a class="button primary" href="#primeiro-scan">Start my first scan</a><a class="text-link" href="#como-usar">Explore the features</a></div>
+            <p class="hero-note">Machines, containers and networks. Tool under development.</p>
+          </div>
+          <div class="hero-preview">
+        <figure class="screenshot-placeholder" id="print-painel" data-screenshot="painel.webp">
+          <div class="placeholder-header"><span>Image 01</span><span>Painel (Dashboard)</span></div>
+          <img src="../assets/prints/painel.webp" alt="The DockScan Painel (Dashboard), with the severity summary, the recent scans and the most urgent findings" width="1440" height="900" decoding="async">
+          <figcaption>Step reference: use “Novo scan” (New scan) to start, or open a scan under “Scans recentes” (Recent scans).</figcaption>
+        </figure>
+          </div>
+        </div>
+        <div class="start-paths" aria-label="Choose your starting point">
+          <a href="#primeiro-scan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6m-6 4h6"></path></svg><span>Scan machines by IP<small>System and containers over SSH</small></span></a>
+          <a href="#rede"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="16" y="16" width="6" height="6" rx="1"></rect><path d="M12 8v5M5 16v-3h14v3"></path></svg><span>Explore a network<small>Hosts, ports and services</small></span></a>
+          <a href="#resultados"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v16h16M8 15v-4m5 4V7m5 8v-6"></path></svg><span>Understand a result<small>Findings, evidence and fixes</small></span></a>
+        </div>
+        <div class="overview-panel-note"><h2>Your starting point is the Painel</h2><p>Once access is set up, open the interface. The Painel brings together the latest findings for each target, the recent scans and the items that need attention.</p></div>
+        <div class="two-columns notes"><div><h3>Opening the local interface?</h3><p>With DockScan installed, run the command below and open the address shown in the terminal. The default local address is <code>http://127.0.0.1:8443</code>.</p><div class="code-box"><pre><code>python -m dockscan ui</code></pre><button type="button" class="copy-button" data-copy hidden>Copy</button></div></div><div><h3>How to use this manual</h3><p>Follow the chapters in order or use the table of contents to jump straight to your task. You can follow the instructions without the images.</p><p class="muted">The screens come from the DockScan lab, with demo data. The guide starts once you have access to the interface. To sign in, change your password and manage your team's accounts, see <a href="#contas">Accounts and access</a>.</p><p class="muted">DockScan is under development: see <a href="#desenvolvimento">what has arrived and what is coming next</a>.</p></div></div>
+      </section>
+
+      </div>
+      <div id="painel-como-usar" data-manual-panel>
+      <section id="como-usar" class="chapter usage-guide" aria-labelledby="titulo-como-usar" data-keywords="tutorial como usar funções recursos menu botões passo a passo auditoria configurações allowlist baselines rede achados nuvem perfis how to use features functions buttons step by step audit settings network findings cloud profiles">
+        <header class="chapter-header"><div><h2 id="titulo-como-usar">How to use</h2><p>See the path a scan follows and what each feature of the interface is for. The following chapters go through the steps in detail, with the screen for each one.</p></div></header>
+        <h3 class="subheading">The complete flow, step by step</h3>
+        <ol class="steps">
+          <li><div><h3>Choose the target</h3><p>Open <a href="#primeiro-scan">Novo scan</a> (New scan) to enter the machine IPs. For IPs, ports and services, follow the <a href="#rede">network tutorial</a>.</p></div></li>
+          <li><div><h3>Fill in the input and the policy</h3><p>Enter the IP addresses and set up SSH access in Frota (Fleet). Set the severity that should fail the scan and choose whether to compare it with a previous scan.</p></div></li>
+          <li><div><h3>Start and follow the scan</h3><p>Click “Iniciar varredura por IP” (Start IP scan) or, for a network, “Iniciar varredura” (Start scan). Wait for it to finish and check any error messages and coverage warnings.</p></div></li>
+          <li><div><h3>Investigate the findings</h3><p>In <a href="#resultados">Resultados</a> (Results), filter the items and read the location, details and recommendation. The “Passou” (Passed) and “Falhou” (Failed) states refer to the configured policy.</p></div></li>
+          <li><div><h3>Fix and scan again</h3><p>Change the target and run another compatible scan. Use <a href="#comparacao">Comparar scans</a> (Compare scans) to check which items are new, which persist and which are no longer reported.</p></div></li>
+          <li><div><h3>Keep the result and set up a routine</h3><p><a href="#relatorios">Export the report</a> in the format you need. To repeat the scan, set up a <a href="#agendamentos">schedule</a>.</p></div></li>
+        </ol>
+
+        <h3 class="subheading">What each menu item does</h3>
+        <div class="function-list">
+          <details class="function-item"><summary>Painel (Dashboard)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Shows the latest findings per target, the recent scans and the urgent items.</p><p class="function-instruction">Check the summary and open a scan under “Scans recentes” (Recent scans). Click a severity count, or “Ver em Achados” (View in Findings), to open those findings already filtered. <a href="#inicio">See guidance</a>.</p></div></details>
+          <details class="function-item"><summary>Novo scan (New scan)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Scans the system and the containers of the machines you select by IP.</p><p class="function-instruction">Enter the IPs, review the policy and start. <a href="#primeiro-scan">See the steps</a>.</p></div></details>
+          <details class="function-item"><summary>Resultados (Results)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Keeps the history and lets you investigate the findings of each scan.</p><p class="function-instruction">Find the scan, open the result, apply filters and read the details. <a href="#resultados">See the steps</a>.</p></div></details>
+          <details class="function-item"><summary>Achados (Findings)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Brings together in one table the findings from the latest scan of each target, with an SQL-like query, the state of each finding over its history, triage with deadlines, tags and saved views.</p><p class="function-instruction">Click the query box, choose a field, an operator and values, and run the query. <a href="#achados">See the steps</a>.</p></div></details>
+          <details class="function-item"><summary>Inventário (Inventory)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Gathers the machines, containers and services from your scans on a map and in a list. Machines discovered in the cloud come in by IP, together with those from the fleet and the network.</p><p class="function-instruction">Click a machine to expand its items, select a resource to see its details and use the filters to find an IP or service.</p><p>The map reads the saved data. Historical states and dates help you spot old or incomplete collections. The ranges are visual groupings of the IPs.</p></div></details>
+          <details class="function-item"><summary>Frota (Fleet)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Saves the inventory of hosts whose containers will be scanned.</p><p class="function-instruction">Add the hosts, save and use “Configurar varredura” (Configure scan). <a href="#frota">See the steps</a>.</p></div></details>
+          <details class="function-item"><summary>Nuvem (Cloud)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Registers cloud accounts and Kubernetes clusters with read-only credentials. AWS can already be read; the other providers arrive in upcoming stages.</p><p class="function-instruction">Choose the provider, fill in the fields, test the connection and use “Descobrir agora” (Discover now). <a href="#nuvem">See the steps</a>.</p></div></details>
+          <details class="function-item"><summary>Buscar CVE (Search CVE)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Checks for a CVE or GHSA live on the IPs you enter, with a fresh collection over SSH.</p><p class="function-instruction"><a href="#guia-cve">See the investigation steps</a>.</p></div></details>
+          <details class="function-item"><summary>Allowlist<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Suppresses findings you have already assessed from upcoming scans and from the policy evaluation.</p><p class="function-instruction">Enter one entry per line, review its scope and save. <a href="#funcao-allowlist">See the steps</a>.</p></div></details>
+          <details class="function-item"><summary>Rede (Network)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Brings together network scanning, hosts, services, Docker exposure, registries, TLS certificates and network findings.</p><p class="function-instruction">Start with “Varrer a rede” (Scan the network) and investigate the results on the module's screens. <a href="#rede">See the steps</a>.</p></div></details>
+          <details class="function-item"><summary>Agendamentos (Schedules)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Repeats scans with a saved interval and input.</p><p class="function-instruction">Set the name, type, interval, time, target and policy. <a href="#agendamentos">See the steps</a>.</p></div></details>
+          <details class="function-item"><summary>Baselines<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Compares compatible scans and shows how the findings changed.</p><p class="function-instruction">Select the current scan and the reference, and review the groups. <a href="#comparacao">See the steps</a>.</p></div></details>
+          <details class="function-item"><summary>Auditoria (Audit)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Lets you look up the access and operation records of the interface.</p><p class="function-instruction">Open the menu and search by user, action, target or result. <a href="#funcao-auditoria">See the steps</a>.</p></div></details>
+          <details class="function-item"><summary>Configurações (Settings)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Shows instance information, upload limits and network options.</p><p class="function-instruction">Check the connection and adjust the scope and the network options. <a href="#funcao-configuracoes">See the steps</a>.</p></div></details>
+        </div>
+
+        <h3 class="subheading">The Rede screens</h3>
+        <div class="function-list">
+          <details class="function-item"><summary>Painel de rede (Network dashboard)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Summarizes the selected scans. Choose the scans and filter by IP or severity to see the indicators.</p></div></details>
+          <details class="function-item"><summary>Varrer a rede (Scan the network)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Creates a scan. Enter the authorized targets, review the profile, ports and modules, and click “Iniciar varredura”.</p></div></details>
+          <details class="function-item"><summary>Hosts<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Organizes the observations by host. Select a scan and open a host to investigate its ports, services and evidence.</p></div></details>
+          <details class="function-item"><summary>Serviços (Services)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Lists the services identified. Select the scan, filter the list and check the observed data.</p></div></details>
+          <details class="function-item"><summary>Exposição do Docker (Docker exposure)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Gathers the observations of Docker APIs. Check the exposure evidence and the related findings.</p></div></details>
+          <details class="function-item"><summary>Registries<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Gathers the data observed in registries. Choose the scan and look up the records and their evidence.</p></div></details>
+          <details class="function-item"><summary>Certificados TLS (TLS certificates)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Lets you investigate the TLS observations. Check the certificate data and the issues reported in the scan.</p></div></details>
+          <details class="function-item"><summary>Achados de rede (Network findings)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Gathers the network findings. Filter by target, port, service or severity; open an item and record the triage with a comment.</p></div></details>
+          <details class="function-item"><summary>Em andamento (In progress)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Shows the progress of active scans. Open the live results or use the pause, resume and stop controls.</p></div></details>
+          <details class="function-item"><summary>Histórico (History)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Lets you find previous scans. Filter the history and use the actions to open, repeat, compare, export or delete a scan.</p></div></details>
+          <details class="function-item"><summary>Comparar varreduras (Compare scans)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Compares the coverage and observations of two scans. Choose the scans and also review the items without comparable coverage.</p></div></details>
+          <details class="function-item"><summary>Perfis (Profiles)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Saves combinations of ports, discovery and audits. Create a profile or duplicate an existing one, adjust the fields and save.</p></div></details>
+        </div>
+
+        <details class="disclosure" id="funcao-allowlist"><summary>Allowlist: how to add an exception</summary><div><ol class="compact-steps"><li>Open “Allowlist” in the menu.</li><li>Enter one rule, package location or identifier per line. Use lines starting with <code>#</code> for comments.</li><li>Review the entry and click “Salvar allowlist” (Save allowlist).</li><li>Run a new scan to apply the change. Earlier history stays as it was.</li></ol><p>A package entry can suppress several vulnerabilities. Check the scope of the exception before saving.</p></div></details>
+        <details class="disclosure" id="funcao-auditoria"><summary>Auditoria: how to find an activity</summary><div><ol class="compact-steps"><li>Open “Auditoria” in the menu.</li><li>Fill in “Buscar atividade” (Search activity) with a user, action, target or result.</li><li>Check the date, user, action, target, IP and result of the activity found.</li><li>Clear the search to go back to the available list.</li></ol></div></details>
+        <details class="disclosure" id="funcao-configuracoes"><summary>Configurações: what to check and how to adjust the network</summary><div><ol class="compact-steps"><li>Open “Configurações” to see the version, the connection and the upload limits.</li><li>In “Configurações de rede” (Network settings), review the authorized scopes, the exclusions and the scan limits.</li><li>Also check the report format, the evidence and the interface preferences.</li><li>Click “Salvar configurações de rede” (Save network settings). Changes to the scope and to global limits require that no scans are running.</li></ol><p>Review the confirmation before reducing retention: this change can delete old network scans and their reports.</p></div></details>
+        <details class="disclosure"><summary>Achados de rede: how to record triage</summary><div><ol class="compact-steps"><li>Open “Rede → Achados de rede”.</li><li>Find the finding using the filters and open its details.</li><li>Read the evidence and write the reason in “Comentário de triagem” (Triage comment).</li><li>Choose the action: revisado (reviewed), falso positivo (false positive) or risco aceito (accepted risk). Use “Reabrir” (Reopen) to reopen a finding.</li></ol><p>Triage records your assessment of the item. Check the evidence and the coverage of the scan before deciding its state.</p></div></details>
+        <div class="callout"><span class="callout-tag">Manual images</span><div><p>The screens for each step come from the DockScan lab, with demo data. Screens and names may change while the tool is under development.</p></div></div>
+      </section>
+
+      <section id="primeiro-scan" class="chapter" aria-labelledby="titulo-primeiro" data-keywords="ip ipv4 ipv6 ssh máquina containers novo scan política kev epss cofre machine new scan first scan policy vault">
+        <header class="chapter-header"><div><h2 id="titulo-primeiro">Your first IP scan</h2><p>Enter the machines' addresses. DockScan collects the data over SSH and automatically identifies the installed packages.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Set up SSH access</h3><p>In Frota (Fleet), add a credential to the vault with the scope of allowed IPs, or set up an SSH key in the inventory.</p></div></li>
+          <li><div><h3>Open “Novo scan” (New scan) and enter the IPs</h3><p>Type one IP per line or separate them with commas. The inventory buttons add IPs that are already registered. The selection can include IPv4 and IPv6.</p></div></li>
+          <li><div><h3>Set the scan policy</h3><p>Choose the minimum severity that fails the scan and the options for CVEs, KEV and EPSS. Leave comparison checked to track changes on the same IPs.</p></div></li>
+          <li><div><h3>Click “Iniciar varredura por IP” (Start IP scan)</h3><p>The result updates automatically. The collection uses only the IPs you entered, even if there are other machines in the inventory.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-novo-scan" data-screenshot="novo-scan.webp">
+          <div class="placeholder-header"><span>Image 02</span><span>Novo scan / machine IPs</span></div>
+          <img src="../assets/prints/novo-scan.webp" alt="Novo scan (New scan) with the machine IPs and the scan policy" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Reference for steps 1 to 4: fill in the target, review the policy and start the scan.</figcaption>
+        </figure>
+        <div class="callout"><span class="callout-tag">How the data is obtained</span><div><p>Package names and versions are discovered on the machine itself. You don't need to enter or upload any package to start the scan. The remote commands only read data, without installing an agent.</p></div></div>
+        <div class="table-scroll"><table><caption class="sr-only">Scans available by IP</caption><thead><tr><th scope="col">Goal</th><th scope="col">Where to open it</th><th scope="col">Target</th></tr></thead><tbody>
+          <tr><td>Audit the system and the containers</td><td>Novo scan</td><td>Machine IPs, with SSH access.</td></tr>
+          <tr><td>Investigate a specific vulnerability</td><td>Buscar CVE (Search CVE)</td><td>Machine IPs and a CVE or GHSA identifier.</td></tr>
+          <tr><td>Identify ports and services</td><td>Rede → Varrer a rede (Network → Scan the network)</td><td>IPs or ranges authorized in the network scope.</td></tr>
+        </tbody></table></div>
+        <details class="disclosure"><summary>What does the scan collect?</summary><div><p>It reads the system packages and configuration, the containers and the available data about processes and ports. The result reports access failures and any parts of the collection that were left incomplete.</p><p>“Pular consulta de CVEs” (Skip CVE lookup) turns off the vulnerability lookup. “Pular KEV e EPSS” (Skip KEV and EPSS) turns off that enrichment. Having no findings in an incomplete collection does not rule out vulnerabilities.</p></div></details>
+      </section>
+
+      <section id="resultados" class="chapter" aria-labelledby="titulo-resultados" data-keywords="achado severidade crítica alta média baixa info risco falhou passou filtros cve kev epss detalhe recomendação resultado vulnerabilidades pacotes finding severity critical high medium low risk failed passed filters detail details recommendation result results vulnerabilities packages">
+        <header class="chapter-header"><div><h2 id="titulo-resultados">Understand the results</h2><p>The result shows what was found, where the problem is and what the recommended next step is.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Check the state and the warnings</h3><p>Open the scan from the Painel (Dashboard) or from Resultados (Results). See whether it finished, whether there was an error and which limits or lookups affected the coverage.</p></div></li>
+          <li><div><h3>Filter what you need to investigate</h3><p>Use Severidade (Severity) and Buscar achado (Search finding) to find a rule, package, CVE or location. Under Exibir (Show), switch between “Pacotes e regras” (Packages and rules) and “Vulnerabilidades individuais” (Individual vulnerabilities).</p></div></li>
+          <li><div><h3>Open the details and read the recommendation</h3><p>Each item shows its severity, rule identifier and location. Use Ver detalhes (View details) to see the evidence and plan the fix. When available, KEV and EPSS help you prioritize.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-resultados" data-screenshot="resultado.webp">
+          <div class="placeholder-header"><span>Image 03</span><span>Resultado / filters and findings</span></div>
+          <img src="../assets/prints/resultado.webp" alt="Result of a scan that failed the policy, with the severity summary and the findings" width="1440" height="1150" loading="lazy" decoding="async">
+          <figcaption>Reference for steps 1 to 3: check the state, filter the items and read the recommendation.</figcaption>
+        </figure>
+        <div class="callout warning"><span class="callout-tag">About the policy</span><div><h3>“Passou” (Passed) can appear even when there are findings</h3><p>The state tells you whether the threshold of the chosen policy was reached. A scan whose findings are all below the configured threshold can pass. Check the policy, the warnings and the coverage before concluding that the target is safe.</p></div></div>
+        <div class="severity-key" aria-label="Severities"><span class="critical">Crítica (Critical)</span><span class="high">Alta (High)</span><span class="medium">Média (Medium)</span><span class="low">Baixa (Low)</span><span class="info">Info</span></div>
+        <p class="muted">A package finding can group several vulnerabilities. The individual view helps you check each identifier without confusing the number of packages with the number of vulnerabilities.</p>
+        <details class="disclosure"><summary>What is the difference between “Falhou” (Failed) and “Erro na análise” (Scan error)?</summary><div><p>“Falhou” and “Passou” are the result of the policy: the scan finished, and some finding did or did not reach the configured threshold. “Erro na análise” is a technical failure: the collection did not finish. It is shown with a red dotted underline so it is not confused with “Falhou”. “Incompleto” (Incomplete) means part of the coverage is missing.</p></div></details>
+      </section>
+
+      <section id="achados" class="chapter" aria-labelledby="titulo-achados" data-keywords="achados consulta sql filtro campos operadores severidade kev epss pacote cve ip fonte agrupar exportar csv json link compartilhar sugestões estado novo corrigido reapareceu triagem prazo risco aceito falso positivo lote tags visões salvas plano de correção ordenar terminal findings query filter fields operators severity package source group export share suggestions state new fixed reappeared triage deadline accepted risk false positive bulk saved views remediation plan sort side panel details description references osv cvss cwe history other assets">
+        <header class="chapter-header"><div><h2 id="titulo-achados">Query the findings</h2><p>The Achados (Findings) screen brings together in a single table the findings from the latest scan of each target, from every source. An SQL-like query finds what you need.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Open “Achados” in the menu</h3><p>The table starts with all findings, from most to least urgent: first the actively exploited ones (KEV), then by severity and by likelihood of exploitation (EPSS).</p></div></li>
+          <li><div><h3>Click the query box and choose a field</h3><p>The list shows the fields. Hover over a field to open its options next to it: choose the operator, check one or more values and click “Adicionar à consulta” (Add to query). The suggested values come from your own findings, with the count for each one.</p></div></li>
+          <li><div><h3>Combine conditions and run the query</h3><p>Once you have a query, click the box again to continue with “e” (and), “ou” (or) or “ordenar por” (order by), or use “Adicionar outro filtro” (Add another filter). Then click “Consultar” (Query) or press Enter. If you already know the language, you can type the query directly.</p></div></li>
+          <li><div><h3>Group, sort, share and export</h3><p>In “Agrupar por” (Group by), view the findings by asset, vulnerability, package, source, state or tag; click a group to filter just that group. Click a column header to sort. The query is kept in the page address, so you can share the link. “Exportar CSV” (Export CSV) and “Exportar JSON” (Export JSON) export the query result.</p></div></li>
+          <li><div><h3>Open the details of a finding</h3><p>Click the identifier, such as CVE-2023-44487, or anywhere in the Achado (Finding) column. A panel opens on the right with CVSS, EPSS, active exploitation, where the finding is, how to fix it, the OSV description and references, the other assets with the same vulnerability and the collection history of the asset. From there you can triage it and move to the previous or next finding in the query; Esc or “Fechar” (Close) takes you back to the table.</p></div></li>
+          <li><div><h3>Triage the findings</h3><p>Select the findings in the first column. In the bar that appears, choose Revisado (Reviewed), Falso positivo (False positive), Risco aceito (Accepted risk) or Reabrir (Reopen), enter the deadline, if there is one, and the reason, and click “Aplicar triagem” (Apply triage). Falso positivo and Risco aceito require a reason; everything is recorded in Auditoria (Audit).</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-achados" data-screenshot="achados.webp">
+          <div class="placeholder-header"><span>Image 09</span><span>Achados / query and field options</span></div>
+          <img src="../assets/prints/achados.webp" alt="Achados (Findings) screen with the suggestion list open and, beside it, the options for the pacote field with some values checked" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Reference for steps 2 and 3: the suggestion list on the left and, beside it, the operator and the values for the chosen field.</figcaption>
+        </figure>
+        <figure class="screenshot-placeholder" id="print-achados-painel" data-screenshot="achados-painel.webp">
+          <div class="placeholder-header"><span>Image 12</span><span>Achados / finding panel</span></div>
+          <img src="../assets/prints/achados-painel.webp" alt="Side panel of an actively exploited finding, with CVSS, EPSS, active exploitation, state and where it is, over the query" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Reference for step 5: the panel opens over the query, which stays on the left.</figcaption>
+        </figure>
+        <div class="code-box labeled"><span class="code-label">Query examples</span><pre><code>severidade &gt;= alta e corrigivel
+pacote ~ openssl e (fonte = maquina ou fonte = container)
+cve em (CVE-2022-37434, CVE-2024-3094)
+ip em 172.30.0.0/24 e visto_em &gt; -7d
+"nginx" ordenar por epss desc
+estado = novo e severidade &gt;= alta
+triagem = risco_aceito ordenar por prazo asc
+tag = ambiente:producao</code></pre><button class="copy-button" type="button" data-copy hidden>Copy</button></div>
+        <div class="table-scroll"><table><caption class="sr-only">Query operators</caption><thead><tr><th scope="col">Operator</th><th scope="col">Meaning</th></tr></thead><tbody>
+          <tr><td class="mono">= and !=</td><td>Equal to or not equal to. Both accept <code>*</code> as a wildcard, as in <code>versao = 1.2.*</code>.</td></tr>
+          <tr><td class="mono">&gt; &gt;= &lt; &lt;=</td><td>Greater than or less than, for severity, EPSS, port and date.</td></tr>
+          <tr><td class="mono">~ and !~</td><td>Contains or does not contain the text.</td></tr>
+          <tr><td class="mono">em (a, b)</td><td>Is in the list. For IP, it accepts a range: <code>ip em 10.0.0.0/24</code>.</td></tr>
+          <tr><td class="mono">existe</td><td>The field has a value.</td></tr>
+          <tr><td class="mono">e, ou, não, ( )</td><td>Combine and group conditions. You can also use and, or, not and in.</td></tr>
+        </tbody></table></div>
+        <div class="callout"><span class="callout-tag">Where the findings come from</span><div><p>The table uses the latest completed scan of each target. In the fleet, each machine counts separately: if a machine was unreachable in the newest scan, its last good collection is used. CVE searches are not included, because the same packages already show up through the fleet.</p><p>Fixed findings, false positives and accepted risks stay out of the table until the query mentions them. The summary says how many are hidden and has a shortcut to show them.</p></div></div>
+        <div class="table-scroll"><table><caption class="sr-only">States of a finding over its history</caption><thead><tr><th scope="col">State</th><th scope="col">When it appears</th></tr></thead><tbody>
+          <tr><td>Novo (New)</td><td>The finding had never appeared on this target before.</td></tr>
+          <tr><td>Ativo (Active)</td><td>It has been present since the previous collection.</td></tr>
+          <tr><td>Reapareceu (Reappeared)</td><td>It had disappeared in a complete collection and came back.</td></tr>
+          <tr><td>Corrigido (Fixed)</td><td>It stopped appearing in a complete collection. A partial collection does not prove the fix: the finding stays active, with the partial collection warning. A warning such as “regras do sudo não verificadas” (sudo rules not checked) only marks as partial the findings that depend on it.</td></tr>
+        </tbody></table></div>
+        <details class="disclosure"><summary>Where does the data in the finding panel come from?</summary><div><p>CVSS, EPSS, active exploitation, package and fix come from the scan. The description, dates, weakness (CWE) and references come from OSV: the DockScan server fetches them when you open the panel and keeps them for a day. Without internet, the panel shows everything else and says that OSV did not respond.</p><p>The history shows the latest collections of the asset: Encontrado (Found), Não encontrado (Not found) or Coleta parcial (Partial collection), when the absence does not prove the fix. The page address gets <code>?achado=</code>, so the link opens straight on the same finding.</p></div></details>
+        <details class="disclosure"><summary>Which fields can I query?</summary><div><p>severidade (severity), cve, regra (rule), titulo (title), pacote (package), versao (version), ecossistema (ecosystem), correcao (fix), corrigivel (fixable), fonte (source), ativo (asset), ip, porta (port), container, local (location), epss, kev, novo (new), visto_em (seen at), estado (state), triagem (triage), primeiro_visto (first seen), corrigido_em (fixed at), prazo (deadline), tag and scan. The “Como consultar” (How to query) help on the screen itself describes each one.</p><p>A yes/no field on its own means “sim” (yes): <code>kev</code> is the same as <code>kev = sim</code>. Dates accept <code>2026-11-01</code>, <code>-7d</code>, <code>+30d</code>, <code>-24h</code>, <code>hoje</code> (today) and <code>ontem</code> (yesterday). EPSS accepts <code>0.1</code> or <code>10%</code>.</p></div></details>
+        <details class="disclosure"><summary>How does the triage deadline work?</summary><div><p>Revisado, Falso positivo and Risco aceito can have a deadline of up to two years. When the deadline passes, the finding goes back to aberto (open) and reappears in the table, marked as prazo vencido (overdue). To review the exceptions that are about to expire, query <code>triagem != aberto e prazo &lt; +30d</code>.</p></div></details>
+        <details class="disclosure"><summary>How do I create tags and saved views?</summary><div><p>A tag has the format category:value, such as <code>ambiente:producao</code> or <code>time:plataforma</code>, and is defined by a query. Write the query that selects the findings, click “Criar tag com esta consulta” (Create tag with this query) and enter the category and the value. Every finding that matches the query gets the tag, including those from upcoming scans. Then filter with <code>tag = ambiente:producao</code> or <code>tag = ambiente:*</code>, or group by tag. The tags are listed in the “Tags” panel, with how many findings each one marks.</p><p>A saved view stores the query and the grouping under a name. Use “Salvar como visão” (Save as view) and later pick the view in “Visões salvas” (Saved views). Tags and views apply to all users of this instance.</p></div></details>
+        <details class="disclosure"><summary>What is the remediation plan?</summary><div><p>In “Agrupar por”, choose “Plano de correção” (Remediation plan). Each row is an installed package, with how many vulnerabilities it has, the worst severity, the affected assets and the version to upgrade to. Upgrading a package on the list fixes all the vulnerabilities in its row at once.</p></div></details>
+        <details class="disclosure"><summary>Can I query from the terminal?</summary><div><p>Yes, with the same language as the screen, reading the interface's data:</p><div class="code-box"><pre><code>dockscan achados severidade &gt;= alta e kev --data-dir ~/.dockscan
+dockscan achados estado = novo --formato csv &gt; novos.csv</code></pre><button type="button" class="copy-button" data-copy hidden>Copy</button></div><p>Without <code>--formato</code>, you get a table; with <code>json</code> or <code>csv</code>, you get the same data as the export on the screen.</p></div></details>
+        <details class="disclosure"><summary>The query showed an error</summary><div><p>The message says what was missing and where, and the cursor moves to the spot with the problem. The most common errors are a misspelled field name, an operator that doesn't apply to the field (such as <code>&gt;</code> on <code>kev</code>) and unclosed quotes or parentheses.</p></div></details>
+      </section>
+
+      <section id="comparacao" class="chapter" aria-labelledby="titulo-comparacao" data-keywords="baseline comparar scans novos persistentes corrigidos allowlist suprimir exceções histórico diferenças compare new persistent fixed suppress exceptions history differences track fixes">
+        <header class="chapter-header"><div><h2 id="titulo-comparacao">Track the fixes</h2><p>Repeat the scan after changing the target and compare the results to see what changed.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Run a new scan of the same target</h3><p>Use the same type of scan and the same target name. Keep the same IP selection and the same coverage options.</p></div></li>
+          <li><div><h3>Open “Comparar scans” (Compare scans)</h3><p>On the page of a completed result, click Comparar scans. You can also open Baselines from the menu. Select the current scan and a compatible reference.</p></div></li>
+          <li><div><h3>Review the three groups</h3><p>Novos (New) appeared in the current scan. Persistentes (Persistent) are still present. Corrigidos (Fixed) were in the reference and do not appear in the current result. Open the items to understand the change.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-comparacao" data-screenshot="comparacao.webp">
+          <div class="placeholder-header"><span>Image 04</span><span>Comparar scans</span></div>
+          <img src="../assets/prints/comparacao.webp" alt="Comparison between two scans of the same image, with the new, persistent and fixed groups" width="1440" height="1000" loading="lazy" decoding="async">
+          <figcaption>Reference for steps 2 and 3: choose two compatible scans and review the changes.</figcaption>
+        </figure>
+        <div class="callout"><span class="callout-tag">Before comparing</span><div><p>A disabled lookup, a collection error or a change to the allowlist can change the results. “Corrigido” means the finding is no longer reported in this comparison. Check the evidence and the warnings of both scans.</p></div></div>
+        <details class="disclosure"><summary>How do I handle an exception with the Allowlist?</summary><div><p>Open Allowlist, enter one rule, package location or identifier per line and click Salvar allowlist (Save allowlist). Lines starting with <code>#</code> are comments.</p><p>The entries apply to upcoming scans and remove the matching findings from the failure evaluation. Earlier history stays as it was. Review the scope of each entry: one package can group several vulnerabilities.</p></div></details>
+      </section>
+
+      <section id="frota" class="chapter" aria-labelledby="titulo-frota" data-keywords="ssh inventário host containers execução frota servidor docker chave remoto local agente inventory running fleet server key remote agent map machines services range ips inventory">
+        <header class="chapter-header"><div><h2 id="titulo-frota">Scan your fleet</h2><p>Register your hosts to scan their running containers and their configuration, using the saved inventory.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Open “Frota” (Fleet) and fill in the inventory</h3><p>Enter one IP per line, with the SSH access options. The DockScan server must be able to reach the hosts over SSH, have access by key or through the credential vault, and have permission to perform the reads. The vault is on the Frota page itself.</p></div></li>
+          <li><div><h3>Save and start the scan</h3><p>Click Salvar inventário (Save inventory) and then Configurar varredura (Configure scan). In “Novo scan” (New scan), select the IPs, adjust the policy and click “Iniciar varredura por IP” (Start IP scan).</p></div></li>
+          <li><div><h3>Review each host</h3><p>In the result, open the hosts and check the findings for the machine and for its containers. Also check for access failures and collection warnings. Go back to “Frota” to see the latest scan.</p></div></li>
+          <li><div><h3>See the machines in Inventário</h3><p>After the scan, “Inventário” (Inventory) shows the machines, containers and services found, in a map grouped by IP range or in a list. Click a machine to open its containers and services, and use the search and filters to find an IP.</p></div></li>
+        </ol>
+        <details class="disclosure" id="guia-cofre"><summary>How to set up the SSH vault</summary><div><ol class="compact-steps"><li>In Frota, go to “Cofre de acesso SSH” (SSH access vault).</li><li>Enter the name, user, password and allowed scope. Check sudo only if that account is configured to use it.</li><li>Click “Salvar credencial” (Save credential). The password is cleared from the field and is never returned by the interface.</li><li>In the inventory, use <code>cred=nome-da-credencial</code> to select it. The scope is still enforced.</li></ol><p>The SSH identity is recorded on the first connection. If it changes, check the change before forgetting the entry in the list of known identities.</p></div></details>
+        <details class="disclosure" id="guia-coleta"><summary>What is read on each machine</summary><div><p>The collection only uses what the machine already has: system commands and files under <code>/proc</code> and <code>/etc</code>. You don't need to install Python or an agent. On a minimal machine, without <code>ss</code> or <code>ps</code>, the ports and processes come straight from the kernel.</p><ol class="compact-steps"><li>System packages: Debian and Ubuntu (dpkg), Alpine (apk), Rocky Linux and AlmaLinux (rpm). Other RPM distributions, such as Red Hat and Amazon Linux, show up as not verified, because OSV does not include their advisories.</li><li>Debian, Ubuntu and Rocky advisories name the source package: an OpenSSL vulnerability that applies to <code>libssl3</code> shows up as <code>openssl</code>. The kernel is left out for now: its risk depends on the running kernel, not on the installed packages.</li><li>In containers, Go and Rust binaries and Java libraries (.jar, .war, .ear) are read as well.</li><li>For each vulnerable package, whether any process is using its files right now. A Go binary that is not running lowers the exposure; for Java libraries, DockScan only reports when they are in use, because a .war unpacked by the server is used without staying open.</li></ol></div></details>
+        <details class="disclosure" id="guia-cve"><summary>How to investigate a CVE</summary><div><ol class="compact-steps"><li>Open “Buscar CVE” (Search CVE) in the tool's menu.</li><li>Enter the IPs and a CVE or GHSA identifier.</li><li>Click “Verificar CVE nos IPs” (Check CVE on the IPs). The data is collected over SSH from the selected machines.</li><li>Read the occurrences, the collection date, the warnings and the evidence of use. An incomplete collection does not rule out a target.</li></ol><p>The packages are identified automatically during the IP collection.</p></div></details>
+        <figure class="screenshot-placeholder" id="print-frota" data-screenshot="frota.webp">
+          <div class="placeholder-header"><span>Image 05</span><span>Frota / inventory</span></div>
+          <img src="../assets/prints/frota.webp" alt="Frota (Fleet) with a sample inventory and the latest scan of the hosts" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Reference for steps 1 and 2: register the hosts, save and set up the fleet scan.</figcaption>
+        </figure>
+        <figure class="screenshot-placeholder" id="print-inventario" data-screenshot="inventario.webp">
+          <div class="placeholder-header"><span>Image 13</span><span>Inventário / machine map</span></div>
+          <img src="../assets/prints/inventario.webp" alt="Inventory with the map of the lab machines grouped by IP range and the totals of machines, containers and services" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Reference for step 4: the map groups the machines by IP range; the list shows the same items for keyboard navigation.</figcaption>
+        </figure>
+        <div class="code-box labeled"><span class="code-label">Inventory example</span><pre><code># Docker da máquina em que o DockScan está rodando
+127.0.0.1 local=true
+
+# Exemplo de host remoto: substitua pelo seu ambiente
+deploy@host.exemplo.com:2222 key=~/.ssh/id_deploy</code></pre><button class="copy-button" type="button" data-copy hidden>Copy</button></div>
+        <p class="muted">Key paths and the local Docker are resolved on the DockScan server machine. Use only hosts you are authorized to access.</p>
+      </section>
+
+      <section id="rede" class="chapter" aria-labelledby="titulo-rede" data-keywords="network security scanner rede ip cidr escopo portas serviços tls registry docker exposição varrer iniciar pausar retomar parar hosts achados histórico perfil painel scope ports services exposure scan start pause resume stop findings history profile dashboard">
+        <header class="chapter-header"><div><h2 id="titulo-rede">Explore the network</h2><p>The Rede (Network) module identifies ports and services and gathers exposure evidence on the authorized targets.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Check the allowed scopes</h3><p>In Configurações → Configurações de rede (Settings → Network settings), review “Escopos de rede autorizados (IP/CIDR)” (Authorized network scopes). Only include networks you are authorized to scan. The default allows loopback.</p></div></li>
+          <li><div><h3>Open “Rede → Varrer a rede” (Network → Scan the network)</h3><p>Give the scan a name. In IP, range, CIDR ou múltiplos alvos (IP, range, CIDR or multiple targets), enter the IPs and networks. To try it out on the server machine, use <code>127.0.0.1</code>. You can also import a <code>.txt</code> list in “Importar alvos” (Import targets).</p><p>Fill in the exclusions, if needed. Check the target estimate and the authorized scope shown in the form.</p></div></li>
+          <li><div><h3>Choose the profile and review the ports</h3><p>In “Configuração da varredura” (Scan configuration), select the “Perfil” (Profile) and check the “Portas” (Ports). Review the timeout, the speed and the modules “Detectar serviços” (Detect services), “Detectar Docker” (Detect Docker), “Auditar registries” (Audit registries) and “Analisar TLS” (Analyze TLS).</p></div></li>
+          <li><div><h3>Confirm the authorization and click “Iniciar varredura” (Start scan)</h3><p>Follow the progress on the scan page. Use “Pausar” (Pause), “Retomar” (Resume) or “Parar” (Stop) to control or end it. When you stop it, the partial results remain available.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-rede" data-screenshot="rede.webp">
+          <div class="placeholder-header"><span>Image 06</span><span>Varrer a rede / configuration</span></div>
+          <img src="../assets/prints/rede.webp" alt="Varrer a rede (Scan the network) with the lab target, the authorized scopes and the configuration" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Reference for steps 1 to 4: check the scope and configure the scan before starting it.</figcaption>
+        </figure>
+        <div class="two-columns notes"><div><h3>Where to look afterwards</h3><p>“Em andamento” (In progress) shows the active jobs. “Histórico” (History) keeps the previous scans. Use “Hosts” and “Serviços” (Services) to investigate the hosts and services found.</p></div><div><h3>How to read the coverage</h3><p>On the scan page, switch “Visualização” (View) between hosts, ports, TCP coverage, services and findings. See “Configuração e limitações” (Configuration and limitations) to understand the reach of the collection.</p></div></div>
+        <div class="callout warning"><span class="callout-tag">About coverage</span><div><h3>A timeout is an inconclusive result</h3><p>A port that doesn't respond is not proven to be closed. A host that doesn't respond is not proven to be down either. Check the coverage states before comparing or closing the investigation.</p></div></div>
+        <details class="disclosure"><summary>How do I compare two network scans?</summary><div><p>Open “Comparar varreduras” (Compare scans) from the Rede menu or use “Comparar” (Compare) on the result. Select the two scans and review the new, removed, changed and unchanged items.</p><p>Items without comparable coverage show up as “NotComparable”. Confirm the targets, ports and modules before you interpret a service as removed or a risk as resolved.</p></div></details>
+      </section>
+
+      <section id="nuvem" class="chapter" aria-labelledby="titulo-nuvem" data-keywords="nuvem cloud aws azure google gcp kubernetes conta credencial permissão leitura securityaudit reader viewer kubeconfig testar conexão descobrir ec2 security group ecr eks account credential permission read-only test connection discover">
+        <header class="chapter-header"><div><h2 id="titulo-nuvem">Connect the cloud</h2><p>The cloud module reads AWS accounts to find what exposes your containers: machines, firewall rules, registries and clusters. Azure, Google Cloud and Kubernetes can already be registered; reading them arrives in upcoming stages.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Create a read-only credential</h3><p>When you choose the provider, the screen shows the minimum permission and step-by-step instructions to create the credential. Never use an administrator user's key.</p></div></li>
+          <li><div><h3>Open “Nuvem” (Cloud) and choose the provider</h3><p>Give the account a name and fill in the fields. Regions, subscriptions, projects or namespaces define what can be read.</p></div></li>
+          <li><div><h3>Save and click “Testar conexão” (Test connection)</h3><p>On AWS, the test checks access in the cloud itself and shows the identity used. For the other providers, it confirms that the account was validated and saved.</p></div></li>
+          <li><div><h3>Click “Descobrir agora” (Discover now)</h3><p>Discovery is a scan like any other: it opens on the scan page, is listed in Resultados (Results) and gets Falhou (Failed) or Passou (Passed) from the policy. The findings go to the Achados (Findings) screen with <code>fonte = cloud</code>, and the machines go to the Inventário (Inventory). If a region can't be read, the scan is marked incomplete and says which one.</p></div></li>
+          <li><div><h3>Edit or delete when needed</h3><p>In “Editar” (Edit), a secret left blank keeps its current value. “Excluir” (Delete) removes the account and its secrets from the server.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-nuvem" data-screenshot="nuvem.webp">
+          <div class="placeholder-header"><span>Image 10</span><span>Nuvem / account registration</span></div>
+          <img src="../assets/prints/nuvem.webp" alt="Nuvem (Cloud) screen with an AWS account being registered and, beside it, the minimum permission and the step-by-step instructions" width="1440" height="1050" loading="lazy" decoding="async">
+          <figcaption>Reference for steps 1 to 3: choose the provider, fill in the fields and check the minimum permission beside them.</figcaption>
+        </figure>
+        <div class="table-scroll"><table><caption class="sr-only">Minimum permission per provider</caption><thead><tr><th scope="col">Provider</th><th scope="col">Read-only credential</th><th scope="col">Scope</th></tr></thead><tbody>
+          <tr><td>AWS</td><td>A user that can only assume a role with the SecurityAudit policy, requiring an external ID.</td><td>Regions</td></tr>
+          <tr><td>Azure</td><td>An application (service principal) with the Reader role.</td><td>Subscriptions</td></tr>
+          <tr><td>Google Cloud</td><td>A service account with the Viewer and Security Reviewer roles.</td><td>Projects</td></tr>
+          <tr><td>Kubernetes</td><td>A ServiceAccount with a read-only ClusterRole on pods, nodes and namespaces.</td><td>Namespaces</td></tr>
+        </tbody></table></div>
+        <div class="callout warning"><span class="callout-tag">Security</span><div><h3>Secrets are encrypted, but they live on the server</h3><p>Credentials are encrypted with the vault key and never come back to the screen. Anyone with administrator access to the DockScan server can read them: register only read-only credentials and, preferably, ones with an expiration date.</p></div></div>
+        <details class="disclosure"><summary>Why was my kubeconfig rejected?</summary><div><p>For security, the kubeconfig must have the token or the certificate embedded, and the cluster CA in <code>certificate-authority-data</code>. The following are rejected: authentication through <code>exec</code> or <code>auth-provider</code>, which would run a program on the DockScan server; file paths, which would read files from the server; <code>insecure-skip-tls-verify</code>; and addresses without <code>https://</code>.</p></div></details>
+        <details class="disclosure"><summary>What does DockScan look for in the cloud?</summary><div><p>Administration ports open to the internet (Docker API, kubelet, etcd, Kubernetes API, registry and SSH), rules that allow all ports, registries with anonymous read access or with an admin user, mutable tags, an open cluster API, clusters without RBAC, machines that accept the metadata service without a token, and privileged workloads.</p><p>On AWS, this comes from EC2 (machines and security groups), ECR and EKS, in the registered regions. With the role ARN, the key can only be used to assume the role, in a 15-minute session, and every read uses the role. No call creates or changes resources.</p></div></details>
+        <details class="disclosure"><summary>“Descobrir agora” does not appear</summary><div><p>The button appears when the provider already has a connector and its SDK is installed on the DockScan server. For AWS, install it with <code>pip install "dockscan[cloud]"</code>. The connection test also warns you when the SDK is missing.</p></div></details>
+      </section>
+
+      <section id="agendamentos" class="chapter" aria-labelledby="titulo-agendamentos" data-keywords="automático recorrente periodicidade intervalo diário agendamento scheduler agendador pausar retomar executar agora minutos automatic recurring frequency interval daily schedule schedules pause resume run now minutes">
+        <header class="chapter-header"><div><h2 id="titulo-agendamentos">Schedule scans</h2><p>Repeat a scan at set intervals and check the result of each run in the history.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Open “Agendamentos” (Schedules) and name the routine</h3><p>Set the interval in minutes and the first run. To run once a day, use 1440 minutes. The interface accepts 5 to 10080 minutes.</p></div></li>
+          <li><div><h3>Fill in the target and the policy</h3><p>Enter the machine IPs and the failure criteria. The selection is saved in the routine, and SSH access uses the Frota (Fleet) settings.</p></div></li>
+          <li><div><h3>Click “Criar agendamento” (Create schedule)</h3><p>The routine appears under “Scans agendados” (Scheduled scans). Use Executar agora (Run now) to start a manual run, Pausar (Pause) to stop the upcoming runs and Retomar (Resume) to reactivate it. Deleting the schedule keeps the previous scans.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-agendamentos" data-screenshot="agendamentos.webp">
+          <div class="placeholder-header"><span>Image 07</span><span>Agendamentos / new routine</span></div>
+          <img src="../assets/prints/agendamentos.webp" alt="Agendamentos (Schedules) with a paused routine and the new routine form" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Reference for steps 1 to 3: define the routine, enter the target and save the schedule.</figcaption>
+        </figure>
+        <div class="callout"><span class="callout-tag">How the routine works</span><div><p>The schedule repeats the collection on the selected IPs and identifies the machines' current data. Adding more IPs to the inventory does not expand the target of a routine that already exists.</p></div></div>
+        <details class="disclosure"><summary>Do scans keep running with the interface closed?</summary><div><p>Closing the browser tab does not shut down the server. Routines keep running as long as the DockScan server is running. To run them with the web server off, keep the standalone service below running, using the same data directory as your instance.</p><div class="code-box"><pre><code>python -m dockscan agendador --data-dir ~/.dockscan</code></pre><button type="button" class="copy-button" data-copy hidden>Copy</button></div><p>Without the server and without this service, the runs do not happen. When it comes back, the pending run takes place, without repeating all the missed runs.</p></div></details>
+      </section>
+
+      <section id="relatorios" class="chapter" aria-labelledby="titulo-relatorios" data-keywords="exportação exportar baixar relatório compartilhar download html json sarif csv cyclonedx spdx sbom imprimir pdf export report reports share print">
+        <header class="chapter-header"><div><h2 id="titulo-relatorios">Export reports</h2><p>Choose the format according to its purpose: reading, automation or component inventory.</p></div></header>
+        <div class="two-columns notes"><div><h3>Machines and containers</h3><ol class="compact-steps"><li>Open a completed scan in Resultados (Results).</li><li>In the summary, click HTML, JSON or SARIF.</li><li>If packages are available, use CycloneDX or SPDX to export the SBOM.</li></ol></div><div><h3>Network scans</h3><ol class="compact-steps"><li>Open the result and look for “Exportar relatório” (Export report).</li><li>Choose the format, the hosts, the severities and whether to include evidence.</li><li>For CSV, select the table you want. Click “Exportar relatório” to download.</li></ol></div></div>
+        <figure class="screenshot-placeholder" id="print-relatorios" data-screenshot="relatorios.webp">
+          <div class="placeholder-header"><span>Image 08</span><span>Report export</span></div>
+          <img src="../assets/prints/relatorios.webp" alt="Result for an image, with the HTML, JSON, SARIF, CycloneDX and SPDX export buttons" width="1440" height="700" loading="lazy" decoding="async">
+          <figcaption>Export reference: find the available formats and review the filters before downloading.</figcaption>
+        </figure>
+        <div class="table-scroll"><table><caption class="sr-only">Report formats and their purposes</caption><thead><tr><th scope="col">Format</th><th scope="col">When to use it</th></tr></thead><tbody><tr><td class="mono">HTML</td><td>A visual report to open in the browser and share.</td></tr><tr><td class="mono">JSON</td><td>Structured data for integrations and processing.</td></tr><tr><td class="mono">SARIF</td><td>Findings in a static analysis format, for compatible tools.</td></tr><tr><td class="mono">CSV</td><td>Network tables and the result of a query from the Achados (Findings) screen, to open in spreadsheets.</td></tr><tr><td class="mono">CycloneDX / SPDX</td><td>Component inventory, for scans that have package data.</td></tr></tbody></table></div>
+        <p class="muted">The filters in the findings list help you navigate the interface. For network exports, review the filters in the “Exportar relatório” form itself to define what goes into the file.</p>
+      </section>
+
+      <section id="contas" class="chapter" aria-labelledby="titulo-contas" data-keywords="usuário usuários conta contas login entrar senha trocar senha esqueci perfil papel papéis administrador analista leitura sessão sessões chave de acesso configurações permissões user users account accounts sign in password change password forgot profile role roles administrator analyst read-only session sessions access key settings permissions two-step verification mfa 2fa authenticator code recovery qr phone require">
+        <header class="chapter-header"><div><h2 id="titulo-contas">Accounts and access</h2><p>Each person signs in with their own username and password, and the account's role defines what they can do. Everything is managed in Configurações (Settings).</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Sign in with your username and password</h3><p>On the login screen, use the account's username or email. “Manter conectado” (Keep me signed in) keeps the session open for up to 7 days in this browser; without it, the session ends after 30 minutes of inactivity or after 12 hours.</p></div></li>
+          <li><div><h3>On your first sign-in, set your password</h3><p>Whoever creates the account gets a temporary password to pass on to you. When you sign in with it, DockScan asks you to choose your own password before opening any screen: at least 12 characters and different from the username.</p></div></li>
+          <li><div><h3>Check your profile in Configurações</h3><p>Click your name at the bottom of the menu. The profile shows your username, email, role and when the password was last changed. There you can adjust your name and email, change your password and see the sessions open in other browsers, with the option to end each one.</p></div></li>
+          <li><div><h3>Administrator: create your team's accounts</h3><p>In Usuários (Users), enter the name, username and role and click “Criar usuário” (Create user). The temporary password appears once, with the Copiar (Copy) button: send it through a secure channel. For each account, Editar (Edit) changes the name, email, role and whether the account is active; Redefinir senha (Reset password) generates a new temporary password; Excluir (Delete) removes access.</p></div></li>
+          <li><div><h3>Turn on two-step verification</h3><p>In Configurações, click “Ativar a verificação em duas etapas” (Turn on two-step verification), scan the QR code with an authenticator app (Google Authenticator, Microsoft Authenticator, Authy or 2FAS) and enter the 6-digit code it shows, together with your password. Keep the 10 recovery codes that appear next: each one lets you in once if you lose your phone. From then on, sign-in asks for the code after the password.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-configuracoes" data-screenshot="configuracoes.webp">
+          <div class="placeholder-header"><span>Image 11</span><span>Configurações / profile, sessions and users</span></div>
+          <img src="../assets/prints/configuracoes.webp" alt="Settings with the administrator profile, two-step verification, open sessions and the list of users" width="1440" height="2100" loading="lazy" decoding="async">
+          <figcaption>Reference for steps 3 to 5: profile, password, two-step verification, open sessions and the team accounts.</figcaption>
+        </figure>
+        <figure class="screenshot-placeholder" id="print-verificacao" data-screenshot="verificacao.webp">
+          <div class="placeholder-header"><span>Image 14</span><span>Configurações / two-step verification</span></div>
+          <img src="../assets/prints/verificacao.webp" alt="Turning on two-step verification, with the steps, the QR code, the key to type and the code and password fields" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Reference for step 5: scan the QR code or type the key in the app and confirm with the first code.</figcaption>
+        </figure>
+        <div class="table-scroll"><table><caption class="sr-only">Account roles and what each one can do</caption><thead><tr><th scope="col">Role</th><th scope="col">Can</th></tr></thead><tbody>
+          <tr><td>Administrador (Administrator)</td><td>Everything, including users, access keys, the SSH vault, the Frota inventory, cloud accounts and network settings.</td></tr>
+          <tr><td>Analista (Analyst)</td><td>Run scans and CVE searches, triage findings, and edit the allowlist, views, tags and schedules.</td></tr>
+          <tr><td>Leitura (Read-only)</td><td>View and export results and findings, without changing anything.</td></tr>
+        </tbody></table></div>
+        <p class="muted">Whatever a role does not allow does not appear on the screen. A role change takes effect immediately, without the person having to sign in again. DockScan does not let the server be left without an active administrator, and no one can change their own role or deactivate their own account.</p>
+        <div class="callout"><span class="callout-tag">Access keys</span><div><p>A key signs in as an administrator, without a username and password. Use keys for automation and to recover access; for people, prefer an account. Generate and revoke keys in Configurações. A key is shown only once.</p></div></div>
+        <div class="callout"><span class="callout-tag">Requiring verification</span><div><p>In Usuários (Users), the administrator chooses who must use two-step verification: nobody, administrators or all accounts. Anyone who has not turned it on yet sees the activation screen before any other. To require it for a role that is yours, turn it on for your account first. Access keys do not ask for the code: keep them like administrator passwords.</p></div></div>
+        <details class="disclosure"><summary>I forgot my password</summary><div><p>Ask an administrator to use Redefinir senha on your account: you get a temporary password and choose your own at your next sign-in. Your open sessions are ended.</p><p>If no administrator is available, someone with access to the server can change the password from the terminal, using the same data directory as the instance:</p><div class="code-box"><pre><code>dockscan usuarios senha --usuario SEU_USUARIO</code></pre><button type="button" class="copy-button" data-copy hidden>Copy</button></div></div></details>
+        <details class="disclosure"><summary>I lost the phone I use for two-step verification</summary><div><p>On the sign-in screen, after the password, click “Usar um código de recuperação” (Use a recovery code) and enter one of the codes you kept. Once in, generate new codes, or turn verification off and on again with the new phone.</p><p>With no codes left, ask an administrator to use “Remover verificação” (Remove verification) on your account: your sessions are ended and the next sign-in asks only for the password. With no administrator available, from the server terminal:</p><div class="code-box"><pre><code>dockscan usuarios remover-verificacao --usuario SEU_USUARIO</code></pre><button type="button" class="copy-button" data-copy hidden>Copy</button></div></div></details>
+        <details class="disclosure"><summary>The code is not accepted</summary><div><p>The code changes every 30 seconds and each one works once. Enter the one the app shows now and check that the phone’s date and time are set automatically. Five wrong codes in a row take you back to the password; too many errors block new attempts for 15 minutes.</p></div></details>
+        <details class="disclosure"><summary>Why did my session end?</summary><div><p>A session ends after 30 minutes of inactivity, after 12 hours (7 days with “Manter conectado”), when you sign out, when another of your sessions ends it in Configurações, when you change your password (your other sessions are signed out) or when an administrator resets your password or deactivates the account. Restarting the server does not end sessions. Turning on two-step verification also ends your other sessions, and an administrator ends yours when removing your verification.</p></div></details>
+        <details class="disclosure"><summary>I got “O papel não permite esta ação” (The role does not allow this action)</summary><div><p>Your account does not have permission for that action, for example editing the Frota inventory with the Analista role. Ask an administrator to make the change or to adjust your role.</p></div></details>
+      </section>
+
+      <section id="desenvolvimento" class="chapter" aria-labelledby="titulo-desenvolvimento" data-keywords="em desenvolvimento roadmap próximos passos novidades futuro versão planejado jira notificações nuvem aws tags triagem estados rpm in development next steps what's new new features future version planned notifications cloud triage states two-step verification panel languages">
+        <header class="chapter-header"><div><h2 id="titulo-desenvolvimento">In development</h2><p>DockScan is a tool under development. Screens and names may change between versions. This chapter shows what arrived recently and what comes next.</p></div></header>
+        <div class="two-columns notes"><div><h3>New in this version</h3><ol class="compact-steps">
+          <li><a href="#contas">Two-step verification</a>: a 6-digit code from an authenticator app, 10 recovery codes and the option to require it from administrators or from all accounts.</li>
+          <li><a href="#achados">Finding panel</a>: click the vulnerability to see CVSS, EPSS, where it is, how to fix it, the OSV description, the other assets and the history, without leaving the query.</li>
+          <li>Manual in Portuguese, English, Spanish, French, German and Japanese: pick the language at the top of the page.</li>
+          <li><a href="#contas">Accounts and access</a>: one account per person, with a username and password and the roles Administrador (Administrator), Analista (Analyst) and Leitura (Read-only); profile, password change and open sessions in Configurações (Settings); sessions survive a server restart.</li>
+          <li><a href="#achados">Achados</a> (Findings): the state of each finding over its history (novo, ativo, reapareceu and corrigido, that is, new, active, reappeared and fixed), triage with deadlines and in bulk, category:value tags, saved views, a remediation plan, sorting by column and querying from the terminal.</li>
+          <li><a href="#nuvem">Nuvem</a> (Cloud): reading AWS (EC2, security groups, ECR and EKS) as a scan, with the findings in Achados and the machines in Inventário (Inventory).</li>
+          <li><a href="#frota">Frota</a> (Fleet): one access entry per IP in the inventory, checked on save; a machine removed from the inventory also leaves Achados, and its history stays in Resultados (Results).</li>
+          <li><a href="#guia-coleta">Machines</a>: RPM packages from Rocky Linux and AlmaLinux, vulnerabilities by source package (<code>libssl3</code> now shows OpenSSL's vulnerabilities), usage of Go binaries and Java libraries, and collection using only what the machine already has.</li>
+          <li>Painel (Dashboard) with shortcuts to Achados, times shown with their time zone, and the Achados and Nuvem screens reworked for keyboard and screen reader use.</li>
+          <li>Results with clear names: “Falhou” (Failed) and “Passou” (Passed) for the policy; “Erro na análise” (Scan error) is shown differently, because it is a technical failure.</li>
+        </ol></div><div><h3>Next steps</h3><ol class="compact-steps">
+          <li>Reading Azure, Google Cloud and Kubernetes, in the same format as AWS.</li>
+          <li>Integrations and notifications: opening Jira tickets and alerting the team when an important finding shows up.</li>
+          <li>Vulnerabilities in the running kernel, based on the version the machine is running.</li>
+          <li>RPM packages inside images and containers too, and other RPM distributions once OSV includes their advisories.</li>
+        </ol></div></div>
+        <div class="callout"><span class="callout-tag">About versions</span><div><p>A feature can arrive in parts: in Nuvem, for example, AWS is read before the other providers. The manual is updated at each stage, together with the tool.</p></div></div>
+      </section>
+
+      <section id="ajuda" class="chapter" aria-labelledby="titulo-ajuda" data-keywords="erro falha problemas nenhum achado vazio limite upload conexão indisponível ajuda suporte dúvidas pergunta faq error failure problems no findings empty limit connection unavailable help support questions question">
+        <header class="chapter-header"><div><h2 id="titulo-ajuda">Frequently asked questions</h2><p>Check the state of the scan before interpreting the result.</p></div></header>
+        <details class="disclosure"><summary>The scan returned no findings. Is everything safe?</summary><div><p>Check whether the scan finished, whether any filters are hiding items and whether there are warnings about failures or an incomplete collection. Also check whether the CVE lookup was turned off and whether there are entries in the allowlist. No findings means that this run did not report any items within the coverage it achieved.</p></div></details>
+        <details class="disclosure"><summary>An IP was not accepted</summary><div><p>Enter the machine's IPv4 or IPv6 address, without a DNS name, user, port or range. If the SSH port is a different one, set it in the Frota (Fleet) inventory.</p></div></details>
+        <details class="disclosure"><summary>Could not connect to the machine</summary><div><p>Check that the DockScan server can reach the IP, that SSH is available and that the vault credential covers that address. Read the error and the warnings of the scan to identify which parts of the collection failed.</p></div></details>
+        <details class="disclosure"><summary>A fleet host failed</summary><div><p>Check the address, user, port and key path in the inventory. SSH access and the Docker query must work from the server machine. Read the per-host warnings; an access failure can prevent the collection for that target.</p></div></details>
+        <details class="disclosure"><summary>The network scan rejected my target</summary><div><p>Check that you entered an IP, range or CIDR and that it is within “Escopos de rede autorizados” (Authorized network scopes). Hostnames and URLs are not valid input for this field. Also check the exclusions and host limits. Adjust the global settings when no scans are running.</p></div></details>
+        <details class="disclosure"><summary>Which time zone are the times in?</summary><div><p>In your browser's time zone, with its abbreviation next to it, as in “02/11/2026, 14:21 BRT”. The server stores each time with its own time zone, so anyone opening the page from somewhere else sees the right time for them.</p></div></details>
+        <details class="disclosure"><summary>No new items appeared in the comparison</summary><div><p>Confirm that there is a compatible previous reference and that comparison was turned on. Use the same IPs and the same coverage options. Review the coverage warnings, the allowlist and the “Somente novos” (Only new) filter. On the first run, there is no baseline to identify what is new.</p></div></details>
+        <div class="closing"><img src="../assets/logo.svg" alt="" width="96" height="42" loading="lazy"><div><h3>Ready for the next scan?</h3><p>Choose the target, review the policy and track the progress.</p></div><a class="button" href="#primeiro-scan">Back to the step-by-step guide</a></div>
+      </section>
+      </div>
+      <footer class="page-footer"><div class="footer-credits"><span>DockScan · User manual</span><p>Tool under development.</p></div><span>Instructions under review</span><a class="back-to-top" href="#inicio">Back to top</a></footer>
+    </main>
+  </div>
+
+  <div id="copy-status" class="sr-only" role="status"></div>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
+  <script src="../tema.js"></script>
+  <meta name="description" content="Manual de uso de DockScan. Aprende a analizar máquinas y contenedores por IP, investigar redes y dar seguimiento a las correcciones.">
+  <title>Manual de uso · DockScan</title>
+  <link rel="alternate" hreflang="pt-BR" href="../index.html">
+  <link rel="alternate" hreflang="en" href="../en/index.html">
+  <link rel="alternate" hreflang="es" href="../es/index.html">
+  <link rel="alternate" hreflang="fr" href="../fr/index.html">
+  <link rel="alternate" hreflang="de" href="../de/index.html">
+  <link rel="alternate" hreflang="ja" href="../ja/index.html">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/barlow-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../manual.css">
+  <script src="../manual.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Saltar al contenido</a>
+  <header class="mobile-header">
+    <a class="brand" href="#inicio" aria-label="DockScan, inicio del manual"><img src="../assets/logo.svg" alt="" width="66" height="30"><span>dock<span>scan</span></span></a>
+    <button class="button" id="menu-toggle" type="button" aria-expanded="false" aria-controls="sidebar" hidden>Capítulos</button>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#inicio" aria-label="DockScan, inicio del manual"><img src="../assets/logo.svg" alt="" width="80" height="36"><span>dock<span>scan</span></span></a>
+    <p class="sidebar-label">Documentación</p>
+    <div class="search" id="search-control" hidden>
+      <label for="busca">Buscar en esta pestaña</label>
+      <div class="search-field"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg><input id="busca" type="search" name="busca" placeholder="Ej.: imagen, exportar…" autocomplete="off"></div>
+      <p id="busca-status" class="sr-only" role="status"></p>
+    </div>
+    <nav aria-label="Capítulos del manual" id="chapters">
+      <a href="#inicio" aria-current="location">Antes de empezar</a>
+      <a href="#como-usar">Cómo usar</a>
+      <a href="#primeiro-scan">Tu primer escaneo</a>
+      <a href="#resultados">Entiende los resultados</a>
+      <a href="#achados">Consulta los hallazgos</a>
+      <a href="#comparacao">Sigue las correcciones</a>
+      <a href="#frota">Analiza tu flota</a>
+      <a href="#rede">Explora la red</a>
+      <a href="#nuvem">Conecta la nube</a>
+      <a href="#agendamentos">Programa análisis</a>
+      <a href="#relatorios">Exporta informes</a>
+      <a href="#contas">Cuentas y acceso</a>
+      <a href="#desenvolvimento">En desarrollo</a>
+      <a href="#ajuda">Preguntas frecuentes</a>
+    </nav>
+    <div class="sidebar-footer">Guía de la interfaz web<p>Manual de uso</p><a href="#primeiro-scan">Ver el paso a paso</a></div>
+  </aside>
+
+  <div class="page">
+    <div class="topbar"><p>Documentación <span aria-hidden="true">/</span> Manual de uso</p><div class="topbar-actions"><details class="lang-menu"><summary class="button small"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.5 2.8 3.8 5.8 3.8 9s-1.3 6.2-3.8 9c-2.5-2.8-3.8-5.8-3.8-9S9.5 5.8 12 3Z"></path></svg><span class="sr-only">Idioma: </span>Español</summary><ul><li><a href="../index.html" hreflang="pt-BR" lang="pt-BR" data-idioma>Português</a></li><li><a href="../en/index.html" hreflang="en" lang="en" data-idioma>English</a></li><li><a href="../es/index.html" hreflang="es" lang="es" data-idioma aria-current="page">Español</a></li><li><a href="../fr/index.html" hreflang="fr" lang="fr" data-idioma>Français</a></li><li><a href="../de/index.html" hreflang="de" lang="de" data-idioma>Deutsch</a></li><li><a href="../ja/index.html" hreflang="ja" lang="ja" data-idioma>日本語</a></li></ul></details><button class="button small theme-toggle" id="theme-toggle" type="button" aria-label="Tema oscuro" aria-pressed="false" title="Activar tema oscuro" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"></path></svg><span>Tema oscuro</span></button><button class="button small" id="print-manual" type="button" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7z"></path></svg>Guardar en PDF</button></div></div>
+    <main id="conteudo" tabindex="-1">
+      <nav class="manual-tabs" id="manual-tabs" aria-label="Secciones del manual">
+        <a id="aba-visao-geral" href="#inicio" data-panel="painel-visao-geral">Visión general</a>
+        <a id="aba-como-usar" href="#como-usar" data-panel="painel-como-usar">Cómo usar</a>
+      </nav>
+      <p id="sem-resultados" class="empty-state" hidden>No se encontró ningún paso. Prueba “escaneo”, “red”, “flota” o “informe”. <button class="text-button" id="limpar-busca" type="button">Borrar búsqueda</button></p>
+
+      <div id="painel-visao-geral" data-manual-panel>
+      <section id="inicio" class="chapter intro" aria-labelledby="titulo-inicio" data-keywords="começar painel acesso interface instalação abrir overview dashboard empezar comenzar panel acceso instalación visión general">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="intro-label">Manual de DockScan</p>
+            <h1 id="titulo-inicio">Aprende a usar<br>DockScan.</h1>
+            <p class="lead">Desde el primer análisis hasta la lectura de los resultados. Encuentra las funciones que necesitas y sigue cada paso con calma.</p>
+            <div class="hero-actions"><a class="button primary" href="#primeiro-scan">Empezar mi primer escaneo</a><a class="text-link" href="#como-usar">Conocer las funciones</a></div>
+            <p class="hero-note">Máquinas, contenedores y redes. Herramienta en desarrollo.</p>
+          </div>
+          <div class="hero-preview">
+        <figure class="screenshot-placeholder" id="print-painel" data-screenshot="painel.webp">
+          <div class="placeholder-header"><span>Imagen 01</span><span>Painel</span></div>
+          <img src="../assets/prints/painel.webp" alt="Pantalla Painel (Panel) de DockScan con el resumen por severidad, los escaneos recientes y los hallazgos más urgentes" width="1440" height="900" decoding="async">
+          <figcaption>Referencia del paso: usa “Novo scan” (Nuevo escaneo) para empezar o abre un análisis en “Scans recentes” (Escaneos recientes).</figcaption>
+        </figure>
+          </div>
+        </div>
+        <div class="start-paths" aria-label="Elige tu punto de partida">
+          <a href="#primeiro-scan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6m-6 4h6"></path></svg><span>Analizar máquinas por IP<small>Sistema y contenedores por SSH</small></span></a>
+          <a href="#rede"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="16" y="16" width="6" height="6" rx="1"></rect><path d="M12 8v5M5 16v-3h14v3"></path></svg><span>Explorar una red<small>Hosts, puertos y servicios</small></span></a>
+          <a href="#resultados"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v16h16M8 15v-4m5 4V7m5 8v-6"></path></svg><span>Entender un resultado<small>Hallazgos, evidencias y correcciones</small></span></a>
+        </div>
+        <div class="overview-panel-note"><h2>Tu punto de partida es el Painel (Panel)</h2><p>Con el acceso ya configurado, abre la interfaz. El Painel reúne los hallazgos más recientes de cada objetivo, los análisis recientes y los elementos que requieren atención.</p></div>
+        <div class="two-columns notes"><div><h3>¿Vas a abrir la interfaz local?</h3><p>Con DockScan instalado, ejecuta el siguiente comando y abre la dirección que indica la terminal. La dirección local predeterminada es <code>http://127.0.0.1:8443</code>.</p><div class="code-box"><pre><code>python -m dockscan ui</code></pre><button type="button" class="copy-button" data-copy hidden>Copiar</button></div></div><div><h3>Cómo usar este manual</h3><p>Sigue los capítulos en orden o usa el índice para ir directo a tu tarea. Puedes seguir las instrucciones sin las imágenes.</p><p class="muted">Las pantallas provienen del laboratorio de DockScan, con datos de demostración. La guía empieza una vez que ya tienes acceso a la interfaz. Para iniciar sesión, cambiar la contraseña y administrar las cuentas del equipo, consulta <a href="#contas">Cuentas y acceso</a>.</p><p class="muted">DockScan está en desarrollo: mira <a href="#desenvolvimento">lo que ya llegó y lo que viene</a>.</p></div></div>
+      </section>
+
+      </div>
+      <div id="painel-como-usar" data-manual-panel>
+      <section id="como-usar" class="chapter usage-guide" aria-labelledby="titulo-como-usar" data-keywords="tutorial como usar funções recursos menu botões passo a passo auditoria configurações allowlist baselines rede achados nuvem perfis cómo usar funciones botones paso a paso auditoría configuración red hallazgos nube perfiles">
+        <header class="chapter-header"><div><h2 id="titulo-como-usar">Cómo usar</h2><p>Mira el recorrido de un análisis y para qué sirve cada función de la interfaz. Los capítulos siguientes detallan los pasos, con la pantalla de cada uno.</p></div></header>
+        <h3 class="subheading">El flujo completo, paso a paso</h3>
+        <ol class="steps">
+          <li><div><h3>Elige el objetivo</h3><p>Abre <a href="#primeiro-scan">Novo scan</a> (Nuevo escaneo) para indicar las IP de las máquinas. Para IP, puertos y servicios, sigue el <a href="#rede">tutorial de red</a>.</p></div></li>
+          <li><div><h3>Completa la entrada y la política</h3><p>Indica las direcciones IP y configura el acceso SSH en Frota (Flota). Define la severidad que debe hacer fallar el escaneo y si quieres compararlo con un análisis anterior.</p></div></li>
+          <li><div><h3>Inicia y da seguimiento</h3><p>Haz clic en “Iniciar varredura por IP” (Iniciar escaneo por IP) o, en la red, en “Iniciar varredura” (Iniciar escaneo). Espera a que termine y revisa los mensajes de error y los avisos de cobertura.</p></div></li>
+          <li><div><h3>Investiga los hallazgos</h3><p>En <a href="#resultados">Resultados</a>, filtra los elementos y lee la ubicación, los detalles y la recomendación. Los estados “Passou” (Pasó) y “Falhou” (Falló) se refieren a la política configurada.</p></div></li>
+          <li><div><h3>Corrige y repite el análisis</h3><p>Modifica el objetivo y ejecuta otro escaneo compatible. Usa <a href="#comparacao">Comparar scans</a> (Comparar escaneos) para revisar los elementos nuevos, los persistentes y los que dejaron de reportarse.</p></div></li>
+          <li><div><h3>Guarda el resultado y crea una rutina</h3><p><a href="#relatorios">Exporta el informe</a> en el formato que necesites. Para repetir el análisis, configura una <a href="#agendamentos">programación</a>.</p></div></li>
+        </ol>
+
+        <h3 class="subheading">Qué hace cada función del menú</h3>
+        <div class="function-list">
+          <details class="function-item"><summary>Painel (Panel)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Muestra los hallazgos más recientes por objetivo, los escaneos recientes y los elementos urgentes.</p><p class="function-instruction">Revisa el resumen y abre un análisis en “Scans recentes” (Escaneos recientes). Haz clic en el número de una severidad, o en “Ver em Achados” (Ver en Hallazgos), para abrir esos hallazgos ya filtrados. <a href="#inicio">Ver orientación</a>.</p></div></details>
+          <details class="function-item"><summary>Novo scan (Nuevo escaneo)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Analiza el sistema y los contenedores de las máquinas seleccionadas por IP.</p><p class="function-instruction">Indica las IP, revisa la política e inicia. <a href="#primeiro-scan">Ver pasos</a>.</p></div></details>
+          <details class="function-item"><summary>Resultados<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Guarda el historial y permite investigar los hallazgos de cada análisis.</p><p class="function-instruction">Localiza el escaneo, abre el resultado, aplica filtros y lee los detalles. <a href="#resultados">Ver pasos</a>.</p></div></details>
+          <details class="function-item"><summary>Achados (Hallazgos)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Reúne en una tabla los hallazgos del último escaneo de cada objetivo, con una consulta parecida a SQL, el estado de cada hallazgo según el historial, triaje con plazo, etiquetas y vistas guardadas.</p><p class="function-instruction">Haz clic en el cuadro de consulta, elige campo, operador y valores, y consulta. <a href="#achados">Ver pasos</a>.</p></div></details>
+          <details class="function-item"><summary>Inventário (Inventario)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Reúne las máquinas, los contenedores y los servicios de los escaneos en un mapa y en una lista. Las máquinas descubiertas en la nube entran por su IP, junto con las de la flota y de la red.</p><p class="function-instruction">Haz clic en una máquina para desplegar sus elementos, selecciona un recurso para ver los detalles y usa los filtros para localizar una IP o un servicio.</p><p>El mapa consulta los datos guardados. Los estados históricos y las fechas ayudan a identificar recolecciones antiguas o incompletas. Los rangos son agrupaciones visuales de las IP.</p></div></details>
+          <details class="function-item"><summary>Frota (Flota)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Guarda el inventario de hosts cuyos contenedores se analizarán.</p><p class="function-instruction">Registra los hosts, guarda y usa “Configurar varredura” (Configurar escaneo). <a href="#frota">Ver pasos</a>.</p></div></details>
+          <details class="function-item"><summary>Nuvem (Nube)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Registra cuentas de nube y clústeres de Kubernetes con credenciales de solo lectura. AWS ya se lee; los demás proveedores llegarán en las próximas etapas.</p><p class="function-instruction">Elige el proveedor, completa los campos, prueba la conexión y usa “Descobrir agora” (Descubrir ahora). <a href="#nuvem">Ver pasos</a>.</p></div></details>
+          <details class="function-item"><summary>Buscar CVE<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Verifica una CVE o un GHSA en vivo en las IP indicadas, con una recolección actual por SSH.</p><p class="function-instruction"><a href="#guia-cve">Ver los pasos de la investigación</a>.</p></div></details>
+          <details class="function-item"><summary>Allowlist<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Suprime hallazgos ya evaluados en los próximos análisis y en la evaluación de la política.</p><p class="function-instruction">Indica una entrada por línea, revisa su alcance y guarda. <a href="#funcao-allowlist">Ver pasos</a>.</p></div></details>
+          <details class="function-item"><summary>Rede (Red)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Reúne el escaneo de red, hosts, servicios, exposición de Docker, registries, certificados TLS y hallazgos de red.</p><p class="function-instruction">Empieza por “Varrer a rede” (Escanear la red) e investiga los resultados en las pantallas del módulo. <a href="#rede">Ver pasos</a>.</p></div></details>
+          <details class="function-item"><summary>Agendamentos (Programaciones)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Repite análisis con un intervalo y una entrada guardados.</p><p class="function-instruction">Define nombre, tipo, intervalo, horario, objetivo y política. <a href="#agendamentos">Ver pasos</a>.</p></div></details>
+          <details class="function-item"><summary>Baselines<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Compara análisis compatibles y muestra cómo cambiaron los hallazgos.</p><p class="function-instruction">Selecciona el escaneo actual y la referencia, y revisa los grupos. <a href="#comparacao">Ver pasos</a>.</p></div></details>
+          <details class="function-item"><summary>Auditoria (Auditoría)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Permite consultar los registros de acceso y de operación de la interfaz.</p><p class="function-instruction">Abre el menú y busca por usuario, acción, objetivo o resultado. <a href="#funcao-auditoria">Ver pasos</a>.</p></div></details>
+          <details class="function-item"><summary>Configurações (Configuración)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Muestra información de la instancia, límites de envío y opciones de red.</p><p class="function-instruction">Revisa la conexión y ajusta el ámbito y las opciones de red. <a href="#funcao-configuracoes">Ver pasos</a>.</p></div></details>
+        </div>
+
+        <h3 class="subheading">Las pantallas de Rede</h3>
+        <div class="function-list">
+          <details class="function-item"><summary>Painel de rede (Panel de red)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Resume los escaneos seleccionados. Elige los análisis y filtra por IP o severidad para consultar los indicadores.</p></div></details>
+          <details class="function-item"><summary>Varrer a rede (Escanear la red)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Crea un análisis. Indica los objetivos autorizados, revisa el perfil, los puertos y los módulos, y haz clic en “Iniciar varredura”.</p></div></details>
+          <details class="function-item"><summary>Hosts<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Organiza las observaciones por host. Selecciona un escaneo y abre el host para investigar puertos, servicios y evidencias.</p></div></details>
+          <details class="function-item"><summary>Serviços (Servicios)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Enumera los servicios identificados. Selecciona el escaneo, filtra el listado y revisa los datos observados.</p></div></details>
+          <details class="function-item"><summary>Exposição do Docker (Exposición de Docker)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Reúne las observaciones de las API de Docker. Revisa las evidencias de exposición y los hallazgos relacionados.</p></div></details>
+          <details class="function-item"><summary>Registries<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Reúne los datos observados en los registries. Elige el escaneo y consulta los registros y sus evidencias.</p></div></details>
+          <details class="function-item"><summary>Certificados TLS<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Permite investigar las observaciones TLS. Revisa los datos del certificado y los problemas reportados en el análisis.</p></div></details>
+          <details class="function-item"><summary>Achados de rede (Hallazgos de red)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Reúne los hallazgos de red. Filtra por objetivo, puerto, servicio o severidad; abre un elemento y registra el triaje con un comentario.</p></div></details>
+          <details class="function-item"><summary>Em andamento (En curso)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Muestra el progreso de los análisis activos. Abre los resultados en vivo o usa los controles para pausar, reanudar y detener.</p></div></details>
+          <details class="function-item"><summary>Histórico (Historial)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Permite localizar análisis anteriores. Filtra el historial y usa las acciones para abrir, repetir, comparar, exportar o eliminar un análisis.</p></div></details>
+          <details class="function-item"><summary>Comparar varreduras (Comparar escaneos)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Compara la cobertura y las observaciones de dos análisis. Elige los escaneos y revisa también los elementos sin cobertura comparable.</p></div></details>
+          <details class="function-item"><summary>Perfis (Perfiles)<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Guarda combinaciones de puertos, descubrimiento y auditorías. Crea un perfil o duplica uno existente, ajusta los campos y guarda.</p></div></details>
+        </div>
+
+        <details class="disclosure" id="funcao-allowlist"><summary>Allowlist: cómo registrar una excepción</summary><div><ol class="compact-steps"><li>Abre “Allowlist” en el menú.</li><li>Indica una regla, una ubicación de paquete o un identificador por línea. Usa líneas que empiecen con <code>#</code> para los comentarios.</li><li>Revisa la entrada y haz clic en “Salvar allowlist” (Guardar allowlist).</li><li>Ejecuta un nuevo escaneo para aplicar el cambio. El historial anterior se mantiene como estaba.</li></ol><p>Una entrada de paquete puede suprimir varias vulnerabilidades. Revisa el alcance de la excepción antes de guardar.</p></div></details>
+        <details class="disclosure" id="funcao-auditoria"><summary>Auditoria: cómo localizar una actividad</summary><div><ol class="compact-steps"><li>Abre “Auditoria” en el menú.</li><li>Completa “Buscar atividade” (Buscar actividad) con un usuario, una acción, un objetivo o un resultado.</li><li>Revisa la fecha, el usuario, la acción, el objetivo, la IP y el resultado de la actividad encontrada.</li><li>Borra la búsqueda para volver al listado disponible.</li></ol></div></details>
+        <details class="disclosure" id="funcao-configuracoes"><summary>Configurações: qué revisar y cómo ajustar la red</summary><div><ol class="compact-steps"><li>Abre “Configurações” para consultar la versión, la conexión y los límites de envío.</li><li>En “Configurações de rede” (Configuración de red), revisa los ámbitos autorizados, las exclusiones y los límites del análisis.</li><li>Revisa también el formato de los informes, las evidencias y las preferencias de la interfaz.</li><li>Haz clic en “Salvar configurações de rede” (Guardar configuración de red). Los cambios de ámbito y de límites globales requieren que no haya escaneos activos.</li></ol><p>Revisa la confirmación antes de reducir la retención: ese cambio puede eliminar escaneos de red antiguos y sus informes.</p></div></details>
+        <details class="disclosure"><summary>Achados de rede: cómo registrar el triaje</summary><div><ol class="compact-steps"><li>Abre “Rede → Achados de rede”.</li><li>Localiza el hallazgo con los filtros y abre sus detalles.</li><li>Lee la evidencia y escribe el motivo en “Comentário de triagem” (Comentario de triaje).</li><li>Elige la acción: revisado, falso positivo o risco aceito (riesgo aceptado). Usa “Reabrir” para reabrir un hallazgo.</li></ol><p>El triaje registra la evaluación del elemento. Revisa la evidencia y la cobertura del análisis antes de decidir su estado.</p></div></details>
+        <div class="callout"><span class="callout-tag">Imágenes del manual</span><div><p>Las pantallas de cada paso provienen del laboratorio de DockScan, con datos de demostración. Las pantallas y los nombres pueden cambiar mientras la herramienta está en desarrollo.</p></div></div>
+      </section>
+
+      <section id="primeiro-scan" class="chapter" aria-labelledby="titulo-primeiro" data-keywords="ip ipv4 ipv6 ssh máquina containers novo scan política kev epss cofre contenedores nuevo escaneo bóveda">
+        <header class="chapter-header"><div><h2 id="titulo-primeiro">Tu primer escaneo por IP</h2><p>Indica las direcciones de las máquinas. DockScan recolecta los datos por SSH e identifica automáticamente los paquetes instalados.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Configura el acceso SSH</h3><p>En Frota (Flota), registra una credencial en la bóveda con el ámbito de las IP permitidas o configura una clave SSH en el inventario.</p></div></li>
+          <li><div><h3>Abre “Novo scan” (Nuevo escaneo) e indica las IP</h3><p>Escribe una IP por línea o sepáralas con comas. Los botones del inventario agregan IP ya registradas. La selección puede incluir IPv4 e IPv6.</p></div></li>
+          <li><div><h3>Define la política del análisis</h3><p>Elige la severidad mínima de falla y las opciones de CVE, KEV y EPSS. Deja marcada la comparación para seguir los cambios en las mismas IP.</p></div></li>
+          <li><div><h3>Haz clic en “Iniciar varredura por IP” (Iniciar escaneo por IP)</h3><p>El resultado se actualiza automáticamente. La recolección usa solo las IP indicadas, aunque haya otras máquinas en el inventario.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-novo-scan" data-screenshot="novo-scan.webp">
+          <div class="placeholder-header"><span>Imagen 02</span><span>Novo scan / IPs das máquinas</span></div>
+          <img src="../assets/prints/novo-scan.webp" alt="Pantalla Novo scan con las IP de las máquinas y la política del análisis" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Referencia de los pasos 1 a 4: completar el objetivo, revisar la política e iniciar el análisis.</figcaption>
+        </figure>
+        <div class="callout"><span class="callout-tag">Cómo se obtienen los datos</span><div><p>Los nombres y las versiones de los paquetes se descubren en la propia máquina. No hace falta indicar ni enviar ningún paquete para iniciar el escaneo. Los comandos remotos realizan lecturas, sin instalar ningún agente.</p></div></div>
+        <div class="table-scroll"><table><caption class="sr-only">Escaneos disponibles por IP</caption><thead><tr><th scope="col">Propósito</th><th scope="col">Dónde abrirlo</th><th scope="col">Objetivo</th></tr></thead><tbody>
+          <tr><td>Auditar el sistema y los contenedores</td><td>Novo scan</td><td>IP de las máquinas, con acceso SSH.</td></tr>
+          <tr><td>Investigar una vulnerabilidad específica</td><td>Buscar CVE</td><td>IP de las máquinas e identificador CVE o GHSA.</td></tr>
+          <tr><td>Identificar puertos y servicios</td><td>Rede → Varrer a rede (Red → Escanear la red)</td><td>IP o rangos autorizados en el ámbito de red.</td></tr>
+        </tbody></table></div>
+        <details class="disclosure"><summary>¿Qué recolecta el escaneo?</summary><div><p>Se leen los paquetes y la configuración del sistema, los contenedores y los datos disponibles sobre procesos y puertos. El resultado informa las fallas de acceso o las partes de la recolección que quedaron incompletas.</p><p>“Pular consulta de CVEs” (Omitir consulta de CVE) desactiva la consulta de vulnerabilidades. “Pular KEV e EPSS” (Omitir KEV y EPSS) desactiva ese enriquecimiento. La ausencia de hallazgos en una recolección incompleta no descarta vulnerabilidades.</p></div></details>
+      </section>
+
+      <section id="resultados" class="chapter" aria-labelledby="titulo-resultados" data-keywords="achado severidade crítica alta média baixa info risco falhou passou filtros cve kev epss detalhe recomendação resultado vulnerabilidades pacotes hallazgo severidad media baja riesgo falló pasó recomendación paquetes">
+        <header class="chapter-header"><div><h2 id="titulo-resultados">Entiende los resultados</h2><p>El resultado muestra qué se encontró, dónde está el problema y cuál es el siguiente paso recomendado.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Revisa el estado y los avisos</h3><p>Abre el escaneo desde el Painel (Panel) o desde Resultados. Comprueba si terminó, si hubo algún error y qué límites o consultas afectaron la cobertura.</p></div></li>
+          <li><div><h3>Filtra lo que necesitas investigar</h3><p>Usa Severidade (Severidad) y Buscar achado (Buscar hallazgo) para localizar una regla, un paquete, una CVE o una ubicación. En Exibir (Mostrar), alterna entre “Pacotes e regras” (Paquetes y reglas) y “Vulnerabilidades individuais” (Vulnerabilidades individuales).</p></div></li>
+          <li><div><h3>Abre los detalles y lee la recomendación</h3><p>Cada elemento indica la severidad, el identificador de la regla y la ubicación. Usa Ver detalhes (Ver detalles) para consultar la evidencia y planificar la corrección. Cuando están disponibles, KEV y EPSS ayudan a priorizar.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-resultados" data-screenshot="resultado.webp">
+          <div class="placeholder-header"><span>Imagen 03</span><span>Resultado / filtros y hallazgos</span></div>
+          <img src="../assets/prints/resultado.webp" alt="Resultado de un análisis que falló por la política, con el resumen por severidad y los hallazgos" width="1440" height="1150" loading="lazy" decoding="async">
+          <figcaption>Referencia de los pasos 1 a 3: revisar el estado, filtrar los elementos y leer la recomendación.</figcaption>
+        </figure>
+        <div class="callout warning"><span class="callout-tag">Sobre la política</span><div><h3>“Passou” (Pasó) puede aparecer aun con hallazgos</h3><p>El estado indica si se alcanzó el umbral de la política elegida. Un escaneo con hallazgos por debajo del límite configurado puede pasar. Revisa la política, los avisos y la cobertura antes de concluir que el objetivo es seguro.</p></div></div>
+        <div class="severity-key" aria-label="Severidades"><span class="critical">Crítica</span><span class="high">Alta</span><span class="medium">Média (Media)</span><span class="low">Baixa (Baja)</span><span class="info">Info</span></div>
+        <p class="muted">Un hallazgo de paquete puede agrupar varias vulnerabilidades. La vista individual ayuda a verificar cada identificador sin confundir la cantidad de paquetes con la de vulnerabilidades.</p>
+        <details class="disclosure"><summary>¿Cuál es la diferencia entre “Falhou” (Falló) y “Erro na análise” (Error en el análisis)?</summary><div><p>“Falhou” y “Passou” son el resultado de la política: el análisis terminó y algún hallazgo alcanzó, o no, el límite configurado. “Erro na análise” es una falla técnica: la recolección no terminó. Aparece con un subrayado punteado rojo para que no se confunda con “Falhou”. “Incompleto” indica que faltó parte de la cobertura.</p></div></details>
+      </section>
+
+      <section id="achados" class="chapter" aria-labelledby="titulo-achados" data-keywords="achados consulta sql filtro campos operadores severidade kev epss pacote cve ip fonte agrupar exportar csv json link compartilhar sugestões estado novo corrigido reapareceu triagem prazo risco aceito falso positivo lote tags visões salvas plano de correção ordenar terminal hallazgos severidad paquete fuente enlace compartir sugerencias nuevo corregido reapareció triaje clasificación plazo riesgo aceptado etiquetas vistas guardadas plan de corrección panel lateral detalles descripción referencias osv cvss cwe historial otros activos">
+        <header class="chapter-header"><div><h2 id="titulo-achados">Consulta los hallazgos</h2><p>La pantalla Achados (Hallazgos) reúne en una sola tabla los hallazgos del último escaneo de cada objetivo, de todas las fuentes. Una consulta parecida a SQL encuentra lo que necesitas.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Abre “Achados” en el menú</h3><p>La tabla empieza con todos los hallazgos, del más urgente al menos urgente: primero los que están en explotación activa (KEV), después por severidad y por probabilidad de explotación (EPSS).</p></div></li>
+          <li><div><h3>Haz clic en el cuadro de consulta y elige un campo</h3><p>La lista muestra los campos. Pasa el puntero sobre un campo para abrir sus opciones al lado: elige el operador, marca uno o más valores y haz clic en “Adicionar à consulta” (Agregar a la consulta). Los valores sugeridos provienen de tus propios hallazgos, con el recuento de cada uno.</p></div></li>
+          <li><div><h3>Combina condiciones y consulta</h3><p>Con una consulta lista, vuelve a hacer clic en el cuadro para continuar con “e” (y), “ou” (o) u “ordenar por”, o usa “Adicionar outro filtro” (Agregar otro filtro). Después haz clic en “Consultar” o presiona Enter. Si ya conoces el lenguaje, puedes escribir directamente.</p></div></li>
+          <li><div><h3>Agrupa, ordena, comparte y exporta</h3><p>En “Agrupar por”, mira los hallazgos por activo, vulnerabilidad, paquete, fuente, estado o etiqueta; haz clic en un grupo para filtrar solo ese. Haz clic en el título de una columna para ordenar. La consulta queda en la dirección de la página, así que puedes compartir el enlace. “Exportar CSV” y “Exportar JSON” exportan el resultado de la consulta.</p></div></li>
+          <li><div><h3>Abre los detalles de un hallazgo</h3><p>Haz clic en el identificador, como CVE-2023-44487, o en cualquier punto de la columna Achado (Hallazgo). Se abre un panel a la derecha con CVSS, EPSS, explotación activa, dónde está el hallazgo, cómo corregirlo, la descripción y las referencias de OSV, los otros activos con la misma vulnerabilidad y el historial de recolecciones del activo. Desde ahí haces el triaje y pasas al hallazgo anterior o al siguiente de la consulta; Esc o “Fechar” (Cerrar) vuelve a la tabla.</p></div></li>
+          <li><div><h3>Haz el triaje</h3><p>Marca los hallazgos en la primera columna. En la barra que aparece, elige Revisado, Falso positivo, Risco aceito (Riesgo aceptado) o Reabrir, indica el plazo, si lo hay, y el motivo, y haz clic en “Aplicar triagem” (Aplicar triaje). Falso positivo y Risco aceito exigen el motivo; todo queda en la Auditoria (Auditoría).</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-achados" data-screenshot="achados.webp">
+          <div class="placeholder-header"><span>Imagen 09</span><span>Achados / consulta y opciones del campo</span></div>
+          <img src="../assets/prints/achados.webp" alt="Pantalla Achados con la lista de sugerencias abierta y, al lado, las opciones del campo pacote con valores marcados" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Referencia de los pasos 2 y 3: la lista de sugerencias a la izquierda y, al lado, el operador y los valores del campo elegido.</figcaption>
+        </figure>
+        <figure class="screenshot-placeholder" id="print-achados-painel" data-screenshot="achados-painel.webp">
+          <div class="placeholder-header"><span>Imagen 12</span><span>Achados / panel del hallazgo</span></div>
+          <img src="../assets/prints/achados-painel.webp" alt="Panel lateral de un hallazgo explotado activamente, con CVSS, EPSS, explotación activa, estado y dónde está, sobre la consulta" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Referencia del paso 5: el panel se abre sobre la consulta, que sigue a la izquierda.</figcaption>
+        </figure>
+        <div class="code-box labeled"><span class="code-label">Ejemplos de consulta</span><pre><code>severidade &gt;= alta e corrigivel
+pacote ~ openssl e (fonte = maquina ou fonte = container)
+cve em (CVE-2022-37434, CVE-2024-3094)
+ip em 172.30.0.0/24 e visto_em &gt; -7d
+"nginx" ordenar por epss desc
+estado = novo e severidade &gt;= alta
+triagem = risco_aceito ordenar por prazo asc
+tag = ambiente:producao</code></pre><button class="copy-button" type="button" data-copy hidden>Copiar</button></div>
+        <div class="table-scroll"><table><caption class="sr-only">Operadores de la consulta</caption><thead><tr><th scope="col">Operador</th><th scope="col">Significado</th></tr></thead><tbody>
+          <tr><td class="mono">= y !=</td><td>Es igual o es diferente. Aceptan <code>*</code> como comodín, como en <code>versao = 1.2.*</code>.</td></tr>
+          <tr><td class="mono">&gt; &gt;= &lt; &lt;=</td><td>Mayor o menor, para severidad, EPSS, puerto y fecha.</td></tr>
+          <tr><td class="mono">~ y !~</td><td>Contiene o no contiene el texto.</td></tr>
+          <tr><td class="mono">em (a, b)</td><td>Está en la lista. Para IP, acepta un rango: <code>ip em 10.0.0.0/24</code>.</td></tr>
+          <tr><td class="mono">existe</td><td>El campo tiene valor.</td></tr>
+          <tr><td class="mono">e, ou, não, ( )</td><td>Unen y agrupan las condiciones. También sirven and, or, not e in.</td></tr>
+        </tbody></table></div>
+        <div class="callout"><span class="callout-tag">De dónde vienen los hallazgos</span><div><p>La tabla usa el último escaneo completado de cada objetivo. En la flota, cada máquina cuenta por separado: si una máquina quedó inaccesible en el escaneo más reciente, vale su última recolección buena. Las búsquedas de CVE no entran, porque los mismos paquetes ya aparecen a través de la flota.</p><p>Los corregidos, los falsos positivos y los riesgos aceptados quedan fuera de la tabla hasta que la consulta los mencione. El resumen indica cuántos están ocultos y ofrece el atajo para mostrarlos.</p></div></div>
+        <div class="table-scroll"><table><caption class="sr-only">Estados de un hallazgo según el historial</caption><thead><tr><th scope="col">Estado</th><th scope="col">Cuándo aparece</th></tr></thead><tbody>
+          <tr><td>Novo (Nuevo)</td><td>El hallazgo nunca había aparecido en ese objetivo.</td></tr>
+          <tr><td>Ativo (Activo)</td><td>Sigue presente desde la recolección anterior.</td></tr>
+          <tr><td>Reapareceu (Reapareció)</td><td>Había desaparecido en una recolección completa y volvió.</td></tr>
+          <tr><td>Corrigido (Corregido)</td><td>Dejó de aparecer en una recolección completa. Una recolección parcial no prueba la corrección: el hallazgo sigue activo, con el aviso de recolección parcial. Un aviso como “regras do sudo não verificadas” (reglas de sudo no verificadas) solo deja parcial lo que depende de él.</td></tr>
+        </tbody></table></div>
+        <details class="disclosure"><summary>¿De dónde salen los datos del panel del hallazgo?</summary><div><p>CVSS, EPSS, explotación activa, paquete y corrección vienen del escaneo. La descripción, las fechas, la debilidad (CWE) y las referencias vienen de OSV: el servidor de DockScan las busca cuando abres el panel y las guarda por un día. Sin internet, el panel muestra el resto y avisa que OSV no respondió.</p><p>El historial muestra las últimas recolecciones del activo: Encontrado, Não encontrado (No encontrado) o Coleta parcial (Recolección parcial), cuando la ausencia no prueba la corrección. La dirección de la página recibe <code>?achado=</code>, así que el enlace abre directo en el mismo hallazgo.</p></div></details>
+        <details class="disclosure"><summary>¿Qué campos puedo consultar?</summary><div><p>severidade, cve, regra, titulo, pacote, versao, ecossistema, correcao, corrigivel, fonte, ativo, ip, porta, container, local, epss, kev, novo, visto_em, estado, triagem, primeiro_visto, corrigido_em, prazo, tag y scan. La ayuda “Como consultar” (Cómo consultar), en la propia pantalla, describe cada uno.</p><p>Un campo de sí o no, escrito solo, equivale a “sim” (sí): <code>kev</code> es lo mismo que <code>kev = sim</code>. Las fechas aceptan <code>2026-11-01</code>, <code>-7d</code>, <code>+30d</code>, <code>-24h</code>, <code>hoje</code> (hoy) y <code>ontem</code> (ayer). EPSS acepta <code>0.1</code> o <code>10%</code>.</p></div></details>
+        <details class="disclosure"><summary>¿Cómo funciona el plazo del triaje?</summary><div><p>Revisado, Falso positivo y Risco aceito pueden tener un plazo de hasta dos años. Cuando vence el plazo, el hallazgo vuelve a quedar abierto y reaparece en la tabla, marcado como prazo vencido (plazo vencido). Para revisar las excepciones que están por vencer, consulta <code>triagem != aberto e prazo &lt; +30d</code>.</p></div></details>
+        <details class="disclosure"><summary>¿Cómo crear etiquetas y vistas guardadas?</summary><div><p>Una etiqueta tiene el formato categoría:valor, como <code>ambiente:producao</code> o <code>time:plataforma</code>, y se define mediante una consulta. Escribe la consulta que selecciona los hallazgos, haz clic en “Criar tag com esta consulta” (Crear etiqueta con esta consulta) e indica la categoría y el valor. Todo hallazgo que cumpla la consulta recibe la etiqueta, incluidos los de los próximos escaneos. Después filtra con <code>tag = ambiente:producao</code>, <code>tag = ambiente:*</code> o agrupa por etiqueta. Las etiquetas aparecen en el panel “Tags” (Etiquetas), con cuántos hallazgos marca cada una.</p><p>Una vista guardada conserva la consulta y la agrupación con un nombre. Usa “Salvar como visão” (Guardar como vista) y elige la vista después en “Visões salvas” (Vistas guardadas). Las etiquetas y las vistas valen para todos los usuarios de esta instancia.</p></div></details>
+        <details class="disclosure"><summary>¿Qué es el plan de corrección?</summary><div><p>En “Agrupar por”, elige “Plano de correção” (Plan de corrección). Cada fila es un paquete instalado, con cuántas vulnerabilidades tiene, la peor severidad, los activos afectados y la versión a la que hay que actualizar. Actualizar un paquete de la lista resuelve de una vez todas las vulnerabilidades de la fila.</p></div></details>
+        <details class="disclosure"><summary>¿Puedo consultar desde la terminal?</summary><div><p>Sí, con el mismo lenguaje de la pantalla, leyendo los datos de la interfaz:</p><div class="code-box"><pre><code>dockscan achados severidade &gt;= alta e kev --data-dir ~/.dockscan
+dockscan achados estado = novo --formato csv &gt; novos.csv</code></pre><button type="button" class="copy-button" data-copy hidden>Copiar</button></div><p>Sin <code>--formato</code>, sale una tabla; con <code>json</code> o <code>csv</code>, salen los mismos datos que en la exportación de la pantalla.</p></div></details>
+        <details class="disclosure"><summary>La consulta mostró un error</summary><div><p>El mensaje indica qué faltó y en qué posición, y el cursor va hasta el punto del problema. Los errores más comunes son un campo con el nombre equivocado, un operador que no sirve para el campo (como <code>&gt;</code> en <code>kev</code>) y comillas o paréntesis sin cerrar.</p></div></details>
+      </section>
+
+      <section id="comparacao" class="chapter" aria-labelledby="titulo-comparacao" data-keywords="baseline comparar scans novos persistentes corrigidos allowlist suprimir exceções histórico diferenças línea base escaneos nuevos corregidos excepciones historial">
+        <header class="chapter-header"><div><h2 id="titulo-comparacao">Sigue las correcciones</h2><p>Repite el análisis después de modificar el objetivo y compara los resultados para saber qué cambió.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Ejecuta un nuevo escaneo del mismo objetivo</h3><p>Usa el mismo tipo de análisis y el mismo nombre de objetivo. Mantén la misma selección de IP y las mismas opciones de cobertura.</p></div></li>
+          <li><div><h3>Abre “Comparar scans” (Comparar escaneos)</h3><p>En la página de un resultado completado, haz clic en Comparar scans. También puedes abrir Baselines en el menú. Selecciona el escaneo actual y la referencia compatible.</p></div></li>
+          <li><div><h3>Revisa los tres grupos</h3><p>Los Novos (Nuevos) aparecieron en el escaneo actual. Los Persistentes siguen presentes. Los Corrigidos (Corregidos) estaban en la referencia y no aparecen en el resultado actual. Abre los elementos para entender el cambio.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-comparacao" data-screenshot="comparacao.webp">
+          <div class="placeholder-header"><span>Imagen 04</span><span>Comparar scans</span></div>
+          <img src="../assets/prints/comparacao.webp" alt="Comparación entre dos escaneos de la misma imagen, con los grupos nuevos, persistentes y corregidos" width="1440" height="1000" loading="lazy" decoding="async">
+          <figcaption>Referencia de los pasos 2 y 3: elegir dos análisis compatibles y revisar los cambios.</figcaption>
+        </figure>
+        <div class="callout"><span class="callout-tag">Antes de comparar</span><div><p>Una consulta desactivada, un error de recolección o un cambio en la allowlist pueden cambiar los resultados. “Corrigido” significa que el hallazgo dejó de reportarse en esa comparación. Revisa la evidencia y los avisos de los dos escaneos.</p></div></div>
+        <details class="disclosure"><summary>¿Cómo manejar una excepción con la Allowlist?</summary><div><p>Abre Allowlist, indica una regla, una ubicación de paquete o un identificador por línea y haz clic en Salvar allowlist (Guardar allowlist). Las líneas que empiezan con <code>#</code> son comentarios.</p><p>Las entradas se aplican en los próximos escaneos y retiran los hallazgos correspondientes de la evaluación de falla. El historial anterior se mantiene como estaba. Revisa el alcance de cada entrada: un paquete puede agrupar varias vulnerabilidades.</p></div></details>
+      </section>
+
+      <section id="frota" class="chapter" aria-labelledby="titulo-frota" data-keywords="ssh inventário host containers execução frota servidor docker chave remoto local agente inventario contenedores ejecución flota clave mapa máquinas servicios rango ips inventario">
+        <header class="chapter-header"><div><h2 id="titulo-frota">Analiza tu flota</h2><p>Registra los hosts para analizar los contenedores en ejecución y su configuración, usando el inventario guardado.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Abre “Frota” (Flota) y completa el inventario</h3><p>Indica una IP por línea, con las opciones de acceso SSH. El servidor de DockScan necesita llegar a los hosts por SSH, tener acceso por clave o mediante la bóveda de credenciales y permiso para las lecturas. La bóveda está en la propia página Frota.</p></div></li>
+          <li><div><h3>Guarda e inicia el análisis</h3><p>Haz clic en Salvar inventário (Guardar inventario) y después en Configurar varredura (Configurar escaneo). En “Novo scan” (Nuevo escaneo), selecciona las IP, ajusta la política y haz clic en “Iniciar varredura por IP” (Iniciar escaneo por IP).</p></div></li>
+          <li><div><h3>Revisa cada host</h3><p>En el resultado, abre los hosts y verifica los hallazgos de la máquina y de los contenedores. Revisa también las fallas de acceso y los avisos de recolección. Vuelve a “Frota” para consultar el último escaneo.</p></div></li>
+          <li><div><h3>Mira las máquinas en Inventário</h3><p>Después del escaneo, “Inventário” (Inventario) muestra las máquinas, los contenedores y los servicios encontrados, en un mapa agrupado por rango de IP o en una lista. Haz clic en una máquina para abrir sus contenedores y servicios y usa la búsqueda y los filtros para encontrar una IP.</p></div></li>
+        </ol>
+        <details class="disclosure" id="guia-cofre"><summary>Cómo configurar la bóveda SSH</summary><div><ol class="compact-steps"><li>En Frota, ve a “Cofre de acesso SSH” (Bóveda de acceso SSH).</li><li>Indica el nombre, el usuario, la contraseña y el ámbito permitido. Marca sudo solo si esa cuenta está configurada para usarlo.</li><li>Haz clic en “Salvar credencial” (Guardar credencial). La contraseña se borra del campo y la interfaz no la devuelve.</li><li>En el inventario, usa <code>cred=nome-da-credencial</code> para seleccionarla. El ámbito se sigue respetando.</li></ol><p>La identidad SSH se registra en la primera conexión. Si cambia, revisa el cambio antes de olvidar la entrada en la lista de identidades conocidas.</p></div></details>
+        <details class="disclosure" id="guia-coleta"><summary>Qué se lee en cada máquina</summary><div><p>La recolección usa solo lo que la máquina ya tiene: comandos del sistema y archivos de <code>/proc</code> y <code>/etc</code>. No hace falta instalar Python ni ningún agente. En una máquina mínima, sin <code>ss</code> ni <code>ps</code>, los puertos y los procesos se obtienen directamente del kernel.</p><ol class="compact-steps"><li>Paquetes del sistema: Debian y Ubuntu (dpkg), Alpine (apk), Rocky Linux y AlmaLinux (rpm). Otras distribuciones RPM, como Red Hat y Amazon Linux, aparecen como no verificadas, porque OSV no incluye sus avisos.</li><li>Los avisos de Debian, Ubuntu y Rocky citan el paquete de origen: una vulnerabilidad de OpenSSL que afecta a <code>libssl3</code> aparece como <code>openssl</code>. El kernel queda fuera por ahora: su riesgo depende del kernel en ejecución, no de los paquetes instalados.</li><li>En los contenedores, también los binarios Go y Rust y las bibliotecas Java (.jar, .war, .ear).</li><li>Para cada paquete vulnerable, si algún proceso está usando sus archivos en este momento. Un binario Go detenido reduce la exposición; en las bibliotecas Java, DockScan solo afirma el uso, porque un .war que el servidor descomprimió se usa sin quedar abierto.</li></ol></div></details>
+        <details class="disclosure" id="guia-cve"><summary>Cómo investigar una CVE</summary><div><ol class="compact-steps"><li>Abre “Buscar CVE” en el menú de la herramienta.</li><li>Indica las IP y un identificador CVE o GHSA.</li><li>Haz clic en “Verificar CVE nos IPs” (Verificar CVE en las IP). Los datos se recolectan por SSH en las máquinas seleccionadas.</li><li>Lee las ocurrencias, la fecha de la recolección, los avisos y las evidencias de uso. Una recolección incompleta no descarta un objetivo.</li></ol><p>Los paquetes se identifican automáticamente durante la recolección por IP.</p></div></details>
+        <figure class="screenshot-placeholder" id="print-frota" data-screenshot="frota.webp">
+          <div class="placeholder-header"><span>Imagen 05</span><span>Frota / inventario</span></div>
+          <img src="../assets/prints/frota.webp" alt="Pantalla Frota con un inventario de ejemplo y el último escaneo de los hosts" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Referencia de los pasos 1 y 2: registrar los hosts, guardar y configurar el análisis de la flota.</figcaption>
+        </figure>
+        <figure class="screenshot-placeholder" id="print-inventario" data-screenshot="inventario.webp">
+          <div class="placeholder-header"><span>Imagen 13</span><span>Inventário / mapa de máquinas</span></div>
+          <img src="../assets/prints/inventario.webp" alt="Inventario con el mapa de las máquinas del laboratorio agrupadas por rango de IP y el total de máquinas, contenedores y servicios" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Referencia del paso 4: el mapa agrupa las máquinas por rango de IP; la lista muestra los mismos elementos para navegar con el teclado.</figcaption>
+        </figure>
+        <div class="code-box labeled"><span class="code-label">Ejemplo de inventario</span><pre><code># Docker da máquina em que o DockScan está rodando
+127.0.0.1 local=true
+
+# Exemplo de host remoto: substitua pelo seu ambiente
+deploy@host.exemplo.com:2222 key=~/.ssh/id_deploy</code></pre><button class="copy-button" type="button" data-copy hidden>Copiar</button></div>
+        <p class="muted">Las rutas de las claves y el Docker local se resuelven en la máquina del servidor de DockScan. Usa hosts a los que tengas acceso autorizado.</p>
+      </section>
+
+      <section id="rede" class="chapter" aria-labelledby="titulo-rede" data-keywords="network security scanner rede ip cidr escopo portas serviços tls registry docker exposição varrer iniciar pausar retomar parar hosts achados histórico perfil painel red ámbito alcance puertos servicios exposición escanear reanudar detener hallazgos historial panel">
+        <header class="chapter-header"><div><h2 id="titulo-rede">Explora la red</h2><p>El módulo Rede (Red) identifica puertos y servicios y reúne evidencias de exposición en los objetivos autorizados.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Revisa los ámbitos permitidos</h3><p>En Configurações → Configurações de rede (Configuración → Configuración de red), revisa “Escopos de rede autorizados (IP/CIDR)” (Ámbitos de red autorizados). Incluye solo las redes que tienes autorización para analizar. De forma predeterminada, se permite el loopback.</p></div></li>
+          <li><div><h3>Abre “Rede → Varrer a rede” (Red → Escanear la red)</h3><p>Ponle un nombre al escaneo. En IP, range, CIDR ou múltiplos alvos (IP, rango, CIDR o múltiples objetivos), indica las IP y las redes. Para probar en la máquina del servidor, usa <code>127.0.0.1</code>. También puedes importar una lista <code>.txt</code> en “Importar alvos” (Importar objetivos).</p><p>Completa las exclusiones, si hace falta. Revisa la estimación de objetivos y el ámbito autorizado que muestra el formulario.</p></div></li>
+          <li><div><h3>Elige el perfil y revisa los puertos</h3><p>En “Configuração da varredura” (Configuración del escaneo), selecciona el “Perfil” y revisa las “Portas” (Puertos). Revisa el tiempo límite, la velocidad y los módulos “Detectar serviços” (Detectar servicios), “Detectar Docker”, “Auditar registries” y “Analisar TLS” (Analizar TLS).</p></div></li>
+          <li><div><h3>Confirma la autorización y haz clic en “Iniciar varredura” (Iniciar escaneo)</h3><p>Sigue el progreso en la página del escaneo. Usa “Pausar”, “Retomar” (Reanudar) o “Parar” (Detener) para finalizarlo. Al detenerlo, los resultados parciales siguen disponibles.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-rede" data-screenshot="rede.webp">
+          <div class="placeholder-header"><span>Imagen 06</span><span>Varrer a rede / configuración</span></div>
+          <img src="../assets/prints/rede.webp" alt="Pantalla Varrer a rede con el objetivo del laboratorio, los ámbitos autorizados y la configuración" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Referencia de los pasos 1 a 4: revisar el ámbito y configurar el escaneo antes de iniciarlo.</figcaption>
+        </figure>
+        <div class="two-columns notes"><div><h3>Dónde consultar después</h3><p>“Em andamento” (En curso) muestra los trabajos activos. “Histórico” (Historial) guarda los análisis anteriores. Usa “Hosts” y “Serviços” (Servicios) para investigar los hosts y servicios encontrados.</p></div><div><h3>Cómo leer la cobertura</h3><p>En la página del escaneo, cambia la “Visualização” (Vista) entre hosts, puertos, cobertura TCP, servicios y hallazgos. Consulta “Configuração e limitações” (Configuración y limitaciones) para entender el alcance de la recolección.</p></div></div>
+        <div class="callout warning"><span class="callout-tag">Sobre la cobertura</span><div><h3>Un timeout es un resultado no concluyente</h3><p>No está comprobado que un puerto sin respuesta esté cerrado. Tampoco está comprobado que un host sin respuesta esté apagado. Verifica los estados de cobertura antes de comparar o de dar por terminada la investigación.</p></div></div>
+        <details class="disclosure"><summary>¿Cómo comparar dos escaneos de red?</summary><div><p>Abre “Comparar varreduras” (Comparar escaneos) en el menú Rede o usa “Comparar” en el resultado. Selecciona los dos análisis y revisa los elementos nuevos, eliminados, modificados y sin cambios.</p><p>Los elementos sin cobertura comparable aparecen como “NotComparable”. Confirma los objetivos, los puertos y los módulos antes de interpretar que un servicio se eliminó o que un riesgo se resolvió.</p></div></details>
+      </section>
+
+      <section id="nuvem" class="chapter" aria-labelledby="titulo-nuvem" data-keywords="nuvem cloud aws azure google gcp kubernetes conta credencial permissão leitura securityaudit reader viewer kubeconfig testar conexão descobrir ec2 security group ecr eks nube cuenta permiso lectura probar conexión descubrir">
+        <header class="chapter-header"><div><h2 id="titulo-nuvem">Conecta la nube</h2><p>El módulo de nube lee cuentas de AWS para encontrar lo que expone tus contenedores: máquinas, reglas de firewall, registries y clústeres. Azure, Google Cloud y Kubernetes ya se pueden registrar; su lectura llegará en las próximas etapas.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Crea una credencial de solo lectura</h3><p>Al elegir el proveedor, la pantalla muestra el permiso mínimo y el paso a paso para crear la credencial. Nunca uses la clave de un usuario administrador.</p></div></li>
+          <li><div><h3>Abre “Nuvem” (Nube) y elige el proveedor</h3><p>Ponle un nombre a la cuenta y completa los campos. Las regiones, suscripciones, proyectos o namespaces definen lo que se puede leer.</p></div></li>
+          <li><div><h3>Guarda y haz clic en “Testar conexão” (Probar conexión)</h3><p>En AWS, la prueba verifica el acceso en la propia nube y muestra la identidad utilizada. En los demás proveedores, confirma que la cuenta se validó y se guardó.</p></div></li>
+          <li><div><h3>Haz clic en “Descobrir agora” (Descubrir ahora)</h3><p>El descubrimiento es un escaneo como los demás: se abre en la página del escaneo, entra en Resultados y obtiene Falhou (Falló) o Passou (Pasó) según la política. Los hallazgos van a la pantalla Achados (Hallazgos) con <code>fonte = cloud</code>, y las máquinas, al Inventário (Inventario). Si una región no se puede leer, el escaneo queda incompleto e indica cuál.</p></div></li>
+          <li><div><h3>Edita o elimina cuando lo necesites</h3><p>En “Editar”, un secreto que dejes en blanco conserva el actual. “Excluir” (Eliminar) borra del servidor la cuenta y sus secretos.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-nuvem" data-screenshot="nuvem.webp">
+          <div class="placeholder-header"><span>Imagen 10</span><span>Nuvem / registro de cuentas</span></div>
+          <img src="../assets/prints/nuvem.webp" alt="Pantalla Nuvem con el registro de una cuenta de AWS y, al lado, el permiso mínimo y el paso a paso" width="1440" height="1050" loading="lazy" decoding="async">
+          <figcaption>Referencia de los pasos 1 a 3: elegir el proveedor, completar los campos y revisar el permiso mínimo al lado.</figcaption>
+        </figure>
+        <div class="table-scroll"><table><caption class="sr-only">Permiso mínimo por proveedor</caption><thead><tr><th scope="col">Proveedor</th><th scope="col">Credencial de solo lectura</th><th scope="col">Ámbito</th></tr></thead><tbody>
+          <tr><td>AWS</td><td>Usuario que solo puede asumir un rol con la política SecurityAudit, con external ID obligatorio.</td><td>Regiones</td></tr>
+          <tr><td>Azure</td><td>Aplicación (service principal) con el rol Reader.</td><td>Suscripciones</td></tr>
+          <tr><td>Google Cloud</td><td>Cuenta de servicio con los roles Viewer y Security Reviewer.</td><td>Proyectos</td></tr>
+          <tr><td>Kubernetes</td><td>ServiceAccount con un ClusterRole de lectura sobre pods, nodes y namespaces.</td><td>Namespaces</td></tr>
+        </tbody></table></div>
+        <div class="callout warning"><span class="callout-tag">Seguridad</span><div><h3>Los secretos se guardan cifrados, pero en el servidor</h3><p>Las credenciales se cifran con la clave de la bóveda y nunca vuelven a la pantalla. Quien tenga acceso de administrador al servidor de DockScan puede leerlas: registra solo credenciales de lectura y, de preferencia, con fecha de vencimiento.</p></div></div>
+        <details class="disclosure"><summary>¿Por qué se rechazó mi kubeconfig?</summary><div><p>Por seguridad, el kubeconfig debe traer el token o el certificado incrustados y la CA del clúster en <code>certificate-authority-data</code>. Se rechazan: la autenticación por <code>exec</code> o <code>auth-provider</code>, que ejecutaría un programa en el servidor de DockScan; las rutas de archivo, que leerían archivos del servidor; <code>insecure-skip-tls-verify</code>; y las direcciones sin <code>https://</code>.</p></div></details>
+        <details class="disclosure"><summary>¿Qué busca DockScan en la nube?</summary><div><p>Puertos de administración abiertos a internet (API de Docker, kubelet, etcd, API de Kubernetes, registry y SSH), reglas que permiten todos los puertos, registries con lectura anónima o con usuario administrador, tags reescribibles, API del clúster abierta, clúster sin RBAC, máquinas que aceptan el servicio de metadatos sin token y workloads privilegiados.</p><p>En AWS, esto se obtiene de EC2 (máquinas y security groups), de ECR y de EKS, en las regiones registradas. Con el ARN del rol, la clave solo sirve para asumirlo, en una sesión de 15 minutos, y toda lectura usa el rol. Ninguna llamada crea ni modifica recursos.</p></div></details>
+        <details class="disclosure"><summary>“Descobrir agora” no aparece</summary><div><p>El botón aparece cuando el proveedor ya tiene conector y su SDK está instalado en el servidor de DockScan. Para AWS, instálalo con <code>pip install "dockscan[cloud]"</code>. La prueba de conexión también avisa cuando falta el SDK.</p></div></details>
+      </section>
+
+      <section id="agendamentos" class="chapter" aria-labelledby="titulo-agendamentos" data-keywords="automático recorrente periodicidade intervalo diário agendamento scheduler agendador pausar retomar executar agora minutos recurrente periodicidad diario programación programar programador reanudar ejecutar ahora">
+        <header class="chapter-header"><div><h2 id="titulo-agendamentos">Programa análisis</h2><p>Repite un análisis en intervalos definidos y consulta el resultado de cada ejecución en el historial.</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Abre “Agendamentos” (Programaciones) y ponle un nombre a la rutina</h3><p>Define el intervalo en minutos y la primera ejecución. Para ejecutarla una vez al día, usa 1440 minutos. La interfaz acepta de 5 a 10080 minutos.</p></div></li>
+          <li><div><h3>Completa el objetivo y la política</h3><p>Indica las IP de las máquinas y los criterios de falla. La selección queda guardada en la rutina, y el acceso SSH usa la configuración de Frota (Flota).</p></div></li>
+          <li><div><h3>Haz clic en “Criar agendamento” (Crear programación)</h3><p>La rutina aparece en “Scans agendados” (Escaneos programados). Usa Executar agora (Ejecutar ahora) para iniciar una ejecución manual, Pausar para interrumpir las próximas ejecuciones y Retomar (Reanudar) para reactivarla. Eliminar la programación conserva los escaneos anteriores.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-agendamentos" data-screenshot="agendamentos.webp">
+          <div class="placeholder-header"><span>Imagen 07</span><span>Agendamentos / nueva rutina</span></div>
+          <img src="../assets/prints/agendamentos.webp" alt="Pantalla Agendamentos con una rutina en pausa y el formulario de nueva rutina" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Referencia de los pasos 1 a 3: definir la rutina, indicar el objetivo y guardar la programación.</figcaption>
+        </figure>
+        <div class="callout"><span class="callout-tag">Cómo funciona la rutina</span><div><p>La programación repite la recolección en las IP seleccionadas e identifica los datos actuales de las máquinas. Agregar otras IP al inventario no amplía el objetivo de una rutina ya creada.</p></div></div>
+        <details class="disclosure"><summary>¿Los análisis continúan con la interfaz cerrada?</summary><div><p>Cerrar la pestaña del navegador no apaga el servidor. Las rutinas continúan mientras el servidor de DockScan esté en ejecución. Para ejecutarlas con el servidor web apagado, mantén activo el siguiente servicio independiente, con el mismo directorio de datos de tu instancia.</p><div class="code-box"><pre><code>python -m dockscan agendador --data-dir ~/.dockscan</code></pre><button type="button" class="copy-button" data-copy hidden>Copiar</button></div><p>Sin el servidor y sin ese servicio, las ejecuciones no se realizan. Al volver, se realiza la ejecución pendiente, sin repetir todas las ejecuciones perdidas.</p></div></details>
+      </section>
+
+      <section id="relatorios" class="chapter" aria-labelledby="titulo-relatorios" data-keywords="exportação exportar baixar relatório compartilhar download html json sarif csv cyclonedx spdx sbom imprimir pdf exportación descargar informe informes compartir">
+        <header class="chapter-header"><div><h2 id="titulo-relatorios">Exporta informes</h2><p>Elige el formato según la finalidad: lectura, automatización o inventario de componentes.</p></div></header>
+        <div class="two-columns notes"><div><h3>Máquinas y contenedores</h3><ol class="compact-steps"><li>Abre un análisis completado en Resultados.</li><li>En el resumen, haz clic en HTML, JSON o SARIF.</li><li>Si hay paquetes disponibles, usa CycloneDX o SPDX para exportar el SBOM.</li></ol></div><div><h3>Escaneos de red</h3><ol class="compact-steps"><li>Abre el resultado y busca “Exportar relatório” (Exportar informe).</li><li>Elige el formato, los hosts, las severidades y si quieres incluir evidencias.</li><li>Para CSV, selecciona la tabla deseada. Haz clic en “Exportar relatório” para descargar.</li></ol></div></div>
+        <figure class="screenshot-placeholder" id="print-relatorios" data-screenshot="relatorios.webp">
+          <div class="placeholder-header"><span>Imagen 08</span><span>Exportación de informes</span></div>
+          <img src="../assets/prints/relatorios.webp" alt="Resultado de una imagen con los botones de exportación HTML, JSON, SARIF, CycloneDX y SPDX" width="1440" height="700" loading="lazy" decoding="async">
+          <figcaption>Referencia de la exportación: localizar los formatos disponibles y revisar los filtros antes de descargar.</figcaption>
+        </figure>
+        <div class="table-scroll"><table><caption class="sr-only">Formatos de informe y sus finalidades</caption><thead><tr><th scope="col">Formato</th><th scope="col">Cuándo usarlo</th></tr></thead><tbody><tr><td class="mono">HTML</td><td>Informe visual para abrir en el navegador y compartir.</td></tr><tr><td class="mono">JSON</td><td>Datos estructurados para integraciones y procesamiento.</td></tr><tr><td class="mono">SARIF</td><td>Hallazgos en formato de análisis estático para herramientas compatibles.</td></tr><tr><td class="mono">CSV</td><td>Tablas de red y el resultado de una consulta de la pantalla Achados (Hallazgos), para abrir en hojas de cálculo.</td></tr><tr><td class="mono">CycloneDX / SPDX</td><td>Inventario de componentes en escaneos que tienen datos de paquetes.</td></tr></tbody></table></div>
+        <p class="muted">Los filtros de la lista de hallazgos ayudan a navegar por la interfaz. En la exportación de red, revisa los filtros del propio formulario “Exportar relatório” para definir el contenido del archivo.</p>
+      </section>
+
+      <section id="contas" class="chapter" aria-labelledby="titulo-contas" data-keywords="usuário usuários conta contas login entrar senha trocar senha esqueci perfil papel papéis administrador analista leitura sessão sessões chave de acesso configurações permissões usuario usuarios cuenta cuentas iniciar sesión contraseña cambiar contraseña olvidé rol roles lectura sesión sesiones clave de acceso configuración permisos verificación en dos pasos mfa 2fa autenticación código recuperación qr celular exigir">
+        <header class="chapter-header"><div><h2 id="titulo-contas">Cuentas y acceso</h2><p>Cada persona inicia sesión con su propio nombre de usuario y contraseña, y el rol de la cuenta define lo que puede hacer. Todo está en Configurações (Configuración).</p></div></header>
+        <ol class="steps">
+          <li><div><h3>Inicia sesión con tu usuario y contraseña</h3><p>En la pantalla de inicio de sesión, usa el nombre de usuario o el correo electrónico de la cuenta. “Manter conectado” (Mantener la sesión iniciada) deja la sesión abierta hasta 7 días en este navegador; sin esa opción, la sesión termina tras 30 minutos sin uso o a las 12 horas.</p></div></li>
+          <li><div><h3>En el primer acceso, define tu contraseña</h3><p>Quien crea la cuenta recibe una contraseña temporal para dártela. Al entrar con ella, DockScan te pide tu propia contraseña antes de abrir cualquier pantalla: al menos 12 caracteres y distinta del nombre de usuario.</p></div></li>
+          <li><div><h3>Revisa tu perfil en Configurações</h3><p>Haz clic en tu nombre, al final del menú. El perfil muestra el usuario, el correo electrónico, el rol y cuándo se cambió la contraseña. Ahí ajustas el nombre y el correo, cambias la contraseña y ves las sesiones abiertas en otros navegadores, con la opción de cerrar cada una.</p></div></li>
+          <li><div><h3>Administrador: crea las cuentas del equipo</h3><p>En Usuários (Usuarios), indica el nombre, el nombre de usuario y el rol, y haz clic en “Criar usuário” (Crear usuario). La contraseña temporal aparece una vez, con el botón Copiar: envíala por un canal seguro. En cada cuenta, Editar cambia el nombre, el correo, el rol y si la cuenta está activa; Redefinir senha (Restablecer contraseña) genera una nueva contraseña temporal; Excluir (Eliminar) quita el acceso.</p></div></li>
+          <li><div><h3>Activa la verificación en dos pasos</h3><p>En Configurações, haz clic en “Ativar a verificação em duas etapas” (Activar la verificación en dos pasos), escanea el código QR con una aplicación de autenticación (Google Authenticator, Microsoft Authenticator, Authy o 2FAS) e introduce el código de 6 dígitos que muestre, junto con tu contraseña. Guarda los 10 códigos de recuperación que aparecen después: cada uno sirve para entrar una vez si pierdes el celular. Desde entonces, el inicio de sesión pide el código después de la contraseña.</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-configuracoes" data-screenshot="configuracoes.webp">
+          <div class="placeholder-header"><span>Imagen 11</span><span>Configurações / perfil, sesiones y usuarios</span></div>
+          <img src="../assets/prints/configuracoes.webp" alt="Configuración con el perfil del administrador, la verificación en dos pasos, las sesiones abiertas y la lista de usuarios" width="1440" height="2100" loading="lazy" decoding="async">
+          <figcaption>Referencia de los pasos 3 a 5: perfil, contraseña, verificación en dos pasos, sesiones abiertas y las cuentas del equipo.</figcaption>
+        </figure>
+        <figure class="screenshot-placeholder" id="print-verificacao" data-screenshot="verificacao.webp">
+          <div class="placeholder-header"><span>Imagen 14</span><span>Configurações / verificación en dos pasos</span></div>
+          <img src="../assets/prints/verificacao.webp" alt="Activación de la verificación en dos pasos, con los pasos, el código QR, la clave para escribir y los campos del código y de la contraseña" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>Referencia del paso 5: escanea el código QR o escribe la clave en la aplicación y confirma con el primer código.</figcaption>
+        </figure>
+        <div class="table-scroll"><table><caption class="sr-only">Roles de las cuentas y lo que puede hacer cada uno</caption><thead><tr><th scope="col">Rol</th><th scope="col">Puede</th></tr></thead><tbody>
+          <tr><td>Administrador</td><td>Todo, incluidos usuarios, claves de acceso, bóveda SSH, inventario de Frota, cuentas de nube y configuración de red.</td></tr>
+          <tr><td>Analista</td><td>Ejecutar escaneos y búsquedas de CVE, hacer el triaje de los hallazgos y editar la allowlist, las vistas, las etiquetas y las programaciones.</td></tr>
+          <tr><td>Leitura (Lectura)</td><td>Consultar y exportar resultados y hallazgos, sin modificar nada.</td></tr>
+        </tbody></table></div>
+        <p class="muted">Lo que el rol no permite no aparece en la pantalla. El cambio de rol se aplica al instante, sin que la persona tenga que volver a iniciar sesión. DockScan no deja el servidor sin ningún administrador activo, y nadie puede cambiar su propio rol ni desactivar su propia cuenta.</p>
+        <div class="callout"><span class="callout-tag">Claves de acceso</span><div><p>Una clave entra como administrador, sin usuario ni contraseña. Úsala para automatización y para recuperar el acceso; para personas, mejor usa una cuenta. Genera y revoca las claves en Configurações. La clave aparece una sola vez.</p></div></div>
+        <div class="callout"><span class="callout-tag">Exigir la verificación</span><div><p>En Usuários (Usuarios), el administrador elige a quién exigir la verificación en dos pasos: a nadie, a los administradores o a todas las cuentas. Quien todavía no la activó ve la pantalla de activación antes que cualquier otra. Para exigirla a un rol que es el tuyo, actívala antes en tu cuenta. Las claves de acceso no piden el código: guárdalas como contraseñas de administrador.</p></div></div>
+        <details class="disclosure"><summary>Olvidé mi contraseña</summary><div><p>Pide a un administrador que use Redefinir senha en tu cuenta: recibirás una contraseña temporal y elegirás la tuya en el próximo acceso. Tus sesiones abiertas se cierran.</p><p>Si no hay ningún administrador disponible, quien tenga acceso al servidor puede cambiar la contraseña desde la terminal, con el mismo directorio de datos de la instancia:</p><div class="code-box"><pre><code>dockscan usuarios senha --usuario SEU_USUARIO</code></pre><button type="button" class="copy-button" data-copy hidden>Copiar</button></div></div></details>
+        <details class="disclosure"><summary>Perdí el celular de la verificación en dos pasos</summary><div><p>En la pantalla de inicio de sesión, después de la contraseña, haz clic en “Usar um código de recuperação” (Usar un código de recuperación) e introduce uno de los códigos que guardaste. Ya dentro, genera códigos nuevos o desactiva y vuelve a activar con el celular nuevo.</p><p>Sin ningún código, pide a un administrador que use “Remover verificação” (Quitar la verificación) en tu cuenta: tus sesiones se cierran y el siguiente acceso pide solo la contraseña. Sin ningún administrador disponible, desde la terminal del servidor:</p><div class="code-box"><pre><code>dockscan usuarios remover-verificacao --usuario SEU_USUARIO</code></pre><button type="button" class="copy-button" data-copy hidden>Copiar</button></div></div></details>
+        <details class="disclosure"><summary>El código no coincide</summary><div><p>El código cambia cada 30 segundos y cada uno vale una vez. Escribe el que aparece ahora en la aplicación y comprueba que la fecha y la hora del celular estén en automático. Cinco códigos incorrectos seguidos te devuelven a la contraseña; demasiados errores bloquean nuevos intentos durante 15 minutos.</p></div></details>
+        <details class="disclosure"><summary>¿Por qué terminó mi sesión?</summary><div><p>La sesión termina cuando pasa 30 minutos sin uso, después de 12 horas (7 días con “Manter conectado”), cuando cierras sesión, cuando otra de tus sesiones la cierra en Configurações, al cambiar la contraseña (las demás sesiones se cierran) o cuando un administrador restablece tu contraseña o desactiva la cuenta. Reiniciar el servidor no cierra las sesiones. Activar la verificación en dos pasos también cierra las otras sesiones, y un administrador cierra las tuyas al quitar tu verificación.</p></div></details>
+        <details class="disclosure"><summary>Apareció “O papel não permite esta ação” (El rol no permite esta acción)</summary><div><p>Tu cuenta no tiene permiso para eso, por ejemplo, editar el inventario de Frota con el rol Analista. Pide a un administrador que haga el cambio o que ajuste tu rol.</p></div></details>
+      </section>
+
+      <section id="desenvolvimento" class="chapter" aria-labelledby="titulo-desenvolvimento" data-keywords="em desenvolvimento roadmap próximos passos novidades futuro versão planejado jira notificações nuvem aws tags triagem estados rpm en desarrollo próximos pasos novedades versión planificado notificaciones nube etiquetas triaje verificación dos pasos panel idiomas">
+        <header class="chapter-header"><div><h2 id="titulo-desenvolvimento">En desarrollo</h2><p>DockScan es una herramienta en desarrollo. Las pantallas y los nombres pueden cambiar entre versiones. Este capítulo muestra lo que llegó hace poco y lo que viene a continuación.</p></div></header>
+        <div class="two-columns notes"><div><h3>Llegó en esta versión</h3><ol class="compact-steps">
+          <li><a href="#contas">Verificación en dos pasos</a>: código de 6 dígitos de una aplicación de autenticación, 10 códigos de recuperación y la opción de exigirla a los administradores o a todas las cuentas.</li>
+          <li><a href="#achados">Panel del hallazgo</a>: haz clic en la vulnerabilidad para ver CVSS, EPSS, dónde está, cómo corregirla, la descripción de OSV, los otros activos y el historial, sin salir de la consulta.</li>
+          <li>Manual en portugués, inglés, español, francés, alemán y japonés: elige el idioma en la parte superior de la página.</li>
+          <li><a href="#contas">Cuentas y acceso</a>: una cuenta por persona, con usuario y contraseña y los roles Administrador, Analista y Leitura (Lectura); perfil, cambio de contraseña y sesiones abiertas en Configurações (Configuración); las sesiones continúan después de reiniciar el servidor.</li>
+          <li><a href="#achados">Achados</a> (Hallazgos): estado de cada hallazgo según el historial (novo/nuevo, ativo/activo, reapareceu/reapareció, corrigido/corregido), triaje con plazo y en lote, etiquetas categoría:valor, vistas guardadas, plan de corrección, ordenación por columna y consulta desde la terminal.</li>
+          <li><a href="#nuvem">Nuvem</a> (Nube): lectura de AWS (EC2, security groups, ECR y EKS) como un escaneo, con los hallazgos en Achados y las máquinas en el Inventário (Inventario).</li>
+          <li><a href="#frota">Frota</a> (Flota): un acceso por IP en el inventario, verificado al guardar; una máquina que sale del inventario también sale de Achados, y su historial sigue en Resultados.</li>
+          <li><a href="#guia-coleta">Máquinas</a>: paquetes RPM de Rocky Linux y AlmaLinux, vulnerabilidades según el paquete de origen (<code>libssl3</code> ahora trae las de OpenSSL), uso de binarios Go y bibliotecas Java, y recolección solo con lo que la máquina ya tiene.</li>
+          <li>Painel (Panel) con atajos a Achados, horarios con zona horaria y las pantallas Achados y Nuvem revisadas para teclado y lector de pantalla.</li>
+          <li>Resultados con nombres claros: “Falhou” (Falló) y “Passou” (Pasó) para la política; “Erro na análise” (Error en el análisis) aparece de otra forma, porque es una falla técnica.</li>
+        </ol></div><div><h3>Próximas etapas</h3><ol class="compact-steps">
+          <li>Lectura de Azure, Google Cloud y Kubernetes, en el mismo formato que AWS.</li>
+          <li>Integraciones y notificaciones: abrir tickets en Jira y avisar al equipo cuando surja un hallazgo importante.</li>
+          <li>Vulnerabilidades del kernel en ejecución, a partir de la versión que está ejecutando la máquina.</li>
+          <li>Paquetes RPM también dentro de imágenes y contenedores, y otras distribuciones RPM cuando OSV incluya sus avisos.</li>
+        </ol></div></div>
+        <div class="callout"><span class="callout-tag">Sobre las versiones</span><div><p>Una función puede llegar por partes: en Nuvem, por ejemplo, AWS se lee antes que los demás proveedores. El manual se actualiza en cada etapa, junto con la herramienta.</p></div></div>
+      </section>
+
+      <section id="ajuda" class="chapter" aria-labelledby="titulo-ajuda" data-keywords="erro falha problemas nenhum achado vazio limite upload conexão indisponível ajuda suporte dúvidas pergunta faq error falla ningún hallazgo vacío límite conexión no disponible ayuda soporte dudas preguntas frecuentes">
+        <header class="chapter-header"><div><h2 id="titulo-ajuda">Preguntas frecuentes</h2><p>Revisa el estado del análisis antes de interpretar el resultado.</p></div></header>
+        <details class="disclosure"><summary>El escaneo no devolvió ningún hallazgo. ¿Está todo seguro?</summary><div><p>Revisa si el análisis terminó, si no hay filtros ocultando elementos y si aparecen avisos de falla o de recolección incompleta. Verifica también si la consulta de CVE se desactivó y si hay entradas en la allowlist. Que no haya hallazgos significa que esa ejecución no reportó elementos dentro de la cobertura realizada.</p></div></details>
+        <details class="disclosure"><summary>No se aceptó una IP</summary><div><p>Indica la dirección IPv4 o IPv6 de la máquina, sin nombre DNS, usuario, puerto ni rango. Si el puerto SSH es otro, configúralo en el inventario de Frota (Flota).</p></div></details>
+        <details class="disclosure"><summary>No fue posible conectarse a la máquina</summary><div><p>Revisa si el servidor de DockScan llega a la IP, si SSH está disponible y si la credencial de la bóveda cubre esa dirección. Lee el error y los avisos del escaneo para identificar las partes de la recolección que fallaron.</p></div></details>
+        <details class="disclosure"><summary>Falló un host de la flota</summary><div><p>Revisa la dirección, el usuario, el puerto y la ruta de la clave en el inventario. El acceso SSH y la consulta a Docker deben funcionar desde la máquina del servidor. Lee los avisos por host; una falla de acceso puede impedir la recolección de ese objetivo.</p></div></details>
+        <details class="disclosure"><summary>El escaneo de red rechazó mi objetivo</summary><div><p>Revisa si indicaste una IP, un intervalo o un CIDR y si está dentro de “Escopos de rede autorizados” (Ámbitos de red autorizados). Los nombres de host y las URL no se aceptan en ese campo. Verifica también las exclusiones y los límites de hosts. Ajusta la configuración global cuando no haya escaneos activos.</p></div></details>
+        <details class="disclosure"><summary>¿En qué zona horaria están los horarios?</summary><div><p>En la zona horaria de tu navegador, con la sigla al lado, como “02/11/2026, 14:21 BRT”. El servidor guarda cada horario con su zona horaria, así que quien lo abre desde otro lugar ve la hora correcta para su ubicación.</p></div></details>
+        <details class="disclosure"><summary>No aparecieron elementos nuevos en la comparación</summary><div><p>Confirma que exista una referencia anterior compatible y que la comparación esté activada. Usa las mismas IP y las mismas opciones de cobertura. Revisa los avisos de cobertura, la allowlist y el filtro “Somente novos” (Solo nuevos). En la primera ejecución, no hay línea base para identificar novedades.</p></div></details>
+        <div class="closing"><img src="../assets/logo.svg" alt="" width="96" height="42" loading="lazy"><div><h3>¿Listo para el próximo escaneo?</h3><p>Elige el objetivo, revisa la política y sigue la evolución.</p></div><a class="button" href="#primeiro-scan">Volver al paso a paso</a></div>
+      </section>
+      </div>
+      <footer class="page-footer"><div class="footer-credits"><span>DockScan · Manual de uso</span><p>Herramienta en desarrollo.</p></div><span>Instrucciones en revisión</span><a class="back-to-top" href="#inicio">Volver al inicio</a></footer>
+    </main>
+  </div>
+
+  <div id="copy-status" class="sr-only" role="status"></div>
+</body>
+</html>

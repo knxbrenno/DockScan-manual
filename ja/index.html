@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
+  <script src="../tema.js"></script>
+  <meta name="description" content="DockScan の使用マニュアルです。IP によるマシンとコンテナの分析、ネットワークの調査、修正状況の追跡の方法を説明します。">
+  <title>使用マニュアル · DockScan</title>
+  <link rel="alternate" hreflang="pt-BR" href="../index.html">
+  <link rel="alternate" hreflang="en" href="../en/index.html">
+  <link rel="alternate" hreflang="es" href="../es/index.html">
+  <link rel="alternate" hreflang="fr" href="../fr/index.html">
+  <link rel="alternate" hreflang="de" href="../de/index.html">
+  <link rel="alternate" hreflang="ja" href="../ja/index.html">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/barlow-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../manual.css">
+  <script src="../manual.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">本文へスキップ</a>
+  <header class="mobile-header">
+    <a class="brand" href="#inicio" aria-label="DockScan、マニュアルのトップ"><img src="../assets/logo.svg" alt="" width="66" height="30"><span>dock<span>scan</span></span></a>
+    <button class="button" id="menu-toggle" type="button" aria-expanded="false" aria-controls="sidebar" hidden>目次</button>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#inicio" aria-label="DockScan、マニュアルのトップ"><img src="../assets/logo.svg" alt="" width="80" height="36"><span>dock<span>scan</span></span></a>
+    <p class="sidebar-label">ドキュメント</p>
+    <div class="search" id="search-control" hidden>
+      <label for="busca">このタブ内を検索</label>
+      <div class="search-field"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg><input id="busca" type="search" name="busca" placeholder="例：イメージ、エクスポート…" autocomplete="off"></div>
+      <p id="busca-status" class="sr-only" role="status"></p>
+    </div>
+    <nav aria-label="マニュアルの章" id="chapters">
+      <a href="#inicio" aria-current="location">はじめに</a>
+      <a href="#como-usar">使い方</a>
+      <a href="#primeiro-scan">最初のスキャン</a>
+      <a href="#resultados">結果を理解する</a>
+      <a href="#achados">検出結果を検索する</a>
+      <a href="#comparacao">修正状況を追跡する</a>
+      <a href="#frota">サーバー群を分析する</a>
+      <a href="#rede">ネットワークを調べる</a>
+      <a href="#nuvem">クラウドに接続する</a>
+      <a href="#agendamentos">分析をスケジュールする</a>
+      <a href="#relatorios">レポートをエクスポートする</a>
+      <a href="#contas">アカウントとアクセス</a>
+      <a href="#desenvolvimento">開発中の機能</a>
+      <a href="#ajuda">よくある質問</a>
+    </nav>
+    <div class="sidebar-footer">Web インターフェースのガイド<p>使用マニュアル</p><a href="#primeiro-scan">手順を開く</a></div>
+  </aside>
+
+  <div class="page">
+    <div class="topbar"><p>ドキュメント <span aria-hidden="true">/</span> 使用マニュアル</p><div class="topbar-actions"><details class="lang-menu"><summary class="button small"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.5 2.8 3.8 5.8 3.8 9s-1.3 6.2-3.8 9c-2.5-2.8-3.8-5.8-3.8-9S9.5 5.8 12 3Z"></path></svg><span class="sr-only">言語: </span>日本語</summary><ul><li><a href="../index.html" hreflang="pt-BR" lang="pt-BR" data-idioma>Português</a></li><li><a href="../en/index.html" hreflang="en" lang="en" data-idioma>English</a></li><li><a href="../es/index.html" hreflang="es" lang="es" data-idioma>Español</a></li><li><a href="../fr/index.html" hreflang="fr" lang="fr" data-idioma>Français</a></li><li><a href="../de/index.html" hreflang="de" lang="de" data-idioma>Deutsch</a></li><li><a href="../ja/index.html" hreflang="ja" lang="ja" data-idioma aria-current="page">日本語</a></li></ul></details><button class="button small theme-toggle" id="theme-toggle" type="button" aria-label="ダークテーマ" aria-pressed="false" title="ダークテーマを有効にする" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"></path></svg><span>ダークテーマ</span></button><button class="button small" id="print-manual" type="button" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7z"></path></svg>PDF として保存</button></div></div>
+    <main id="conteudo" tabindex="-1">
+      <nav class="manual-tabs" id="manual-tabs" aria-label="マニュアルのセクション">
+        <a id="aba-visao-geral" href="#inicio" data-panel="painel-visao-geral">概要</a>
+        <a id="aba-como-usar" href="#como-usar" data-panel="painel-como-usar">使い方</a>
+      </nav>
+      <p id="sem-resultados" class="empty-state" hidden>該当する手順が見つかりません。「スキャン」「ネットワーク」「サーバー群」「レポート」などで検索してみてください。 <button class="text-button" id="limpar-busca" type="button">検索をクリア</button></p>
+
+      <div id="painel-visao-geral" data-manual-panel>
+      <section id="inicio" class="chapter intro" aria-labelledby="titulo-inicio" data-keywords="começar painel acesso interface instalação abrir overview dashboard はじめに 開始 ダッシュボード アクセス インターフェース インストール 開く 概要 スキャン">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="intro-label">DockScan マニュアル</p>
+            <h1 id="titulo-inicio">DockScan の<br>使い方を学びましょう。</h1>
+            <p class="lead">最初の分析から結果の読み解きまでを説明します。必要な機能を探し、一つひとつのステップを落ち着いて進めてください。</p>
+            <div class="hero-actions"><a class="button primary" href="#primeiro-scan">最初のスキャンを始める</a><a class="text-link" href="#como-usar">機能を知る</a></div>
+            <p class="hero-note">マシン、コンテナ、ネットワークに対応。開発中のツールです。</p>
+          </div>
+          <div class="hero-preview">
+        <figure class="screenshot-placeholder" id="print-painel" data-screenshot="painel.webp">
+          <div class="placeholder-header"><span>図 01</span><span>Painel（ダッシュボード）</span></div>
+          <img src="../assets/prints/painel.webp" alt="DockScan の Painel（ダッシュボード）画面。重大度別の概要、最近のスキャン、最も緊急性の高い検出結果が表示されています" width="1440" height="900" decoding="async">
+          <figcaption>この手順の参考：分析を始めるには「Novo scan」（新規スキャン）を使うか、「Scans recentes」（最近のスキャン）から分析を開きます。</figcaption>
+        </figure>
+          </div>
+        </div>
+        <div class="start-paths" aria-label="出発点を選んでください">
+          <a href="#primeiro-scan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6m-6 4h6"></path></svg><span>IP でマシンを分析する<small>SSH 経由でシステムとコンテナを分析</small></span></a>
+          <a href="#rede"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="16" y="16" width="6" height="6" rx="1"></rect><path d="M12 8v5M5 16v-3h14v3"></path></svg><span>ネットワークを調べる<small>ホスト、ポート、サービス</small></span></a>
+          <a href="#resultados"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v16h16M8 15v-4m5 4V7m5 8v-6"></path></svg><span>結果を理解する<small>検出結果、証拠、修正方法</small></span></a>
+        </div>
+        <div class="overview-panel-note"><h2>出発点は Painel（ダッシュボード）です</h2><p>アクセスの設定が済んだら、インターフェースを開きます。Painel には、各対象の最新の検出結果、最近の分析、対応が必要な項目がまとめて表示されます。</p></div>
+        <div class="two-columns notes"><div><h3>ローカルのインターフェースを開く場合</h3><p>DockScan をインストールした状態で次のコマンドを実行し、ターミナルに表示されたアドレスを開きます。ローカルの既定のアドレスは <code>http://127.0.0.1:8443</code> です。</p><div class="code-box"><pre><code>python -m dockscan ui</code></pre><button type="button" class="copy-button" data-copy hidden>コピー</button></div></div><div><h3>このマニュアルの使い方</h3><p>章を順番に読み進めるか、目次から目的の作業に直接移動してください。手順は画像を見なくても進められます。</p><p class="muted">画面は DockScan のラボ環境のもので、デモ用のデータを使っています。このガイドは、インターフェースにアクセスした後の操作から始まります。ログイン、パスワードの変更、チームのアカウント管理については、<a href="#contas">アカウントとアクセス</a>を参照してください。</p><p class="muted">DockScan は開発中です。<a href="#desenvolvimento">新しく追加された機能と今後の予定</a>をご覧ください。</p></div></div>
+      </section>
+
+      </div>
+      <div id="painel-como-usar" data-manual-panel>
+      <section id="como-usar" class="chapter usage-guide" aria-labelledby="titulo-como-usar" data-keywords="tutorial como usar funções recursos menu botões passo a passo auditoria configurações allowlist baselines rede achados nuvem perfis チュートリアル 使い方 機能 メニュー ボタン 手順 監査 設定 許可リスト ベースライン ネットワーク 検出結果 クラウド プロファイル スキャン ダッシュボード インベントリ スケジュール トリアージ">
+        <header class="chapter-header"><div><h2 id="titulo-como-usar">使い方</h2><p>分析の流れと、インターフェースの各機能の役割を紹介します。各ステップの詳細は、それぞれの画面とともに以降の章で説明します。</p></div></header>
+        <h3 class="subheading">全体の流れをステップごとに</h3>
+        <ol class="steps">
+          <li><div><h3>対象を選ぶ</h3><p>マシンの IP を入力するには、<a href="#primeiro-scan">Novo scan</a>（新規スキャン）を開きます。IP、ポート、サービスを調べる場合は、<a href="#rede">ネットワークのチュートリアル</a>に従ってください。</p></div></li>
+          <li><div><h3>入力内容とポリシーを設定する</h3><p>IP アドレスを入力し、Frota（サーバー群）で SSH アクセスを設定します。スキャンを不合格にする重大度と、以前の分析と比較するかどうかを決めます。</p></div></li>
+          <li><div><h3>開始して進行を確認する</h3><p>「Iniciar varredura por IP」（IP によるスキャンを開始）をクリックします。ネットワークの場合は「Iniciar varredura」（スキャンを開始）をクリックします。完了を待ち、エラーメッセージとカバレッジに関する警告を確認します。</p></div></li>
+          <li><div><h3>検出結果を調べる</h3><p><a href="#resultados">Resultados</a>（結果）で項目を絞り込み、場所、詳細、推奨事項を読みます。「Passou」（合格）と「Falhou」（不合格）の状態は、設定したポリシーに対する判定です。</p></div></li>
+          <li><div><h3>修正して再分析する</h3><p>対象を修正し、比較可能な条件で再度スキャンを実行します。<a href="#comparacao">Comparar scans</a>（スキャンの比較）を使って、新規の項目、継続している項目、報告されなくなった項目を確認します。</p></div></li>
+          <li><div><h3>結果を保存し、定期実行を設定する</h3><p>必要な形式で<a href="#relatorios">レポートをエクスポート</a>します。分析を繰り返すには、<a href="#agendamentos">スケジュール</a>を設定します。</p></div></li>
+        </ol>
+
+        <h3 class="subheading">メニューの各機能の役割</h3>
+        <div class="function-list">
+          <details class="function-item"><summary>Painel（ダッシュボード）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>対象ごとの最新の検出結果、最近のスキャン、緊急の項目を表示します。</p><p class="function-instruction">概要を確認し、「Scans recentes」（最近のスキャン）から分析を開きます。重大度の件数、または「Ver em Achados」（Achados で表示）をクリックすると、その条件で絞り込まれた検出結果が開きます。<a href="#inicio">説明を見る</a>。</p></div></details>
+          <details class="function-item"><summary>Novo scan（新規スキャン）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>IP で選択したマシンのシステムとコンテナを分析します。</p><p class="function-instruction">IP を入力し、ポリシーを確認して開始します。<a href="#primeiro-scan">手順を見る</a>。</p></div></details>
+          <details class="function-item"><summary>Resultados（結果）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>履歴を保存し、各分析の検出結果を調べられるようにします。</p><p class="function-instruction">スキャンを探して結果を開き、フィルターを適用して詳細を読みます。<a href="#resultados">手順を見る</a>。</p></div></details>
+          <details class="function-item"><summary>Achados（検出結果）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>各対象の最新スキャンの検出結果を 1 つの表にまとめます。SQL に似たクエリ、履歴に基づく検出結果ごとの状態、期限付きのトリアージ、タグ、保存済みビューを利用できます。</p><p class="function-instruction">クエリ入力欄をクリックし、フィールド、演算子、値を選んで検索します。<a href="#achados">手順を見る</a>。</p></div></details>
+          <details class="function-item"><summary>Inventário（インベントリ）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>スキャンで見つかったマシン、コンテナ、サービスを、マップとリストにまとめます。クラウドで検出されたマシンも、サーバー群やネットワークのマシンと同じように IP 単位で登録されます。</p><p class="function-instruction">マシンをクリックすると項目が展開されます。リソースを選ぶと詳細が表示され、フィルターを使うと IP やサービスを探せます。</p><p>マップは保存済みのデータを参照します。過去の状態や日付から、古い収集や不完全な収集を見分けられます。IP 範囲の帯は、IP を視覚的にグループ化したものです。</p></div></details>
+          <details class="function-item"><summary>Frota（サーバー群）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>コンテナを分析するホストのインベントリを保存します。</p><p class="function-instruction">ホストを登録して保存し、「Configurar varredura」（スキャンを設定）を使います。<a href="#frota">手順を見る</a>。</p></div></details>
+          <details class="function-item"><summary>Nuvem（クラウド）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>読み取り専用の資格情報で、クラウドアカウントと Kubernetes クラスターを登録します。AWS はすでに読み取りに対応しており、ほかのプロバイダーは今後の段階で対応します。</p><p class="function-instruction">プロバイダーを選んで各フィールドを入力し、接続をテストしてから「Descobrir agora」（今すぐ検出）を使います。<a href="#nuvem">手順を見る</a>。</p></div></details>
+          <details class="function-item"><summary>Buscar CVE（CVE を検索）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>入力した IP に対して、SSH による最新の収集を行い、CVE や GHSA をリアルタイムで確認します。</p><p class="function-instruction"><a href="#guia-cve">調査の手順を見る</a>。</p></div></details>
+          <details class="function-item"><summary>Allowlist（許可リスト）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>評価済みの検出結果を、次回以降の分析とポリシーの評価から除外します。</p><p class="function-instruction">1 行に 1 エントリを入力し、適用範囲を確認して保存します。<a href="#funcao-allowlist">手順を見る</a>。</p></div></details>
+          <details class="function-item"><summary>Rede（ネットワーク）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>ネットワークスキャン、ホスト、サービス、Docker の露出、レジストリ、TLS 証明書、ネットワークの検出結果をまとめています。</p><p class="function-instruction">「Varrer a rede」（ネットワークをスキャン）から始め、モジュール内の各画面で結果を調べます。<a href="#rede">手順を見る</a>。</p></div></details>
+          <details class="function-item"><summary>Agendamentos（スケジュール）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>保存した間隔と入力内容で分析を繰り返します。</p><p class="function-instruction">名前、種類、間隔、時刻、対象、ポリシーを設定します。<a href="#agendamentos">手順を見る</a>。</p></div></details>
+          <details class="function-item"><summary>Baselines（ベースライン）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>比較可能な分析同士を比べ、検出結果がどう変化したかを示します。</p><p class="function-instruction">現在のスキャンと基準となるスキャンを選び、各グループを確認します。<a href="#comparacao">手順を見る</a>。</p></div></details>
+          <details class="function-item"><summary>Auditoria（監査）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>インターフェースのアクセスと操作の記録を参照できます。</p><p class="function-instruction">メニューから開き、ユーザー、操作、対象、結果で検索します。<a href="#funcao-auditoria">手順を見る</a>。</p></div></details>
+          <details class="function-item"><summary>Configurações（設定）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>インスタンスの情報、アップロードの上限、ネットワークのオプションを表示します。</p><p class="function-instruction">接続を確認し、スコープとネットワークのオプションを調整します。<a href="#funcao-configuracoes">手順を見る</a>。</p></div></details>
+        </div>
+
+        <h3 class="subheading">Rede（ネットワーク）の画面</h3>
+        <div class="function-list">
+          <details class="function-item"><summary>Painel de rede（ネットワークのダッシュボード）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>選択したスキャンの概要を表示します。分析を選び、IP や重大度で絞り込んで指標を確認します。</p></div></details>
+          <details class="function-item"><summary>Varrer a rede（ネットワークをスキャン）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>分析を作成します。許可された対象を入力し、プロファイル、ポート、モジュールを確認してから「Iniciar varredura」をクリックします。</p></div></details>
+          <details class="function-item"><summary>Hosts（ホスト）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>観測結果をホストごとに整理します。スキャンを選んでホストを開き、ポート、サービス、証拠を調べます。</p></div></details>
+          <details class="function-item"><summary>Serviços（サービス）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>識別されたサービスを一覧表示します。スキャンを選び、一覧を絞り込んで、観測されたデータを確認します。</p></div></details>
+          <details class="function-item"><summary>Exposição do Docker（Docker の露出）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>Docker API に関する観測結果をまとめています。露出の証拠と関連する検出結果を確認します。</p></div></details>
+          <details class="function-item"><summary>Registries（レジストリ）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>レジストリで観測されたデータをまとめています。スキャンを選び、記録とその証拠を確認します。</p></div></details>
+          <details class="function-item"><summary>Certificados TLS（TLS 証明書）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>TLS の観測結果を調べられます。証明書のデータと、分析で報告された問題を確認します。</p></div></details>
+          <details class="function-item"><summary>Achados de rede（ネットワークの検出結果）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>ネットワークの検出結果をまとめています。対象、ポート、サービス、重大度で絞り込み、項目を開いて、コメント付きでトリアージを記録します。</p></div></details>
+          <details class="function-item"><summary>Em andamento（実行中）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>実行中の分析の進行状況を表示します。結果をリアルタイムで開いたり、一時停止、再開、停止の操作を行ったりできます。</p></div></details>
+          <details class="function-item"><summary>Histórico（履歴）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>過去の分析を探せます。履歴を絞り込み、各操作を使って、分析を開く、再実行する、比較する、エクスポートする、削除するといったことができます。</p></div></details>
+          <details class="function-item"><summary>Comparar varreduras（スキャンの比較）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>2 つの分析のカバレッジと観測結果を比較します。スキャンを選び、比較可能なカバレッジがない項目もあわせて確認します。</p></div></details>
+          <details class="function-item"><summary>Perfis（プロファイル）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></summary><div><p>ポート、検出、監査の組み合わせを保存します。プロファイルを新規作成するか既存のものを複製し、フィールドを調整して保存します。</p></div></details>
+        </div>
+
+        <details class="disclosure" id="funcao-allowlist"><summary>Allowlist：例外を登録する方法</summary><div><ol class="compact-steps"><li>メニューから「Allowlist」を開きます。</li><li>1 行に 1 つずつ、ルール、パッケージの場所、または識別子を入力します。コメントには <code>#</code> で始まる行を使います。</li><li>入力内容を確認し、「Salvar allowlist」（許可リストを保存）をクリックします。</li><li>変更を適用するには、新しいスキャンを実行します。過去の履歴はそのまま残ります。</li></ol><p>パッケージのエントリ 1 つで、複数の脆弱性が除外されることがあります。保存する前に、例外の適用範囲を確認してください。</p></div></details>
+        <details class="disclosure" id="funcao-auditoria"><summary>Auditoria：アクティビティを探す方法</summary><div><ol class="compact-steps"><li>メニューから「Auditoria」を開きます。</li><li>「Buscar atividade」（アクティビティを検索）に、ユーザー、操作、対象、または結果を入力します。</li><li>見つかったアクティビティの日時、ユーザー、操作、対象、IP、結果を確認します。</li><li>検索をクリアすると、利用できる一覧に戻ります。</li></ol></div></details>
+        <details class="disclosure" id="funcao-configuracoes"><summary>Configurações：確認する項目とネットワークの調整方法</summary><div><ol class="compact-steps"><li>「Configurações」を開くと、バージョン、接続、アップロードの上限を確認できます。</li><li>「Configurações de rede」（ネットワーク設定）で、許可されたスコープ、除外対象、分析の上限を確認します。</li><li>レポートの形式、証拠、インターフェースの設定もあわせて確認します。</li><li>「Salvar configurações de rede」（ネットワーク設定を保存）をクリックします。スコープや全体の上限を変更するには、実行中のスキャンがない状態である必要があります。</li></ol><p>保持期間を短くする前に、確認メッセージをよく読んでください。この変更により、古いネットワークスキャンとそのレポートが削除されることがあります。</p></div></details>
+        <details class="disclosure"><summary>Achados de rede：トリアージを記録する方法</summary><div><ol class="compact-steps"><li>「Rede → Achados de rede」を開きます。</li><li>フィルターを使って検出結果を探し、詳細を開きます。</li><li>証拠を読み、「Comentário de triagem」（トリアージのコメント）に理由を書きます。</li><li>操作は revisado（確認済み）、falso positivo（誤検知）、risco aceito（受容済みリスク）のいずれかを選びます。検出結果を再オープンするには「Reabrir」（再オープン）を使います。</li></ol><p>トリアージには、その項目の評価が記録されます。状態を決める前に、証拠と分析のカバレッジを確認してください。</p></div></details>
+        <div class="callout"><span class="callout-tag">マニュアルの画像</span><div><p>各ステップの画面は DockScan のラボ環境のもので、デモ用のデータを使っています。ツールの開発中は、画面や名称が変わることがあります。</p></div></div>
+      </section>
+
+      <section id="primeiro-scan" class="chapter" aria-labelledby="titulo-primeiro" data-keywords="ip ipv4 ipv6 ssh máquina containers novo scan política kev epss cofre マシン コンテナ 新規スキャン スキャン ポリシー 資格情報の保管庫 保管庫 資格情報 パッケージ">
+        <header class="chapter-header"><div><h2 id="titulo-primeiro">IP による最初のスキャン</h2><p>マシンのアドレスを入力します。DockScan は SSH でデータを収集し、インストールされているパッケージを自動的に特定します。</p></div></header>
+        <ol class="steps">
+          <li><div><h3>SSH アクセスを設定する</h3><p>Frota（サーバー群）で、許可する IP のスコープを指定して資格情報の保管庫に資格情報を登録するか、インベントリに SSH 鍵を設定します。</p></div></li>
+          <li><div><h3>「Novo scan」（新規スキャン）を開いて IP を入力する</h3><p>IP は 1 行に 1 つずつ入力するか、カンマで区切ります。インベントリのボタンを使うと、登録済みの IP を追加できます。IPv4 と IPv6 をあわせて選択することもできます。</p></div></li>
+          <li><div><h3>分析のポリシーを決める</h3><p>不合格とする最小の重大度と、CVE、KEV、EPSS のオプションを選びます。同じ IP での変化を追跡するには、比較のチェックを入れたままにします。</p></div></li>
+          <li><div><h3>「Iniciar varredura por IP」（IP によるスキャンを開始）をクリックする</h3><p>結果は自動的に更新されます。インベントリにほかのマシンがあっても、収集の対象は入力した IP だけです。</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-novo-scan" data-screenshot="novo-scan.webp">
+          <div class="placeholder-header"><span>図 02</span><span>Novo scan / マシンの IP</span></div>
+          <img src="../assets/prints/novo-scan.webp" alt="マシンの IP と分析のポリシーが入力された Novo scan（新規スキャン）画面" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>手順 1〜4 の参考：対象を入力し、ポリシーを確認して、分析を開始します。</figcaption>
+        </figure>
+        <div class="callout"><span class="callout-tag">データの取得方法</span><div><p>パッケージの名前とバージョンは、マシン上で直接検出されます。スキャンを始めるために、パッケージを入力したりアップロードしたりする必要はありません。リモートコマンドは読み取りのみを行い、エージェントはインストールしません。</p></div></div>
+        <div class="table-scroll"><table><caption class="sr-only">IP で実行できるスキャン</caption><thead><tr><th scope="col">目的</th><th scope="col">開く場所</th><th scope="col">対象</th></tr></thead><tbody>
+          <tr><td>システムとコンテナを監査する</td><td>Novo scan</td><td>SSH でアクセスできるマシンの IP。</td></tr>
+          <tr><td>特定の脆弱性を調べる</td><td>Buscar CVE（CVE を検索）</td><td>マシンの IP と、CVE または GHSA の識別子。</td></tr>
+          <tr><td>ポートとサービスを特定する</td><td>Rede → Varrer a rede（ネットワークのスキャン）</td><td>ネットワークのスコープで許可された IP または範囲。</td></tr>
+        </tbody></table></div>
+        <details class="disclosure"><summary>スキャンでは何を収集しますか？</summary><div><p>システムのパッケージと設定、コンテナ、そしてプロセスとポートについて取得できるデータを読み取ります。アクセスに失敗した箇所や、収集が不完全だった部分は、結果に表示されます。</p><p>「Pular consulta de CVEs」（CVE の照会をスキップ）を選ぶと、脆弱性の照会が無効になります。「Pular KEV e EPSS」（KEV と EPSS をスキップ）を選ぶと、それらによる情報の付加が無効になります。収集が不完全な場合、検出結果がなくても脆弱性がないとは言い切れません。</p></div></details>
+      </section>
+
+      <section id="resultados" class="chapter" aria-labelledby="titulo-resultados" data-keywords="achado severidade crítica alta média baixa info risco falhou passou filtros cve kev epss detalhe recomendação resultado vulnerabilidades pacotes 検出結果 重大度 緊急 高 中 低 情報 リスク 不合格 合格 フィルター 詳細 推奨事項 結果 脆弱性 パッケージ スキャン イメージ">
+        <header class="chapter-header"><div><h2 id="titulo-resultados">結果を理解する</h2><p>結果には、何が見つかったか、問題がどこにあるか、次に推奨される対応は何かが示されます。</p></div></header>
+        <ol class="steps">
+          <li><div><h3>状態と警告を確認する</h3><p>Painel（ダッシュボード）または Resultados（結果）からスキャンを開きます。完了したかどうか、エラーがあったかどうか、どの制限や照会がカバレッジに影響したかを確認します。</p></div></li>
+          <li><div><h3>調べたい項目に絞り込む</h3><p>Severidade（重大度）と Buscar achado（検出結果を検索）を使って、ルール、パッケージ、CVE、場所を探します。Exibir（表示）では、「Pacotes e regras」（パッケージとルール）と「Vulnerabilidades individuais」（個々の脆弱性）を切り替えます。</p></div></li>
+          <li><div><h3>詳細を開いて推奨事項を読む</h3><p>各項目には、重大度、ルールの識別子、場所が示されます。Ver detalhes（詳細を表示）で証拠を確認し、修正の計画を立てます。KEV と EPSS が利用できる場合は、優先順位付けに役立ちます。</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-resultados" data-screenshot="resultado.webp">
+          <div class="placeholder-header"><span>図 03</span><span>Resultado（結果）/ フィルターと検出結果</span></div>
+          <img src="../assets/prints/resultado.webp" alt="ポリシーにより不合格となった分析の結果画面。重大度別の概要と検出結果が表示されています" width="1440" height="1150" loading="lazy" decoding="async">
+          <figcaption>手順 1〜3 の参考：状態を確認し、項目を絞り込み、推奨事項を読みます。</figcaption>
+        </figure>
+        <div class="callout warning"><span class="callout-tag">ポリシーについて</span><div><h3>検出結果があっても「Passou」（合格）と表示されることがあります</h3><p>この状態は、選択したポリシーの基準に達したかどうかを示します。設定したしきい値を下回る検出結果しかないスキャンは、合格になることがあります。対象が安全だと判断する前に、ポリシー、警告、カバレッジを確認してください。</p></div></div>
+        <div class="severity-key" aria-label="重大度"><span class="critical">Crítica（緊急）</span><span class="high">Alta（高）</span><span class="medium">Média（中）</span><span class="low">Baixa（低）</span><span class="info">Info（情報）</span></div>
+        <p class="muted">パッケージの検出結果 1 件に、複数の脆弱性が含まれることがあります。個別表示にすると、パッケージ数と脆弱性数を混同せずに、識別子を 1 つずつ確認できます。</p>
+        <details class="disclosure"><summary>「Falhou」（不合格）と「Erro na análise」（分析エラー）の違いは何ですか？</summary><div><p>「Falhou」と「Passou」はポリシーの判定結果です。分析は完了しており、設定したしきい値に達した検出結果があったかどうかを示します。「Erro na análise」は技術的な障害で、収集が完了していません。「Falhou」と混同しないよう、赤い点線の下線付きで表示されます。「Incompleto」（不完全）は、カバレッジの一部が欠けていることを示します。</p></div></details>
+      </section>
+
+      <section id="achados" class="chapter" aria-labelledby="titulo-achados" data-keywords="achados consulta sql filtro campos operadores severidade kev epss pacote cve ip fonte agrupar exportar csv json link compartilhar sugestões estado novo corrigido reapareceu triagem prazo risco aceito falso positivo lote tags visões salvas plano de correção ordenar terminal 検出結果 クエリ 検索 フィルター フィールド 演算子 重大度 パッケージ ソース グループ化 エクスポート リンク 共有 候補 状態 新規 修正済み 再発 トリアージ 期限 受容済みリスク 誤検知 一括 タグ 保存済みビュー 修正計画 並べ替え ターミナル スキャン サイドパネル 詳細 説明 参考情報 osv cvss cwe 履歴 他の資産">
+        <header class="chapter-header"><div><h2 id="titulo-achados">検出結果を検索する</h2><p>Achados（検出結果）画面では、すべてのソースについて、各対象の最新スキャンの検出結果を 1 つの表にまとめて表示します。SQL に似たクエリで、必要な項目を見つけられます。</p></div></header>
+        <ol class="steps">
+          <li><div><h3>メニューから「Achados」を開く</h3><p>表には最初、すべての検出結果が緊急度の高い順に並びます。まず悪用が確認済みのもの（KEV）、次に重大度、さらに悪用される可能性（EPSS）の順です。</p></div></li>
+          <li><div><h3>クエリ入力欄をクリックしてフィールドを選ぶ</h3><p>一覧にフィールドが表示されます。フィールドにマウスを合わせると、その横にオプションが開きます。演算子を選び、値を 1 つ以上チェックして、「Adicionar à consulta」（クエリに追加）をクリックします。候補として表示される値は実際の検出結果から取られ、それぞれの件数も表示されます。</p></div></li>
+          <li><div><h3>条件を組み合わせて検索する</h3><p>クエリができたら、もう一度入力欄をクリックして「e」（かつ）、「ou」（または）、「ordenar por」（並べ替え）で続けるか、「Adicionar outro filtro」（別のフィルターを追加）を使います。その後、「Consultar」（検索）をクリックするか、Enter キーを押します。クエリ言語に慣れている場合は、直接入力することもできます。</p></div></li>
+          <li><div><h3>グループ化、並べ替え、共有、エクスポートを行う</h3><p>「Agrupar por」（グループ化）では、資産、脆弱性、パッケージ、ソース、状態、タグごとに検出結果を表示できます。グループをクリックすると、そのグループだけに絞り込まれます。列の見出しをクリックすると並べ替えられます。クエリはページのアドレスに含まれるため、そのリンクを共有できます。「Exportar CSV」（CSV をエクスポート）と「Exportar JSON」（JSON をエクスポート）では、クエリの結果が出力されます。</p></div></li>
+          <li><div><h3>検出結果の詳細を開く</h3><p>CVE-2023-44487 のような識別子、または Achado（検出結果）列の任意の場所をクリックします。右側にパネルが開き、CVSS、EPSS、悪用の状況、検出結果の場所、修正方法、OSV の説明と参考情報、同じ脆弱性を持つ他の資産、その資産の収集履歴が表示されます。そこからトリアージを行い、クエリの前後の検出結果に移動できます。Esc キーまたは「Fechar」（閉じる）で表に戻ります。</p></div></li>
+          <li><div><h3>トリアージする</h3><p>最初の列で検出結果にチェックを入れます。表示されるバーで Revisado（確認済み）、Falso positivo（誤検知）、Risco aceito（受容済みリスク）、Reabrir（再オープン）のいずれかを選び、期限（ある場合）と理由を入力して、「Aplicar triagem」（トリアージを適用）をクリックします。Falso positivo と Risco aceito では理由の入力が必要です。すべての操作は Auditoria（監査）に記録されます。</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-achados" data-screenshot="achados.webp">
+          <div class="placeholder-header"><span>図 09</span><span>Achados / クエリとフィールドのオプション</span></div>
+          <img src="../assets/prints/achados.webp" alt="Achados（検出結果）画面。候補リストが開き、その横に pacote フィールドのオプションと選択済みの値が表示されています" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>手順 2 と 3 の参考：左側に候補リスト、その横に選択したフィールドの演算子と値が表示されます。</figcaption>
+        </figure>
+        <figure class="screenshot-placeholder" id="print-achados-painel" data-screenshot="achados-painel.webp">
+          <div class="placeholder-header"><span>図 12</span><span>Achados / 検出結果パネル</span></div>
+          <img src="../assets/prints/achados-painel.webp" alt="悪用が確認済みの検出結果のサイドパネル。CVSS、EPSS、悪用の状況、状態、場所がクエリの上に表示されている" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>手順 5 の参考：パネルはクエリの上に開き、クエリは左側に残ります。</figcaption>
+        </figure>
+        <div class="code-box labeled"><span class="code-label">クエリの例</span><pre><code>severidade &gt;= alta e corrigivel
+pacote ~ openssl e (fonte = maquina ou fonte = container)
+cve em (CVE-2022-37434, CVE-2024-3094)
+ip em 172.30.0.0/24 e visto_em &gt; -7d
+"nginx" ordenar por epss desc
+estado = novo e severidade &gt;= alta
+triagem = risco_aceito ordenar por prazo asc
+tag = ambiente:producao</code></pre><button class="copy-button" type="button" data-copy hidden>コピー</button></div>
+        <div class="table-scroll"><table><caption class="sr-only">クエリの演算子</caption><thead><tr><th scope="col">演算子</th><th scope="col">意味</th></tr></thead><tbody>
+          <tr><td class="mono">= と !=</td><td>等しい、または等しくない。<code>versao = 1.2.*</code> のように、<code>*</code> をワイルドカードとして使えます。</td></tr>
+          <tr><td class="mono">&gt; &gt;= &lt; &lt;=</td><td>より大きい、またはより小さい。重大度、EPSS、ポート、日付に使えます。</td></tr>
+          <tr><td class="mono">~ と !~</td><td>テキストを含む、または含まない。</td></tr>
+          <tr><td class="mono">em (a, b)</td><td>リストに含まれる。IP の場合は、<code>ip em 10.0.0.0/24</code> のように範囲も指定できます。</td></tr>
+          <tr><td class="mono">existe</td><td>フィールドに値がある。</td></tr>
+          <tr><td class="mono">e, ou, não, ( )</td><td>条件を組み合わせたり、まとめたりします。and、or、not、in も使えます。</td></tr>
+        </tbody></table></div>
+        <div class="callout"><span class="callout-tag">検出結果の取得元</span><div><p>表には、各対象で最後に完了したスキャンが使われます。サーバー群では各マシンが個別に扱われ、最新のスキャンでアクセスできなかったマシンについては、そのマシンで最後に成功した収集が使われます。CVE の検索結果は含まれません。同じパッケージが、サーバー群のスキャンですでに表示されるためです。</p><p>修正済み、誤検知、受容済みリスクの検出結果は、クエリでそれらを指定しない限り表に表示されません。概要には非表示の件数が示され、それらを表示するためのショートカットもあります。</p></div></div>
+        <div class="table-scroll"><table><caption class="sr-only">履歴に基づく検出結果の状態</caption><thead><tr><th scope="col">状態</th><th scope="col">表示される条件</th></tr></thead><tbody>
+          <tr><td>Novo（新規）</td><td>この対象で、これまで一度も出現したことのない検出結果です。</td></tr>
+          <tr><td>Ativo（アクティブ）</td><td>前回の収集から引き続き存在しています。</td></tr>
+          <tr><td>Reapareceu（再発）</td><td>完全な収集で一度消えた後、再び出現しました。</td></tr>
+          <tr><td>Corrigido（修正済み）</td><td>完全な収集で出現しなくなりました。部分的な収集では修正を証明できないため、その場合の検出結果は、部分的な収集である旨の警告付きで Ativo のままになります。「regras do sudo não verificadas」（sudo のルールは未確認）のような警告は、それに依存する部分だけを部分的な収集として扱います。</td></tr>
+        </tbody></table></div>
+        <details class="disclosure"><summary>検出結果パネルのデータはどこから来ますか？</summary><div><p>CVSS、EPSS、悪用の状況、パッケージ、修正はスキャンから取得します。説明、日付、弱点（CWE）、参考情報は OSV から取得します。DockScan のサーバーがパネルを開いたときに取得し、1 日保存します。インターネットに接続できない場合も、パネルは残りの情報を表示し、OSV が応答しなかったことを知らせます。</p><p>履歴には資産の最近の収集が表示されます。Encontrado（検出）、Não encontrado（未検出）、または不在が修正の証明にならない場合の Coleta parcial（部分的な収集）です。ページのアドレスには <code>?achado=</code> が付くため、リンクから同じ検出結果を直接開けます。</p></div></details>
+        <details class="disclosure"><summary>どのフィールドを検索できますか？</summary><div><p>使用できるフィールドは、severidade、cve、regra、titulo、pacote、versao、ecossistema、correcao、corrigivel、fonte、ativo、ip、porta、container、local、epss、kev、novo、visto_em、estado、triagem、primeiro_visto、corrigido_em、prazo、tag、scan です。各フィールドの説明は、画面上のヘルプ「Como consultar」（検索方法）にあります。</p><p>はい／いいえで答えるフィールドを単独で書くと、「sim」（はい）とみなされます。<code>kev</code> は <code>kev = sim</code> と同じ意味です。日付には <code>2026-11-01</code>、<code>-7d</code>、<code>+30d</code>、<code>-24h</code>、<code>hoje</code>（今日）、<code>ontem</code>（昨日）を指定できます。EPSS には <code>0.1</code> または <code>10%</code> を指定できます。</p></div></details>
+        <details class="disclosure"><summary>トリアージの期限はどのように機能しますか？</summary><div><p>Revisado、Falso positivo、Risco aceito には、最長 2 年の期限を設定できます。期限が切れると、検出結果は未対応（aberto）に戻り、期限切れとしてマークされて再び表に表示されます。期限が近い例外を確認するには、<code>triagem != aberto e prazo &lt; +30d</code> で検索します。</p></div></details>
+        <details class="disclosure"><summary>タグと保存済みビューはどう作成しますか？</summary><div><p>タグは <code>ambiente:producao</code> や <code>time:plataforma</code> のような categoria:valor（カテゴリ:値）の形式で、クエリによって定義します。対象の検出結果を選ぶクエリを書き、「Criar tag com esta consulta」（このクエリでタグを作成）をクリックして、カテゴリと値を入力します。クエリに一致するすべての検出結果に、今後のスキャンの分も含めてタグが付きます。その後は <code>tag = ambiente:producao</code> や <code>tag = ambiente:*</code> で絞り込んだり、タグでグループ化したりできます。タグは「Tags」（タグ）パネルに、それぞれが付いている検出結果の件数とともに表示されます。</p><p>保存済みビューは、クエリとグループ化の設定に名前を付けて保存したものです。「Salvar como visão」（ビューとして保存）で保存し、あとで「Visões salvas」（保存済みビュー）から選びます。タグとビューは、このインスタンスのすべてのユーザーに共通です。</p></div></details>
+        <details class="disclosure"><summary>修正計画とは何ですか？</summary><div><p>「Agrupar por」で「Plano de correção」（修正計画）を選びます。各行はインストール済みのパッケージ 1 つに対応し、脆弱性の数、最も高い重大度、影響を受ける資産、更新先のバージョンが表示されます。一覧のパッケージを更新すると、その行の脆弱性がまとめて解消されます。</p></div></details>
+        <details class="disclosure"><summary>ターミナルから検索できますか？</summary><div><p>はい。画面と同じクエリ言語を使い、インターフェースのデータを読み取って検索できます。</p><div class="code-box"><pre><code>dockscan achados severidade &gt;= alta e kev --data-dir ~/.dockscan
+dockscan achados estado = novo --formato csv &gt; novos.csv</code></pre><button type="button" class="copy-button" data-copy hidden>コピー</button></div><p><code>--formato</code> を指定しない場合は、表形式で出力されます。<code>json</code> または <code>csv</code> を指定すると、画面からのエクスポートと同じデータが出力されます。</p></div></details>
+        <details class="disclosure"><summary>クエリでエラーが表示された</summary><div><p>メッセージには不足している内容とその位置が示され、カーソルが問題の箇所に移動します。よくあるエラーは、フィールド名の誤り、そのフィールドには使えない演算子（<code>kev</code> に対する <code>&gt;</code> など）、閉じていない引用符や括弧です。</p></div></details>
+      </section>
+
+      <section id="comparacao" class="chapter" aria-labelledby="titulo-comparacao" data-keywords="baseline comparar scans novos persistentes corrigidos allowlist suprimir exceções histórico diferenças ベースライン 比較 スキャン 新規 継続 修正済み 許可リスト 除外 例外 履歴 差分 イメージ">
+        <header class="chapter-header"><div><h2 id="titulo-comparacao">修正状況を追跡する</h2><p>対象を修正した後に分析を再実行し、結果を比較して何が変わったかを確認します。</p></div></header>
+        <ol class="steps">
+          <li><div><h3>同じ対象で新しいスキャンを実行する</h3><p>同じ種類の分析と同じ対象名を使います。IP の選択とカバレッジのオプションも同じにしておきます。</p></div></li>
+          <li><div><h3>「Comparar scans」（スキャンの比較）を開く</h3><p>完了した結果のページで Comparar scans をクリックします。メニューから Baselines（ベースライン）を開くこともできます。現在のスキャンと、比較可能な基準のスキャンを選びます。</p></div></li>
+          <li><div><h3>3 つのグループを確認する</h3><p>Novos（新規）は、現在のスキャンで新たに出現した項目です。Persistentes（継続）は、引き続き存在している項目です。Corrigidos（修正済み）は、基準のスキャンにはあり、現在の結果には出現しない項目です。項目を開いて、変化の内容を確認します。</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-comparacao" data-screenshot="comparacao.webp">
+          <div class="placeholder-header"><span>図 04</span><span>Comparar scans</span></div>
+          <img src="../assets/prints/comparacao.webp" alt="同じイメージに対する 2 つのスキャンの比較。新規、継続、修正済みのグループが表示されています" width="1440" height="1000" loading="lazy" decoding="async">
+          <figcaption>手順 2 と 3 の参考：比較可能な 2 つの分析を選び、変化を確認します。</figcaption>
+        </figure>
+        <div class="callout"><span class="callout-tag">比較する前に</span><div><p>照会の無効化、収集エラー、Allowlist（許可リスト）の変更によって、結果が変わることがあります。「Corrigido」（修正済み）は、この比較においてその検出結果が報告されなくなったことを意味します。両方のスキャンの証拠と警告を確認してください。</p></div></div>
+        <details class="disclosure"><summary>Allowlist で例外を扱うには？</summary><div><p>Allowlist を開き、1 行に 1 つずつルール、パッケージの場所、または識別子を入力して、Salvar allowlist（許可リストを保存）をクリックします。<code>#</code> で始まる行はコメントです。</p><p>エントリは次回以降のスキャンに適用され、該当する検出結果は不合格の判定から除外されます。過去の履歴はそのまま残ります。各エントリの適用範囲を確認してください。1 つのパッケージに複数の脆弱性が含まれることがあります。</p></div></details>
+      </section>
+
+      <section id="frota" class="chapter" aria-labelledby="titulo-frota" data-keywords="ssh inventário host containers execução frota servidor docker chave remoto local agente サーバー群 フリート インベントリ ホスト コンテナ 実行中 サーバー 鍵 キー リモート ローカル エージェント 資格情報の保管庫 イメージ スキャン マップ マシン サービス ip 範囲 インベントリ">
+        <header class="chapter-header"><div><h2 id="titulo-frota">サーバー群を分析する</h2><p>ホストを登録すると、保存したインベントリを使って、実行中のコンテナとその設定を分析できます。</p></div></header>
+        <ol class="steps">
+          <li><div><h3>「Frota」（サーバー群）を開いてインベントリを入力する</h3><p>1 行に 1 つずつ、SSH アクセスのオプションとともに IP を入力します。DockScan サーバーは、SSH でホストに到達でき、鍵または資格情報の保管庫によるアクセス手段と、読み取りに必要な権限を持っている必要があります。資格情報の保管庫は Frota ページ内にあります。</p></div></li>
+          <li><div><h3>保存して分析を開始する</h3><p>Salvar inventário（インベントリを保存）をクリックし、続いて Configurar varredura（スキャンを設定）をクリックします。「Novo scan」（新規スキャン）で IP を選び、ポリシーを調整して、「Iniciar varredura por IP」（IP によるスキャンを開始）をクリックします。</p></div></li>
+          <li><div><h3>各ホストを確認する</h3><p>結果画面でホストを開き、マシンとコンテナの検出結果を確認します。アクセスの失敗や収集に関する警告もあわせて確認します。最後のスキャンを確認するには、「Frota」に戻ります。</p></div></li>
+          <li><div><h3>Inventário でマシンを確認する</h3><p>スキャンの後、「Inventário」（インベントリ）に見つかったマシン、コンテナ、サービスが、IP 範囲ごとにまとめたマップまたはリストで表示されます。マシンをクリックするとコンテナとサービスが開きます。IP を探すには検索とフィルターを使います。</p></div></li>
+        </ol>
+        <details class="disclosure" id="guia-cofre"><summary>SSH の資格情報の保管庫を設定する方法</summary><div><ol class="compact-steps"><li>Frota で「Cofre de acesso SSH」（SSH アクセスの保管庫）に移動します。</li><li>名前、ユーザー、パスワード、許可するスコープを入力します。sudo は、そのアカウントで sudo を使うよう設定されている場合にのみチェックします。</li><li>「Salvar credencial」（資格情報を保存）をクリックします。パスワードは入力欄から消去され、インターフェースに再表示されることはありません。</li><li>インベントリでは、<code>cred=nome-da-credencial</code> と書いてその資格情報を選びます。この場合もスコープは守られます。</li></ol><p>SSH のホスト識別情報は、最初の接続時に登録されます。識別情報が変わった場合は、既知の識別情報の一覧からそのエントリを消去する前に、変更内容を確認してください。</p></div></details>
+        <details class="disclosure" id="guia-coleta"><summary>各マシンで読み取る内容</summary><div><p>収集には、マシンにもともとあるもの、つまりシステムコマンドと、<code>/proc</code> および <code>/etc</code> のファイルだけを使います。Python やエージェントをインストールする必要はありません。<code>ss</code> や <code>ps</code> がない最小構成のマシンでは、ポートとプロセスの情報をカーネルから直接取得します。</p><ol class="compact-steps"><li>システムパッケージ：Debian と Ubuntu（dpkg）、Alpine（apk）、Rocky Linux と AlmaLinux（rpm）。Red Hat や Amazon Linux など、その他の RPM 系ディストリビューションは、OSV にそれらのアドバイザリが含まれていないため、未検証として表示されます。</li><li>Debian、Ubuntu、Rocky のアドバイザリはソースパッケージを示します。そのため、<code>libssl3</code> に該当する OpenSSL の脆弱性は <code>openssl</code> として表示されます。カーネルは現時点では対象外です。カーネルのリスクは、インストールされているパッケージではなく、実行中のカーネルに依存するためです。</li><li>コンテナでは、Go や Rust のバイナリと、Java ライブラリ（.jar、.war、.ear）も対象です。</li><li>脆弱なパッケージごとに、現在そのファイルを使用しているプロセスがあるかどうか。停止している Go バイナリは露出が低いと判断されます。Java ライブラリについては、DockScan は使用中であることだけを示します。サーバーが展開した .war は、ファイルを開いたままにせずに使われるためです。</li></ol></div></details>
+        <details class="disclosure" id="guia-cve"><summary>CVE を調査する方法</summary><div><ol class="compact-steps"><li>ツールのメニューから「Buscar CVE」（CVE を検索）を開きます。</li><li>IP と、CVE または GHSA の識別子を入力します。</li><li>「Verificar CVE nos IPs」（IP で CVE を確認）をクリックします。選択したマシンから SSH でデータが収集されます。</li><li>検出箇所、収集日時、警告、使用状況の証拠を確認します。収集が不完全な場合、その対象が該当しないとは言い切れません。</li></ol><p>パッケージは、IP による収集の際に自動的に特定されます。</p></div></details>
+        <figure class="screenshot-placeholder" id="print-frota" data-screenshot="frota.webp">
+          <div class="placeholder-header"><span>図 05</span><span>Frota / インベントリ</span></div>
+          <img src="../assets/prints/frota.webp" alt="サンプルのインベントリとホストの最新スキャンが表示された Frota（サーバー群）画面" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>手順 1 と 2 の参考：ホストを登録して保存し、サーバー群の分析を設定します。</figcaption>
+        </figure>
+        <figure class="screenshot-placeholder" id="print-inventario" data-screenshot="inventario.webp">
+          <div class="placeholder-header"><span>図 13</span><span>Inventário / マシンのマップ</span></div>
+          <img src="../assets/prints/inventario.webp" alt="ラボのマシンを IP 範囲ごとにまとめたマップと、マシン、コンテナ、サービスの合計が表示されたインベントリ" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>手順 4 の参考：マップはマシンを IP 範囲ごとにまとめます。リストはキーボード操作用に同じ項目を表示します。</figcaption>
+        </figure>
+        <div class="code-box labeled"><span class="code-label">インベントリの例</span><pre><code># Docker da máquina em que o DockScan está rodando
+127.0.0.1 local=true
+
+# Exemplo de host remoto: substitua pelo seu ambiente
+deploy@host.exemplo.com:2222 key=~/.ssh/id_deploy</code></pre><button class="copy-button" type="button" data-copy hidden>コピー</button></div>
+        <p class="muted">鍵のパスとローカルの Docker は、DockScan サーバーが動作するマシン上で解決されます。アクセスが許可されているホストだけを使ってください。</p>
+      </section>
+
+      <section id="rede" class="chapter" aria-labelledby="titulo-rede" data-keywords="network security scanner rede ip cidr escopo portas serviços tls registry docker exposição varrer iniciar pausar retomar parar hosts achados histórico perfil painel ネットワーク スキャナー スキャン スコープ ポート サービス レジストリ 露出 開始 一時停止 再開 停止 ホスト 検出結果 履歴 プロファイル ダッシュボード カバレッジ">
+        <header class="chapter-header"><div><h2 id="titulo-rede">ネットワークを調べる</h2><p>Rede（ネットワーク）モジュールは、許可された対象のポートとサービスを特定し、露出の証拠を収集します。</p></div></header>
+        <ol class="steps">
+          <li><div><h3>許可されたスコープを確認する</h3><p>Configurações（設定）→ Configurações de rede（ネットワーク設定）で、「Escopos de rede autorizados (IP/CIDR)」（許可されたネットワークスコープ）を確認します。分析が許可されているネットワークだけを含めてください。既定ではループバックが許可されています。</p></div></li>
+          <li><div><h3>「Rede → Varrer a rede」（ネットワークのスキャン）を開く</h3><p>スキャンに名前を付けます。「IP, range, CIDR ou múltiplos alvos」（IP、範囲、CIDR、または複数の対象）の欄に、IP とネットワークを入力します。サーバーのマシンで試す場合は、<code>127.0.0.1</code> を使います。「Importar alvos」（対象をインポート）から <code>.txt</code> のリストを読み込むこともできます。</p><p>必要に応じて、除外対象を入力します。フォームに表示される対象数の見積もりと、許可されたスコープを確認します。</p></div></li>
+          <li><div><h3>プロファイルを選んでポートを確認する</h3><p>「Configuração da varredura」（スキャンの設定）で「Perfil」（プロファイル）を選び、「Portas」（ポート）を確認します。タイムアウト、速度、および「Detectar serviços」（サービスを検出）、「Detectar Docker」（Docker を検出）、「Auditar registries」（レジストリを監査）、「Analisar TLS」（TLS を分析）の各モジュールを確認します。</p></div></li>
+          <li><div><h3>許可を確認して「Iniciar varredura」（スキャンを開始）をクリックする</h3><p>スキャンのページで進行状況を確認します。スキャンの一時停止、再開、終了には、「Pausar」（一時停止）、「Retomar」（再開）、「Parar」（停止）を使います。停止した場合も、それまでの部分的な結果は引き続き参照できます。</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-rede" data-screenshot="rede.webp">
+          <div class="placeholder-header"><span>図 06</span><span>Varrer a rede / 設定</span></div>
+          <img src="../assets/prints/rede.webp" alt="ラボの対象、許可されたスコープ、設定が表示された Varrer a rede（ネットワークのスキャン）画面" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>手順 1〜4 の参考：開始する前にスコープを確認し、スキャンを設定します。</figcaption>
+        </figure>
+        <div class="two-columns notes"><div><h3>あとで確認できる場所</h3><p>「Em andamento」（実行中）には、実行中のジョブが表示されます。「Histórico」（履歴）には、過去の分析が保存されています。見つかったホストとサービスを調べるには、「Hosts」（ホスト）と「Serviços」（サービス）を使います。</p></div><div><h3>カバレッジの読み方</h3><p>スキャンのページで、「Visualização」（表示）をホスト、ポート、TCP カバレッジ、サービス、検出結果の間で切り替えます。収集の範囲を把握するには、「Configuração e limitações」（設定と制限事項）を参照します。</p></div></div>
+        <div class="callout warning"><span class="callout-tag">カバレッジについて</span><div><h3>タイムアウトは結論の出ない結果です</h3><p>応答のないポートが閉じているとは限りません。応答のないホストも、停止しているとは限りません。比較したり調査を終えたりする前に、カバレッジの状態を確認してください。</p></div></div>
+        <details class="disclosure"><summary>2 つのネットワークスキャンを比較するには？</summary><div><p>Rede メニューの「Comparar varreduras」（スキャンの比較）を開くか、結果画面の「Comparar」（比較）を使います。2 つの分析を選び、新規、削除、変更、変更なしの各項目を確認します。</p><p>比較可能なカバレッジがない項目は、「NotComparable」と表示されます。サービスが削除された、あるいはリスクが解消されたと判断する前に、対象、ポート、モジュールを確認してください。</p></div></details>
+      </section>
+
+      <section id="nuvem" class="chapter" aria-labelledby="titulo-nuvem" data-keywords="nuvem cloud aws azure google gcp kubernetes conta credencial permissão leitura securityaudit reader viewer kubeconfig testar conexão descobrir ec2 security group ecr eks クラウド アカウント 資格情報 権限 読み取り 接続テスト 検出 セキュリティグループ ロール スキャン コンテナ">
+        <header class="chapter-header"><div><h2 id="titulo-nuvem">クラウドに接続する</h2><p>クラウドモジュールは AWS アカウントを読み取り、コンテナを露出させている要素（マシン、ファイアウォールルール、レジストリ、クラスター）を見つけます。Azure、Google Cloud、Kubernetes はすでに登録できますが、それらの読み取りは今後の段階で対応します。</p></div></header>
+        <ol class="steps">
+          <li><div><h3>読み取り専用の資格情報を作成する</h3><p>プロバイダーを選ぶと、必要最小限の権限と、資格情報を作成する手順が画面に表示されます。管理者ユーザーのキーは決して使わないでください。</p></div></li>
+          <li><div><h3>「Nuvem」（クラウド）を開いてプロバイダーを選ぶ</h3><p>アカウントに名前を付け、各フィールドを入力します。リージョン、サブスクリプション、プロジェクト、名前空間によって、読み取れる範囲が決まります。</p></div></li>
+          <li><div><h3>保存して「Testar conexão」（接続をテスト）をクリックする</h3><p>AWS では、テストによってクラウド上で実際にアクセスを確認し、使用された ID を表示します。ほかのプロバイダーでは、アカウントが検証されて保存されたことを確認します。</p></div></li>
+          <li><div><h3>「Descobrir agora」（今すぐ検出）をクリックする</h3><p>検出は、ほかのスキャンと同じように扱われます。スキャンのページで開き、Resultados（結果）に記録され、ポリシーに基づいて Falhou（不合格）または Passou（合格）と判定されます。検出結果は <code>fonte = cloud</code> として Achados（検出結果）画面に、マシンは Inventário（インベントリ）に登録されます。読み取れないリージョンがあった場合、スキャンは不完全となり、どのリージョンかが表示されます。</p></div></li>
+          <li><div><h3>必要に応じて編集または削除する</h3><p>「Editar」（編集）では、シークレットを空欄のままにすると、現在の値が維持されます。「Excluir」（削除）を使うと、アカウントとそのシークレットがサーバーから削除されます。</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-nuvem" data-screenshot="nuvem.webp">
+          <div class="placeholder-header"><span>図 10</span><span>Nuvem / アカウントの登録</span></div>
+          <img src="../assets/prints/nuvem.webp" alt="Nuvem（クラウド）画面。AWS アカウントの登録フォームと、その横に最小限の権限と手順が表示されています" width="1440" height="1050" loading="lazy" decoding="async">
+          <figcaption>手順 1〜3 の参考：プロバイダーを選び、フィールドを入力して、横に表示される最小限の権限を確認します。</figcaption>
+        </figure>
+        <div class="table-scroll"><table><caption class="sr-only">プロバイダー別の最小限の権限</caption><thead><tr><th scope="col">プロバイダー</th><th scope="col">読み取り専用の資格情報</th><th scope="col">スコープ</th></tr></thead><tbody>
+          <tr><td>AWS</td><td>SecurityAudit ポリシーを持つロールを引き受けることだけができるユーザー（external ID 必須）。</td><td>リージョン</td></tr>
+          <tr><td>Azure</td><td>Reader ロールを持つアプリケーション（サービスプリンシパル）。</td><td>サブスクリプション</td></tr>
+          <tr><td>Google Cloud</td><td>Viewer ロールと Security Reviewer ロールを持つサービスアカウント。</td><td>プロジェクト</td></tr>
+          <tr><td>Kubernetes</td><td>pods、nodes、namespaces に対する読み取り用の ClusterRole を持つ ServiceAccount。</td><td>名前空間（Namespace）</td></tr>
+        </tbody></table></div>
+        <div class="callout warning"><span class="callout-tag">セキュリティ</span><div><h3>シークレットは暗号化されますが、保存先はサーバーです</h3><p>資格情報は保管庫のキーで暗号化され、画面に再表示されることはありません。ただし、DockScan サーバーの管理者権限を持つ人は、それらを読み取れます。登録するのは読み取り専用の資格情報だけにし、できれば有効期限付きのものにしてください。</p></div></div>
+        <details class="disclosure"><summary>kubeconfig が拒否されたのはなぜですか？</summary><div><p>セキュリティ上の理由から、kubeconfig にはトークンまたは証明書が埋め込まれ、クラスターの CA が <code>certificate-authority-data</code> に含まれている必要があります。次のものは拒否されます。DockScan サーバー上でプログラムを実行することになる <code>exec</code> または <code>auth-provider</code> による認証、サーバー上のファイルを読み込むことになるファイルパス、<code>insecure-skip-tls-verify</code>、そして <code>https://</code> で始まらないアドレスです。</p></div></details>
+        <details class="disclosure"><summary>DockScan はクラウドで何を探しますか？</summary><div><p>インターネットに公開された管理用ポート（Docker API、kubelet、etcd、Kubernetes API、レジストリ、SSH）、すべてのポートを許可するルール、匿名で読み取れるレジストリや管理者ユーザーが有効なレジストリ、上書き可能なタグ、公開されたクラスター API、RBAC のないクラスター、トークンなしでメタデータサービスを受け付けるマシン、特権付きのワークロードです。</p><p>AWS では、登録したリージョンの EC2（マシンとセキュリティグループ）、ECR、EKS からこれらの情報を取得します。ロールの ARN を指定した場合、キーはそのロールを 15 分間のセッションで引き受けるためだけに使われ、読み取りはすべてそのロールで行われます。リソースを作成または変更する呼び出しは一切行いません。</p></div></details>
+        <details class="disclosure"><summary>「Descobrir agora」が表示されない</summary><div><p>このボタンは、プロバイダーのコネクタが用意されていて、その SDK が DockScan サーバーにインストールされている場合に表示されます。AWS の場合は、<code>pip install "dockscan[cloud]"</code> でインストールします。SDK が不足している場合は、接続テストでも通知されます。</p></div></details>
+      </section>
+
+      <section id="agendamentos" class="chapter" aria-labelledby="titulo-agendamentos" data-keywords="automático recorrente periodicidade intervalo diário agendamento scheduler agendador pausar retomar executar agora minutos スケジュール 自動 定期 定期実行 間隔 毎日 スケジューラー 一時停止 再開 今すぐ実行 分 スキャン">
+        <header class="chapter-header"><div><h2 id="titulo-agendamentos">分析をスケジュールする</h2><p>決めた間隔で分析を繰り返し、各回の結果を履歴で確認します。</p></div></header>
+        <ol class="steps">
+          <li><div><h3>「Agendamentos」（スケジュール）を開いて定期実行に名前を付ける</h3><p>間隔（分）と初回の実行日時を設定します。1 日 1 回実行するには、1440 分を指定します。インターフェースでは 5〜10080 分を指定できます。</p></div></li>
+          <li><div><h3>対象とポリシーを入力する</h3><p>マシンの IP と不合格の基準を入力します。選択内容は定期実行に保存され、SSH アクセスには Frota（サーバー群）の設定が使われます。</p></div></li>
+          <li><div><h3>「Criar agendamento」（スケジュールを作成）をクリックする</h3><p>作成した定期実行は「Scans agendados」（スケジュール済みのスキャン）に表示されます。手動で 1 回実行するには Executar agora（今すぐ実行）、以降の実行を止めるには Pausar（一時停止）、再び有効にするには Retomar（再開）を使います。スケジュールを削除しても、過去のスキャンは残ります。</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-agendamentos" data-screenshot="agendamentos.webp">
+          <div class="placeholder-header"><span>図 07</span><span>Agendamentos / 新しい定期実行</span></div>
+          <img src="../assets/prints/agendamentos.webp" alt="一時停止中の定期実行と、新しい定期実行のフォームが表示された Agendamentos（スケジュール）画面" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>手順 1〜3 の参考：定期実行を設定し、対象を入力して、スケジュールを保存します。</figcaption>
+        </figure>
+        <div class="callout"><span class="callout-tag">定期実行のしくみ</span><div><p>スケジュールは、選択した IP で収集を繰り返し、マシンの現在のデータを特定します。インベントリにほかの IP を追加しても、作成済みの定期実行の対象は広がりません。</p></div></div>
+        <details class="disclosure"><summary>インターフェースを閉じても分析は続きますか？</summary><div><p>ブラウザーのタブを閉じても、サーバーは停止しません。DockScan サーバーが動作している間、定期実行は続きます。Web サーバーを停止した状態で実行するには、インスタンスと同じデータディレクトリを指定して、次の独立したサービスを動かし続けてください。</p><div class="code-box"><pre><code>python -m dockscan agendador --data-dir ~/.dockscan</code></pre><button type="button" class="copy-button" data-copy hidden>コピー</button></div><p>サーバーもこのサービスも動いていない場合、定期実行は行われません。再び動き出すと保留中の 1 回分が実行され、実行されなかった回をすべて繰り返すことはありません。</p></div></details>
+      </section>
+
+      <section id="relatorios" class="chapter" aria-labelledby="titulo-relatorios" data-keywords="exportação exportar baixar relatório compartilhar download html json sarif csv cyclonedx spdx sbom imprimir pdf エクスポート ダウンロード レポート 報告書 共有 印刷 形式 イメージ スキャン">
+        <header class="chapter-header"><div><h2 id="titulo-relatorios">レポートをエクスポートする</h2><p>用途（閲覧、自動化、コンポーネントのインベントリ）に応じて形式を選びます。</p></div></header>
+        <div class="two-columns notes"><div><h3>マシンとコンテナ</h3><ol class="compact-steps"><li>Resultados（結果）で、完了した分析を開きます。</li><li>概要で、HTML、JSON、SARIF のいずれかをクリックします。</li><li>パッケージ情報がある場合は、CycloneDX または SPDX で SBOM をエクスポートします。</li></ol></div><div><h3>ネットワークスキャン</h3><ol class="compact-steps"><li>結果を開き、「Exportar relatório」（レポートをエクスポート）を探します。</li><li>形式、ホスト、重大度、証拠を含めるかどうかを選びます。</li><li>CSV の場合は、出力する表を選びます。「Exportar relatório」をクリックしてダウンロードします。</li></ol></div></div>
+        <figure class="screenshot-placeholder" id="print-relatorios" data-screenshot="relatorios.webp">
+          <div class="placeholder-header"><span>図 08</span><span>レポートのエクスポート</span></div>
+          <img src="../assets/prints/relatorios.webp" alt="HTML、JSON、SARIF、CycloneDX、SPDX のエクスポートボタンがある、イメージのスキャン結果" width="1440" height="700" loading="lazy" decoding="async">
+          <figcaption>エクスポートの参考：ダウンロードする前に、利用できる形式を探し、フィルターを確認します。</figcaption>
+        </figure>
+        <div class="table-scroll"><table><caption class="sr-only">レポートの形式と用途</caption><thead><tr><th scope="col">形式</th><th scope="col">使う場面</th></tr></thead><tbody><tr><td class="mono">HTML</td><td>ブラウザーで開いて共有できる、視覚的なレポート。</td></tr><tr><td class="mono">JSON</td><td>連携や処理に使う構造化データ。</td></tr><tr><td class="mono">SARIF</td><td>対応ツールで扱える、静的解析形式の検出結果。</td></tr><tr><td class="mono">CSV</td><td>ネットワークの表や、Achados（検出結果）画面のクエリ結果。スプレッドシートで開けます。</td></tr><tr><td class="mono">CycloneDX / SPDX</td><td>パッケージのデータを含むスキャンの、コンポーネントのインベントリ。</td></tr></tbody></table></div>
+        <p class="muted">検出結果の一覧のフィルターは、インターフェース上での閲覧に役立つものです。ネットワークのエクスポートでは、ファイルの内容を決めるために、「Exportar relatório」フォーム自体のフィルターを確認してください。</p>
+      </section>
+
+      <section id="contas" class="chapter" aria-labelledby="titulo-contas" data-keywords="usuário usuários conta contas login entrar senha trocar senha esqueci perfil papel papéis administrador analista leitura sessão sessões chave de acesso configurações permissões ユーザー アカウント ログイン サインイン パスワード パスワード変更 パスワードを忘れた プロファイル ロール 管理者 アナリスト 閲覧 セッション アクセスキー 設定 権限 一時パスワード 2段階認証 2 段階認証 mfa 2fa 認証アプリ コード 復旧コード qr 携帯電話 必須">
+        <header class="chapter-header"><div><h2 id="titulo-contas">アカウントとアクセス</h2><p>各ユーザーは自分のユーザー名とパスワードでログインし、アカウントのロールによって、できる操作が決まります。これらはすべて Configurações（設定）で管理します。</p></div></header>
+        <ol class="steps">
+          <li><div><h3>ユーザー名とパスワードでログインする</h3><p>ログイン画面では、アカウントのユーザー名またはメールアドレスを使います。「Manter conectado」（ログイン状態を保持）を選ぶと、このブラウザーでセッションが最長 7 日間維持されます。選ばない場合、セッションは 30 分間操作がないとき、または 12 時間で終了します。</p></div></li>
+          <li><div><h3>初回ログイン時にパスワードを設定する</h3><p>アカウントを作成した人には、あなたに渡すための一時パスワードが発行されます。そのパスワードでログインすると、DockScan はどの画面を開くよりも先に、あなた自身のパスワードの設定を求めます。パスワードは 12 文字以上で、ユーザー名とは異なるものにしてください。</p></div></li>
+          <li><div><h3>Configurações でプロファイルを確認する</h3><p>メニューの最下部にある自分の名前をクリックします。プロファイルには、ユーザー名、メールアドレス、ロール、パスワードを変更した日時が表示されます。ここでは、名前とメールアドレスの変更、パスワードの変更ができるほか、ほかのブラウザーで開いているセッションを確認し、それぞれを終了することもできます。</p></div></li>
+          <li><div><h3>管理者向け：チームのアカウントを作成する</h3><p>Usuários（ユーザー）で名前、ユーザー名、ロールを入力し、「Criar usuário」（ユーザーを作成）をクリックします。一時パスワードは Copiar（コピー）ボタンとともに一度だけ表示されるので、安全な経路で伝えてください。各アカウントでは、Editar（編集）で名前、メールアドレス、ロール、アカウントを有効にするかどうかを変更でき、Redefinir senha（パスワードをリセット）で新しい一時パスワードを発行でき、Excluir（削除）でアクセス権を取り消せます。</p></div></li>
+          <li><div><h3>2 段階認証を有効にする</h3><p>Configurações で「Ativar a verificação em duas etapas」（2 段階認証を有効にする）をクリックし、認証アプリ（Google Authenticator、Microsoft Authenticator、Authy、2FAS）で QR コードを読み取り、表示された 6 桁のコードをパスワードと一緒に入力します。続いて表示される 10 個の復旧コードを保管してください。携帯電話をなくした場合、それぞれ 1 回ずつログインに使えます。以後、ログインではパスワードの後にコードを求められます。</p></div></li>
+        </ol>
+        <figure class="screenshot-placeholder" id="print-configuracoes" data-screenshot="configuracoes.webp">
+          <div class="placeholder-header"><span>図 11</span><span>Configurações / プロファイル、セッション、ユーザー</span></div>
+          <img src="../assets/prints/configuracoes.webp" alt="管理者のプロフィール、2 段階認証、開いているセッション、ユーザー一覧が表示された設定画面" width="1440" height="2100" loading="lazy" decoding="async">
+          <figcaption>手順 3〜5 の参考：プロフィール、パスワード、2 段階認証、開いているセッション、チームのアカウント。</figcaption>
+        </figure>
+        <figure class="screenshot-placeholder" id="print-verificacao" data-screenshot="verificacao.webp">
+          <div class="placeholder-header"><span>図 14</span><span>Configurações / 2 段階認証</span></div>
+          <img src="../assets/prints/verificacao.webp" alt="2 段階認証の有効化。手順、QR コード、入力用のキー、コードとパスワードの欄が表示されている" width="1440" height="900" loading="lazy" decoding="async">
+          <figcaption>手順 5 の参考：アプリで QR コードを読み取るかキーを入力し、最初のコードで確定します。</figcaption>
+        </figure>
+        <div class="table-scroll"><table><caption class="sr-only">アカウントのロールと、各ロールでできること</caption><thead><tr><th scope="col">ロール</th><th scope="col">できること</th></tr></thead><tbody>
+          <tr><td>Administrador（管理者）</td><td>すべての操作。ユーザー、アクセスキー、SSH の資格情報の保管庫、Frota のインベントリ、クラウドアカウント、ネットワーク設定の管理も含みます。</td></tr>
+          <tr><td>Analista（アナリスト）</td><td>スキャンと CVE の検索の実行、検出結果のトリアージ、許可リスト、ビュー、タグ、スケジュールの編集。</td></tr>
+          <tr><td>Leitura（閲覧のみ）</td><td>結果と検出結果の参照とエクスポート。変更は一切できません。</td></tr>
+        </tbody></table></div>
+        <p class="muted">ロールで許可されていない操作は、画面に表示されません。ロールの変更はすぐに反映され、ログインし直す必要はありません。DockScan では、有効な管理者が 1 人もいない状態にはできません。また、自分自身のロールを変更したり、自分のアカウントを無効にしたりすることはできません。</p>
+        <div class="callout"><span class="callout-tag">アクセスキー</span><div><p>アクセスキーを使うと、ユーザー名とパスワードなしで管理者としてログインできます。自動化やアクセスの復旧に使い、人が使う場合はアカウントを使ってください。キーの発行と取り消しは Configurações で行います。キーは一度だけ表示されます。</p></div></div>
+        <div class="callout"><span class="callout-tag">2 段階認証の必須化</span><div><p>Usuários（ユーザー）で、管理者は 2 段階認証を必須にする対象を選びます。なし、管理者、またはすべてのアカウントです。まだ有効にしていない人には、ほかの画面より先に有効化の画面が表示されます。自分のロールに必須化するには、先に自分のアカウントで有効にしてください。アクセスキーはコードを求めないため、管理者パスワードと同じように保管してください。</p></div></div>
+        <details class="disclosure"><summary>パスワードを忘れた</summary><div><p>管理者に、あなたのアカウントで Redefinir senha を実行してもらってください。一時パスワードが発行されるので、次回のログイン時に自分のパスワードを設定します。開いているセッションはすべて終了します。</p><p>対応できる管理者がいない場合は、サーバーにアクセスできる人が、インスタンスと同じデータディレクトリを使って、ターミナルからパスワードを変更します。</p><div class="code-box"><pre><code>dockscan usuarios senha --usuario SEU_USUARIO</code></pre><button type="button" class="copy-button" data-copy hidden>コピー</button></div></div></details>
+        <details class="disclosure"><summary>2 段階認証の携帯電話をなくした</summary><div><p>ログイン画面でパスワードの後に「Usar um código de recuperação」（復旧コードを使う）をクリックし、保管しておいたコードのいずれかを入力します。ログイン後、新しいコードを生成するか、いったん無効にして新しい携帯電話で有効にし直してください。</p><p>コードが残っていない場合は、管理者にあなたのアカウントで「Remover verificação」（認証を削除）を使ってもらいます。あなたのセッションは終了し、次回のログインではパスワードだけが求められます。管理者がいない場合は、サーバーのターミナルで次を実行します。</p><div class="code-box"><pre><code>dockscan usuarios remover-verificacao --usuario SEU_USUARIO</code></pre><button type="button" class="copy-button" data-copy hidden>コピー</button></div></div></details>
+        <details class="disclosure"><summary>コードが一致しない</summary><div><p>コードは 30 秒ごとに変わり、それぞれ 1 回だけ使えます。アプリに今表示されているコードを入力し、携帯電話の日付と時刻が自動設定になっているか確認してください。間違ったコードを 5 回続けるとパスワードの入力に戻ります。誤りが多すぎると、15 分間は新しい試行がブロックされます。</p></div></details>
+        <details class="disclosure"><summary>セッションが終了したのはなぜですか？</summary><div><p>セッションは、30 分間操作がなかったとき、12 時間が経過したとき（「Manter conectado」の場合は 7 日間）、ログアウトしたとき、自分の別のセッションから Configurações で終了されたとき、パスワードを変更したとき（ほかのセッションは終了します）、管理者がパスワードをリセットしたりアカウントを無効にしたりしたときに終了します。サーバーを再起動しても、セッションは終了しません。2 段階認証を有効にしたときも、ほかのセッションは終了します。また、管理者があなたの 2 段階認証を削除すると、あなたのセッションは終了します。</p></div></details>
+        <details class="disclosure"><summary>「O papel não permite esta ação」（このロールではこの操作は許可されていません）と表示された</summary><div><p>あなたのアカウントには、その操作を行う権限がありません。たとえば、Analista ロールで Frota のインベントリを編集しようとした場合です。管理者に変更を依頼するか、ロールの調整を依頼してください。</p></div></details>
+      </section>
+
+      <section id="desenvolvimento" class="chapter" aria-labelledby="titulo-desenvolvimento" data-keywords="em desenvolvimento roadmap próximos passos novidades futuro versão planejado jira notificações nuvem aws tags triagem estados rpm 開発中 ロードマップ 今後の予定 新機能 将来 バージョン 予定 通知 クラウド タグ トリアージ 状態 イメージ 2段階認証 検出結果パネル 言語">
+        <header class="chapter-header"><div><h2 id="titulo-desenvolvimento">開発中の機能</h2><p>DockScan は開発中のツールです。バージョンによって画面や名称が変わることがあります。この章では、最近追加された機能と今後の予定を紹介します。</p></div></header>
+        <div class="two-columns notes"><div><h3>このバージョンで追加された機能</h3><ol class="compact-steps">
+          <li><a href="#contas">2 段階認証</a>：認証アプリの 6 桁のコード、10 個の復旧コード、管理者またはすべてのアカウントに必須化するオプション。</li>
+          <li><a href="#achados">検出結果パネル</a>：脆弱性をクリックすると、クエリを離れずに CVSS、EPSS、場所、修正方法、OSV の説明、他の資産、履歴を確認できます。</li>
+          <li>マニュアルはポルトガル語、英語、スペイン語、フランス語、ドイツ語、日本語で読めます。言語はページ上部で選べます。</li>
+          <li><a href="#contas">アカウントとアクセス</a>：ユーザー名とパスワードによる個人ごとのアカウントと、Administrador（管理者）、Analista（アナリスト）、Leitura（閲覧のみ）の各ロール。Configurações（設定）でのプロファイル、パスワードの変更、開いているセッションの確認。サーバーを再起動しても、セッションは維持されます。</li>
+          <li><a href="#achados">Achados</a>（検出結果）：履歴に基づく検出結果ごとの状態（novo、ativo、reapareceu、corrigido。それぞれ新規、アクティブ、再発、修正済み）、期限付きのトリアージと一括トリアージ、categoria:valor 形式のタグ、保存済みビュー、修正計画、列による並べ替え、ターミナルからの検索。</li>
+          <li><a href="#nuvem">Nuvem</a>（クラウド）：AWS（EC2、セキュリティグループ、ECR、EKS）をスキャンとして読み取り、検出結果は Achados に、マシンは Inventário（インベントリ）に登録。</li>
+          <li><a href="#frota">Frota</a>（サーバー群）：インベントリでは IP ごとに 1 つのアクセス設定とし、保存時に検証。インベントリから外したマシンは Achados からも外れ、その履歴は Resultados（結果）に残ります。</li>
+          <li><a href="#guia-coleta">マシン</a>：Rocky Linux と AlmaLinux の RPM パッケージ、ソースパッケージに基づく脆弱性の判定（<code>libssl3</code> に OpenSSL の脆弱性が表示されるようになりました）、Go バイナリと Java ライブラリの使用状況の確認、マシンにもともとあるものだけを使った収集。</li>
+          <li>Painel（ダッシュボード）から Achados へのショートカット、タイムゾーン付きの時刻表示、キーボードとスクリーンリーダー向けに見直した Achados と Nuvem の画面。</li>
+          <li>結果の名称をわかりやすく変更：ポリシーの判定には「Falhou」（不合格）と「Passou」（合格）を使い、「Erro na análise」（分析エラー）は技術的な障害であるため、異なる表示になりました。</li>
+        </ol></div><div><h3>今後の予定</h3><ol class="compact-steps">
+          <li>AWS と同じ形式での、Azure、Google Cloud、Kubernetes の読み取り。</li>
+          <li>連携と通知：重要な検出結果が見つかったときに、Jira でチケットを作成し、チームに通知する機能。</li>
+          <li>マシンで実行中のカーネルのバージョンに基づく、カーネルの脆弱性の検出。</li>
+          <li>イメージやコンテナ内の RPM パッケージへの対応と、OSV がアドバイザリを提供するようになった時点での、その他の RPM 系ディストリビューションへの対応。</li>
+        </ol></div></div>
+        <div class="callout"><span class="callout-tag">バージョンについて</span><div><p>機能は段階的に追加されることがあります。たとえば Nuvem では、AWS がほかのプロバイダーより先に読み取りに対応しています。このマニュアルは、ツールとともに各段階で更新されます。</p></div></div>
+      </section>
+
+      <section id="ajuda" class="chapter" aria-labelledby="titulo-ajuda" data-keywords="erro falha problemas nenhum achado vazio limite upload conexão indisponível ajuda suporte dúvidas pergunta faq エラー 障害 失敗 問題 検出結果なし 空 上限 アップロード 接続 利用不可 ヘルプ サポート 質問 よくある質問 タイムゾーン スキャン">
+        <header class="chapter-header"><div><h2 id="titulo-ajuda">よくある質問</h2><p>結果を解釈する前に、分析の状態を確認してください。</p></div></header>
+        <details class="disclosure"><summary>スキャンで検出結果が 1 件も返されませんでした。すべて安全ですか？</summary><div><p>分析が完了しているか、フィルターで項目が隠れていないか、失敗や不完全な収集の警告が出ていないかを確認してください。CVE の照会が無効になっていないか、Allowlist（許可リスト）にエントリがないかも確認します。検出結果がないということは、その実行において、実施したカバレッジの範囲内で報告された項目がなかったという意味です。</p></div></details>
+        <details class="disclosure"><summary>IP が受け付けられない</summary><div><p>DNS 名、ユーザー、ポート、範囲を含めずに、マシンの IPv4 または IPv6 アドレスを入力してください。SSH のポートが既定と異なる場合は、Frota（サーバー群）のインベントリで設定します。</p></div></details>
+        <details class="disclosure"><summary>マシンに接続できない</summary><div><p>DockScan サーバーからその IP に到達できるか、SSH が利用できるか、保管庫の資格情報のスコープにそのアドレスが含まれているかを確認してください。スキャンのエラーと警告を読み、収集に失敗した部分を特定します。</p></div></details>
+        <details class="disclosure"><summary>サーバー群のホストが失敗した</summary><div><p>インベントリのアドレス、ユーザー、ポート、鍵のパスを確認してください。SSH アクセスと Docker への問い合わせは、サーバーのマシンから動作する必要があります。ホストごとの警告を読んでください。アクセスに失敗すると、その対象の収集ができないことがあります。</p></div></details>
+        <details class="disclosure"><summary>ネットワークスキャンで対象が拒否された</summary><div><p>入力したのが IP、範囲、CIDR のいずれかであり、それが「Escopos de rede autorizados」（許可されたネットワークスコープ）の範囲内にあるかを確認してください。ホスト名や URL は、この欄には入力できません。除外対象とホスト数の上限も確認します。全体の設定は、実行中のスキャンがないときに調整してください。</p></div></details>
+        <details class="disclosure"><summary>時刻はどのタイムゾーンで表示されますか？</summary><div><p>ブラウザーのタイムゾーンで、「02/11/2026, 14:21 BRT」のように略称を添えて表示されます。サーバーは各時刻をタイムゾーン付きで記録するため、別の地域から開いた人にも、その人にとって正しい時刻が表示されます。</p></div></details>
+        <details class="disclosure"><summary>比較で新しい項目が表示されない</summary><div><p>比較可能な過去の基準があるか、比較が有効になっているかを確認してください。同じ IP と同じカバレッジのオプションを使います。カバレッジの警告、Allowlist、「Somente novos」（新規のみ）フィルターを確認してください。初回の実行では、新しい項目を判別するためのベースラインがありません。</p></div></details>
+        <div class="closing"><img src="../assets/logo.svg" alt="" width="96" height="42" loading="lazy"><div><h3>次のスキャンの準備はできましたか？</h3><p>対象を選び、ポリシーを確認して、変化を追跡しましょう。</p></div><a class="button" href="#primeiro-scan">手順に戻る</a></div>
+      </section>
+      </div>
+      <footer class="page-footer"><div class="footer-credits"><span>DockScan · 使用マニュアル</span><p>開発中のツールです。</p></div><span>手順は見直し中です</span><a class="back-to-top" href="#inicio">トップに戻る</a></footer>
+    </main>
+  </div>
+
+  <div id="copy-status" class="sr-only" role="status"></div>
+</body>
+</html>

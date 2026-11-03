@@ -4,6 +4,13 @@
 (() => {
   const key = 'dockscan.manual.tema';
   const root = document.documentElement;
+  // Título do botão no idioma da página.
+  const titles = {
+    'pt-BR': ['Voltar ao tema claro', 'Ativar tema escuro'], en: ['Back to light theme', 'Turn on dark theme'],
+    es: ['Volver al tema claro', 'Activar tema oscuro'], fr: ['Revenir au thème clair', 'Activer le thème sombre'],
+    de: ['Zurück zum hellen Design', 'Dunkles Design aktivieren'], ja: ['ライトテーマに戻す', 'ダークテーマを有効にする'],
+  };
+  const [lightTitle, darkTitle] = titles[root.lang] || titles['pt-BR'];
   let initialTheme = 'light';
   try {
     if (localStorage.getItem(key) === 'dark') initialTheme = 'dark';
@@ -19,7 +26,7 @@
     const button = document.querySelector('#theme-toggle');
     if (button) {
       button.setAttribute('aria-pressed', String(dark));
-      button.title = dark ? 'Voltar ao tema claro' : 'Ativar tema escuro';
+      button.title = dark ? lightTitle : darkTitle;
     }
   }
 
