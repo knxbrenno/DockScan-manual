@@ -103,7 +103,7 @@
           <li><img src="../assets/logos/linux.svg" alt="" width="28" height="28" loading="lazy"><div><h4>Linux カーネル</h4><p>オペレーティングシステムの中核。</p><p class="support-read">各マシンで実行中のバージョン。CVE の総数と、今対応が必要なものを示します。</p></div></li>
         </ul>
         <p class="support-lead">これらについては、DockScan はすでにサポート終了を知らせます。パッケージの検証は開発中です。</p>
-        <ul class="support-inline"><li><img src="../assets/logos/centos.svg" alt="" width="22" height="22" loading="lazy">CentOS</li><li><img src="../assets/logos/redhat.svg" alt="" width="22" height="22" loading="lazy">Red Hat Enterprise Linux</li><li><img src="../assets/logos/servidor.svg" alt="" width="22" height="22" loading="lazy">Oracle Linux</li><li><img src="../assets/logos/servidor.svg" alt="" width="22" height="22" loading="lazy">Amazon Linux</li><li><img src="../assets/logos/fedora.svg" alt="" width="22" height="22" loading="lazy">Fedora</li><li><img src="../assets/logos/opensuse.svg" alt="" width="22" height="22" loading="lazy">openSUSE</li><li><img src="../assets/logos/suse.svg" alt="" width="22" height="22" loading="lazy">SUSE Linux Enterprise</li></ul>
+        <ul class="support-inline"><li><img src="../assets/logos/centos.svg" alt="" width="22" height="22" loading="lazy">CentOS</li><li><img src="../assets/logos/redhat.svg" alt="" width="22" height="22" loading="lazy">Red Hat Enterprise Linux</li><li><img src="../assets/logos/oracle.png" alt="" width="22" height="22" loading="lazy">Oracle Linux</li><li><img class="logo-claro" src="../assets/logos/aws.svg" alt="" width="22" height="22" loading="lazy"><img class="logo-escuro" src="../assets/logos/aws-escuro.svg" alt="" width="22" height="22" loading="lazy">Amazon Linux</li><li><img src="../assets/logos/fedora.svg" alt="" width="22" height="22" loading="lazy">Fedora</li><li><img src="../assets/logos/opensuse.svg" alt="" width="22" height="22" loading="lazy">openSUSE</li><li><img src="../assets/logos/suse.svg" alt="" width="22" height="22" loading="lazy">SUSE Linux Enterprise</li></ul>
         <h3 class="subheading">プログラミング言語</h3>
         <p class="support-lead">依存関係は、プロジェクトのファイル、マシン、コンテナ、イメージにインストールされたパッケージ、コンパイル済みのプログラムから読み取ります。パッケージマネージャー外とは、公式イメージのように apt、apk、dnf を使わずにインストールされたものを指します。バージョンはファイルそのものから読み取り、何も実行しません。</p>
         <ul class="support-list">
@@ -162,8 +162,8 @@
           <li><img src="../assets/logos/documento.svg" alt="" width="28" height="28" loading="lazy"><div><h4>Dockerfile</h4><p>イメージのビルド手順。</p><p class="support-read">root での実行、ENV 内のシークレット、プロジェクト全体のコピーなどの悪い慣行。</p></div></li>
           <li><img src="../assets/logos/caixa.svg" alt="" width="28" height="28" loading="lazy"><div><h4>レジストリのイメージ</h4><p>Docker Hub、GitHub Container Registry、その他の互換レジストリ。</p><p class="support-read">Docker を使わずにレジストリから直接イメージを読み取り、cosign の署名も確認します。</p></div></li>
           <li><img src="../assets/logos/kubernetes.svg" alt="" width="28" height="28" loading="lazy"><div><h4>Kubernetes</h4><p>コンテナのオーケストレーター。</p><p class="support-read">YAML と JSON のマニフェスト：特権、root、hostPath、制限、サービスアカウントのトークン。</p><p class="support-next"><span>開発中：</span>Nuvem（クラウド）に登録したクラスターの読み取り。</p></div></li>
-          <li><img src="../assets/logos/nuvem.svg" alt="" width="28" height="28" loading="lazy"><div><h4>Amazon Web Services</h4><p>Amazon のクラウド。</p><p class="support-read">EC2、セキュリティグループ、ECR、EKS を、読み取りのみで調べます。</p></div></li>
-          <li class="support-future"><img src="../assets/logos/nuvem.svg" alt="" width="28" height="28" loading="lazy"><div><h4>Microsoft Azure</h4><p>Microsoft のクラウド。</p><p class="support-next"><span>開発中：</span>AWS と同じ形式での、アカウントの読み取り。登録はすでにできます。</p></div></li>
+          <li><img class="logo-claro" src="../assets/logos/aws.svg" alt="" width="28" height="28" loading="lazy"><img class="logo-escuro" src="../assets/logos/aws-escuro.svg" alt="" width="28" height="28" loading="lazy"><div><h4>Amazon Web Services</h4><p>Amazon のクラウド。</p><p class="support-read">EC2、セキュリティグループ、ECR、EKS を、読み取りのみで調べます。</p></div></li>
+          <li class="support-future"><img src="../assets/logos/azure.svg" alt="" width="28" height="28" loading="lazy"><div><h4>Microsoft Azure</h4><p>Microsoft のクラウド。</p><p class="support-next"><span>開発中：</span>AWS と同じ形式での、アカウントの読み取り。登録はすでにできます。</p></div></li>
           <li class="support-future"><img src="../assets/logos/googlecloud.svg" alt="" width="28" height="28" loading="lazy"><div><h4>Google Cloud</h4><p>Google のクラウド。</p><p class="support-next"><span>開発中：</span>AWS と同じ形式での、プロジェクトの読み取り。登録はすでにできます。</p></div></li>
           <li class="support-future"><img src="../assets/logos/helm.svg" alt="" width="28" height="28" loading="lazy"><div><h4>Helm</h4><p>Kubernetes のパッケージマネージャー。</p><p class="support-next"><span>開発中：</span>chart の読み取り。マニフェストと同じチェックを行います。</p></div></li>
           <li class="support-future"><img src="../assets/logos/terraform.svg" alt="" width="28" height="28" loading="lazy"><div><h4>Terraform</h4><p>Infrastructure as Code。</p><p class="support-next"><span>開発中：</span>リソースが作成される前に、開いているポートとアクセスを見つけること。</p></div></li>
@@ -171,9 +171,9 @@
         </ul>
         <h3 class="subheading">形式と連携</h3>
         <ul class="support-list">
-          <li><img src="../assets/logos/documento.svg" alt="" width="28" height="28" loading="lazy"><div><h4>CycloneDX</h4><p>OWASP のオープンな SBOM 形式。</p><p class="support-read">分析結果の SBOM を生成し、ほかのツールの SBOM も読み取ります。この形式の VEX も読み取ります。</p></div></li>
+          <li><img src="../assets/logos/cyclonedx.png" alt="" width="28" height="28" loading="lazy"><div><h4>CycloneDX</h4><p>OWASP のオープンな SBOM 形式。</p><p class="support-read">分析結果の SBOM を生成し、ほかのツールの SBOM も読み取ります。この形式の VEX も読み取ります。</p></div></li>
           <li><img src="../assets/logos/spdx.svg" alt="" width="28" height="28" loading="lazy"><div><h4>SPDX</h4><p>Linux Foundation の SBOM 形式。</p><p class="support-read">分析結果の SBOM を生成し、ほかのツールの SBOM も読み取ります。</p></div></li>
-          <li><img src="../assets/logos/declaracao.svg" alt="" width="28" height="28" loading="lazy"><div><h4>OpenVEX</h4><p>該当しない脆弱性を宣言する形式。</p><p class="support-read">影響なし、または修正済みと宣言されたものは、レポートから除外されます。</p></div></li>
+          <li><img src="../assets/logos/openvex.png" alt="" width="28" height="28" loading="lazy"><div><h4>OpenVEX</h4><p>該当しない脆弱性を宣言する形式。</p><p class="support-read">影響なし、または修正済みと宣言されたものは、レポートから除外されます。</p></div></li>
           <li><img src="../assets/logos/github.svg" alt="" width="28" height="28" loading="lazy"><div><h4>SARIF</h4><p>静的解析の結果の形式。</p><p class="support-read">検出結果が GitHub の Security タブに表示されます。</p></div></li>
           <li><img src="../assets/logos/githubactions.svg" alt="" width="28" height="28" loading="lazy"><div><h4>GitHub Actions</h4><p>GitHub の自動化機能。</p><p class="support-read">DockScan 専用の Action。CI で DockScan を実行し、ポリシーで不合格になるとビルドを失敗させます。</p></div></li>
           <li class="support-future"><img src="../assets/logos/git.svg" alt="" width="28" height="28" loading="lazy"><div><h4>コードリポジトリ</h4><p>プロジェクトのフォルダーと Git リポジトリ。</p><p class="support-next"><span>開発中：</span>プロジェクト全体の一括分析：依存関係、Dockerfile、マニフェスト、シークレット。</p></div></li>
@@ -183,12 +183,12 @@
         </ul>
         <h3 class="subheading">データの取得元</h3>
         <ul class="support-list">
-          <li><img src="../assets/logos/escudo.svg" alt="" width="28" height="28" loading="lazy"><div><h4>OSV</h4><p>Google が管理する、オープンな脆弱性データベース。</p><p class="support-read">パッケージ、ディストリビューション、Bitnami のアドバイザリ。</p></div></li>
+          <li><img class="logo-claro" src="../assets/logos/osv.svg" alt="" width="28" height="28" loading="lazy"><img class="logo-escuro" src="../assets/logos/osv-escuro.svg" alt="" width="28" height="28" loading="lazy"><div><h4>OSV</h4><p>Google が管理する、オープンな脆弱性データベース。</p><p class="support-read">パッケージ、ディストリビューション、Bitnami のアドバイザリ。</p></div></li>
           <li><img src="../assets/logos/alerta.svg" alt="" width="28" height="28" loading="lazy"><div><h4>KEV</h4><p>米国のサイバーセキュリティ機関である CISA による、悪用が確認された脆弱性のカタログ。</p><p class="support-read">悪用が確認済みの検出結果に印を付けます。</p></div></li>
-          <li><img src="../assets/logos/grafico.svg" alt="" width="28" height="28" loading="lazy"><div><h4>EPSS</h4><p>今後 30 日間に悪用される可能性を示す、FIRST のスコア。</p><p class="support-read">検出結果の優先度の順位付けに使います。</p></div></li>
-          <li><img src="../assets/logos/calendario.svg" alt="" width="28" height="28" loading="lazy"><div><h4>endoflife.date</h4><p>システムとプログラムのサポート終了日。</p><p class="support-read">システムのバージョンのサポートが終了すると知らせます。</p></div></li>
+          <li><img src="../assets/logos/first.jpg" alt="" width="28" height="28" loading="lazy"><div><h4>EPSS</h4><p>今後 30 日間に悪用される可能性を示す、FIRST のスコア。</p><p class="support-read">検出結果の優先度の順位付けに使います。</p></div></li>
+          <li><img src="../assets/logos/endoflife.png" alt="" width="28" height="28" loading="lazy"><div><h4>endoflife.date</h4><p>システムとプログラムのサポート終了日。</p><p class="support-read">システムのバージョンのサポートが終了すると知らせます。</p></div></li>
         </ul>
-        <p class="muted support-note">各商標はそれぞれの権利者に帰属します。ロゴは Simple Icons プロジェクトのものです。そこにないものは汎用のアイコンで表示しています。開発中の項目は、ロゴがグレーで表示されます。</p>
+        <p class="muted support-note">各商標はそれぞれの権利者に帰属し、各プロジェクトを示すためだけに表示しています。ロゴは Simple Icons プロジェクトと各プロジェクトのものです。プロトコルなど独自のロゴがない項目は汎用のアイコンで表示しています。開発中の項目は、ロゴがグレーで表示されます。</p>
       </section>
 
       </div>

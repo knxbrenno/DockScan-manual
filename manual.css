@@ -213,6 +213,14 @@ h1 { font-size: clamp(42px, 4.2vw, 64px); line-height: 1.04; letter-spacing: -2p
 .support-list .support-read { color: var(--text); }
 .support-list .support-next span { color: var(--accent); }
 .support-future img { filter: grayscale(1); opacity: .65; }
+/* Logos em quadrado com fundo próprio (ícone da organização) ganham o canto arredondado. As que têm partes
+   escuras trazem uma segunda versão, e o tema escuro mostra só essa. */
+.support-list img[src$=".png"], .support-list img[src$=".jpg"] { border-radius: 6px; }
+.logo-escuro { display: none; }
+@media screen {
+  :root[data-theme="dark"] .logo-claro { display: none; }
+  :root[data-theme="dark"] .logo-escuro { display: block; }
+}
 .support-inline { display: flex; flex-wrap: wrap; gap: 14px 30px; margin: 18px 0 34px; padding: 0; list-style: none; font-size: 16px; }
 .support-inline li { display: flex; align-items: center; gap: 10px; }
 .support-inline img { width: 22px; height: 22px; }
