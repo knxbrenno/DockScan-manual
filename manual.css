@@ -199,6 +199,24 @@ h1 { font-size: clamp(42px, 4.2vw, 64px); line-height: 1.04; letter-spacing: -2p
 .function-item[open] summary svg { transform: rotate(90deg); }
 .function-item > div { padding: 0 28px 23px 0; color: var(--muted); font-size: 16px; }
 .function-instruction { margin-top: 12px; }
+/* O que o DockScan reconhece: logo, nome, o que é e o que é lido, no mesmo ritmo da lista de funções.
+   Em desenvolvimento: a logo fica em cinza e a linha do que vem começa pelo rótulo na cor de ação. */
+.support-lead { max-width: 70ch; color: var(--muted); font-size: 17px; }
+.support-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 36px; margin: 14px 0 34px; padding: 0; list-style: none; }
+.support-list > li { display: flex; align-items: flex-start; gap: 14px; min-width: 0; padding: 18px 0; border-bottom: 1px solid var(--border); }
+.support-list img, .support-inline img { flex: none; }
+.support-list img { width: 28px; height: 28px; margin-top: 1px; }
+.support-list > li > div { min-width: 0; }
+.support-list h4 { margin: 0 0 4px; font-size: 18px; font-weight: 400; line-height: 1.35; }
+.support-list p { color: var(--muted); font-size: 15px; line-height: 1.55; }
+.support-list p + p { margin-top: 6px; }
+.support-list .support-read { color: var(--text); }
+.support-list .support-next span { color: var(--accent); }
+.support-future img { filter: grayscale(1); opacity: .65; }
+.support-inline { display: flex; flex-wrap: wrap; gap: 14px 30px; margin: 18px 0 34px; padding: 0; list-style: none; font-size: 16px; }
+.support-inline li { display: flex; align-items: center; gap: 10px; }
+.support-inline img { width: 22px; height: 22px; }
+.support-note { margin-top: 26px; font-size: 14px; }
 .disclosure { border-bottom: 1px solid var(--border); padding: 0; }
 .disclosure summary { position: relative; min-height: 60px; padding: 19px 32px 19px 0; cursor: pointer; list-style: none; color: var(--text); font-size: 18px; line-height: 1.4; }
 .disclosure summary::-webkit-details-marker { display: none; }
@@ -274,6 +292,7 @@ td:first-child { width: 28%; color: var(--text); }
   .hero-actions { align-items: flex-start; flex-direction: column; }
   .start-paths { gap: 16px; }
   .start-paths a + a { padding-left: 16px; }
+  .support-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 1040px) {
   .hero { grid-template-columns: 1fr; gap: 32px; }
@@ -333,6 +352,7 @@ td:first-child { width: 28%; color: var(--text); }
   .steps > li:not(:last-child)::after { left: 14px; top: 36px; }
   .steps h3 { font-size: 20px; }
   .steps p { font-size: 17px; }
+  .support-list { grid-template-columns: 1fr; }
   .function-item summary { font-size: 18px; min-height: 62px; }
   .function-item > div { font-size: 17px; padding-right: 12px; }
   .placeholder-header { padding: 13px 16px; gap: 12px; font-size: 13px; }
@@ -386,7 +406,8 @@ td:first-child { width: 28%; color: var(--text); }
   .start-paths { grid-template-columns: repeat(3, 1fr); margin-block: 25px; }
   .start-paths a { font-size: 11pt; }
   .start-paths small { font-size: 9pt; }
-  .function-list { grid-template-columns: 1fr 1fr; }
+  .function-list, .support-list { grid-template-columns: 1fr 1fr; }
+  .support-list > li { break-inside: avoid; }
   .function-item > div, .disclosure > div { display: block !important; }
   .function-item summary svg, .disclosure summary::after { display: none; }
   .table-scroll { overflow: visible; }
